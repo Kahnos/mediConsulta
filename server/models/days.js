@@ -17,7 +17,7 @@ var daySchema = new mongoose.Schema({
         },
         eventType: { type: String, enum: ['Consulta', 'Vacaciones', 'Reunión', 'Seminario', 'Personal'] }, 
         patient: { // Si tipoEvento no es cita médica, patient estará vacío.   
-            patientID: { type: Number, min: 0, max: 99999999 },
+            patientID: { type: String, trim: true },
             patientName: { type: String, trim: true },
             description: { type: String, trim: true }
         }

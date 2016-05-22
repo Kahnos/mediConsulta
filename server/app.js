@@ -10,7 +10,7 @@ var bodyParser  = require("body-parser"), // Permite parsear JSON. Decodificará
     app = express();
 
 // Conexión a la BD
-mongoose.connect('mongodb://localhost/mediConecta');
+mongoose.connect('mongodb://localhost/mediConsulta');
 var db = mongoose.connection;
 
 // Se llama si la conexión con la BD devuelve un error.
@@ -31,13 +31,10 @@ db.once('open', function() {
     // Se asignan a las rutas para las sollicitudes de citas sus respectivos manejadores.
     days.route('/days')
       .get(daysController.findAllDays);
- /*     .post(daysController.addTVShow);
 
-    days.route('/days/:id')
-      .get(daysController.findById)
-      .put(daysController.updateTVShow)
-      .delete(daysController.deleteTVShow);*/
-
+    days.route('/days/:medicID')
+      .get(daysController.findAllDaysByDoctor);
+    
     app.use('/api', days);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
