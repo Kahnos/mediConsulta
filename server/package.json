@@ -1,0 +1,40 @@
+{
+  "name": "mediconecta_api",
+  "version": "1.0.0",
+  "description": "REST API for a medical administration noSQL database, desktop and android app.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "mongoose": "^4.4.17",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kahnos/mediConsulta/"
+  },
+  "keywords": [
+    "rest",
+    "medical",
+    "api",
+    "android",
+    "java"
+  ],
+  "author": "José Díaz <josed1305@gmail.com>",
+ "contributors": [{
+   "name": "Libny Corrales",
+   "email": "libcorrales@gmail.com"
+ },
+ {
+   "name": "Jesús Castro",
+   "email": "jesus.e.castro.m@gmail.com"
+ },
+ {
+   "name": "Rusben Guzmán",
+   "email": "rusbenguzman@gmail.com"
+ }],
+  "license": "ISC"
+}
