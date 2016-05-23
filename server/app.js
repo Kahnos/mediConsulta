@@ -28,12 +28,15 @@ db.once('open', function() {
     // Rutas de citas.
     var days = express.Router();
     
-    // Se asignan a las rutas para las sollicitudes de citas sus respectivos manejadores.
-    days.route('/days')
-      .get(daysController.findAllDays);
+    // Se asignan a las rutas para las solicitudes de citas sus respectivos manejadores.
+    /*days.route('/days')
+        .get(daysController.findAllDays);*/
 
+    days.route('/days')
+        .post(daysController.addDay);
+    
     days.route('/days/:medicID')
-      .get(daysController.findAllDaysByDoctor);
+        .get(daysController.findAllDaysByDoctor);
     
     app.use('/api', days);
 
