@@ -5,23 +5,22 @@
 
 var mongoose = require('mongoose');
 
-// Contiene la información de cada día del calendario. Acá estará la información de las citas.
+// Contiene la información de las citas. Subdocumento de daySchema.
+var appointmentSchema = new mongoose.Schema({
+    start: { type: Date },
+    end: { type: Date },
+    eventType: { type: String, enum: ['Consulta', 'Vacaciones', 'Reunión', 'Seminario', 'Personal'] },
+    patientID: { type: String, trim: true },
+    patientName: { type: String, trim: true },
+    description: { type: String, trim: true }
+});
+
+// Contiene la información de cada día del calendario.
 var daySchema = new mongoose.Schema({
     date: { type: Date },
     medicID: { type: String, trim: true },
     full: Boolean,
-    dayAppointments: [{
-        timeSlot: {
-            start: { type: Date },
-            end: { type: Date }
-        },
-        eventType: { type: String, enum: ['Consulta', 'Vacaciones', 'Reunión', 'Seminario', 'Personal'] }, 
-        patient: { // Si tipoEvento no es cita médica, patient estará vacío.   
-            patientID: { type: String, trim: true },
-            patientName: { type: String, trim: true },
-            description: { type: String, trim: true }
-        }
-   }]
+    dayAppointments: [appointmentSchema]
 });
 
 exports = module.exports = mongoose.model('Day', daySchema);
