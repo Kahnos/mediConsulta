@@ -36,6 +36,9 @@ db.once('open', function() {
         .put(daysController.updateDay)
         .post(daysController.addAppointment);
 
+    days.route('/days/:id/:appointment_id')
+        .delete(daysController.removeAppointment);
+
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
 

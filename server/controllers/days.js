@@ -81,3 +81,24 @@ exports.addAppointment = function(req, res) {
         });
     });
 };
+
+// DELETE - Se elimina un evento del día de un doctor.
+exports.removeAppointment = function(req, res) {
+    console.log('DELETE /days/:id/:appointment_id');
+
+    // Se busca el documento por su id, si se encuentra, se elimina el evento con id = appointment_id.
+    days.findById(req.params.id, function(err, day) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        // Se elimina la cita del arreglo de citas.
+        day.dayAppointments.id(req.params.appointment_id).remove();
+
+        day.save(function(err) {
+            if ( err )
+                return res.status(500).send(err.message);
+
+            res.status(200).jsonp(day);
+        });
+    });
+};
