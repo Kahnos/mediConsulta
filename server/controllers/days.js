@@ -5,29 +5,20 @@
 
 var days = require('../models/days.js');
 
-// GET - Retorna todos los días en la colección.
-/*exports.findAllDays = function(req, res) {
-    days.find(function(err, days) {
-        if(err) res.send(500, err.message);
-
-        console.log('GET /days');
-        res.status(200).jsonp(days);
-    });
-};*/
-
 // GET - Retorna todos los días en la colección de un doctor específico.
 exports.findAllDaysByDoctor = function(req, res) {
+    console.log('GET /days/doctorID');
     days.find(function(err, days) {
-        if(err) res.send(500, err.message);
+        if ( err )
+            return res.status(500).send(err.message);
 
-        console.log('GET /days/doctorID');
         res.status(200).jsonp(days);
     }).where({ medicID: req.params.medicID });
 };
 
 // POST - Inserta un nuevo día en la base de datos.
 exports.addDay = function(req, res) {
-    console.log('POST /days/:id');
+    console.log('POST /days');
     console.log(req.body);
 
     // Se crea un nuevo documento.
@@ -38,15 +29,33 @@ exports.addDay = function(req, res) {
         dayAppointments : req.body.dayAppointments
     });
 
-    //day.dayAppointments = JSON.parse(JSON.stringify(req.body.dayAppointments));
-
-    /*day = new days({
-       JSON.parse(JSON.stringify(req.body))
-    });*/
-
     day.save(function(err, day) {
-        if(err) return res.status(500).send(err.message);
+        if ( err )
+            return res.status(500).send(err.message);
 
         res.status(200).jsonp(day);
+    });
+};
+
+// PUT - Actualiza un día existente en la base de datos.
+exports.updateDay = function(req, res) {
+    console.log('PUT /days/:id');
+
+    // Se busca el documento por su id, si se encuentra, se modifica.
+    days.findById(req.params.id, function(err, day) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        day.medicID = req.body.medicID;
+        day.date = req.body.date;
+        day.full = req.body.full;
+        day.dayAppointments = req.body.dayAppointments;
+
+        day.save(function(err) {
+            if ( err )
+                return res.status(500).send(err.message);
+
+            res.status(200).jsonp(day);
+        });
     });
 };

@@ -27,17 +27,17 @@ db.once('open', function() {
 
     // Rutas de citas.
     var days = express.Router();
-    
-    // Se asignan a las rutas para las solicitudes de citas sus respectivos manejadores.
-    /*days.route('/days')
-        .get(daysController.findAllDays);*/
 
+    // Se asignan a las rutas para las solicitudes de citas sus respectivos manejadores.
     days.route('/days')
         .post(daysController.addDay);
-    
+
+    days.route('/days/:id')
+        .put(daysController.updateDay);
+
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
-    
+
     app.use('/api', days);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
