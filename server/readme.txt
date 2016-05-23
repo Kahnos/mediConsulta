@@ -1,6 +1,6 @@
 Servidor basado en node.js con base de datos noSQL (MongoDB) y API REST.
 
-Para poder utilizar este servidor, se debe instalar node.js primero. Puede descargarlo desde su página oficial para su S.O. correspondiente.
+Para poder utilizar este servidor, se debe instalar node.js primero y MongoDB. Puede descargarlos desde sus páginas oficiales para su S.O. correspondiente.
 
 Luego de poseer node.js y poder utilizarlo en su línea de comando, utilice los siguientes instrucciones:
 
