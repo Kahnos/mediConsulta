@@ -46,10 +46,32 @@ exports.updateDay = function(req, res) {
         if ( err )
             return res.status(500).send(err.message);
 
-        day.medicID = req.body.medicID;
-        day.date = req.body.date;
-        day.full = req.body.full;
-        day.dayAppointments = req.body.dayAppointments;
+        day.medicID = req.body.medicID || day.medicID;
+        day.date = req.body.date || day.date;
+        day.full = req.body.full || day.full;
+        day.dayAppointments = req.body.dayAppointments || day.dayAppointments;
+
+        day.save(function(err) {
+            if ( err )
+                return res.status(500).send(err.message);
+
+            res.status(200).jsonp(day);
+        });
+    });
+};
+
+// POST - Añade un nuevo evento al día de un doctor.
+exports.addAppointment = function(req, res) {
+    console.log('POST /days/:id');
+    console.log(req.body);
+
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo evento.
+    days.findById(req.params.id, function(err, day) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        // Se añade los datos de la solicitud al arreglo de citas.
+        day.dayAppointments.addToSet(req.body);
 
         day.save(function(err) {
             if ( err )

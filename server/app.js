@@ -33,7 +33,8 @@ db.once('open', function() {
         .post(daysController.addDay);
 
     days.route('/days/:id')
-        .put(daysController.updateDay);
+        .put(daysController.updateDay)
+        .post(daysController.addAppointment);
 
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
@@ -42,6 +43,6 @@ db.once('open', function() {
 
     // Se inicia el servidor en el puerto 1305 de localhost.
     app.listen(1305, function() {
-      console.log("Servidor Node corriendo en http://localhost:1305");
+      console.log("Servidor node.js corriendo en http://localhost:1305");
     });
 });
