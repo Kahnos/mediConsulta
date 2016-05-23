@@ -71,3 +71,30 @@
     ]
   }
 ]
+
+{
+    "date": "2016-05-13T00:00:00.000Z",
+    "medicID": "22824486",
+    "full": false,
+    "dayAppointments": [
+        {
+            "eventType": "Consulta",
+            "patient": {
+                "patientID": "24560595",
+                "patientName": "Libnosa Corrales",
+                "description": "Something else."
+            },
+            "timeSlot": {
+                "start": "2016-05-22T16:00:00.000Z",
+                "end": "2016-05-22T20:00:00.000Z"
+            }
+        },
+        {
+            "eventType": "Vacaciones mejoradas",
+            "timeSlot": {
+                "start": "2016-05-22T22:00:00.000Z",
+                "end": "2016-05-22T23:00:00.000Z"
+            }
+        }
+    ]
+}
