@@ -1,0 +1,35 @@
+[
+	{
+		"day": "23/05/2016",
+		"full":false,
+		"Citas":[
+			{
+			"nombre": "Rosben",
+			"hora"  : "3:00",
+			"motivo": "Molestia en la cabeza"
+			},
+			{
+			"nombre": "Doniel",
+			"hora"  : "1:00",
+			"motivo": "Molestia en la cabeza"
+			}
+		]
+		
+	},
+	{
+		"day": "24/05/2016",
+		"full":false,
+		"Citas":[
+			{
+			"nombre": "Lobny",
+			"hora"  : "3:00",
+			"motivo": "Molestia en la cabeza"
+			},
+			{
+			"nombre": "Josus",
+			"hora"  : "9:00",
+			"motivo": "Molestia en la cabeza"
+			}
+		]
+	}	
+]
