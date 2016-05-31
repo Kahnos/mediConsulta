@@ -10,7 +10,7 @@ var bodyParser  = require("body-parser"), // Permite parsear JSON. Decodificará
     app = express();
 
 // Conexión a la BD
-mongoose.connect('mongodb://localhost/mediConsulta');
+mongoose.connect('mongodb://127.0.0.1/mediConsulta');
 var db = mongoose.connection;
 
 // Se llama si la conexión con la BD devuelve un error.
