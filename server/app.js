@@ -24,11 +24,17 @@ db.once('open', function() {
 
     // Se importan los modelos y los controladores.
     var daysController = require('./controllers/days.js');
+    var configsController = require('./controllers/configs.js');
 
-    // Rutas de citas.
+    // Router de días y citas.
     var days = express.Router();
 
+    // Router de configuraciones.
+    var configs = express.Router();
+    
     // Se asignan a las rutas para las solicitudes de citas sus respectivos manejadores.
+    
+    // Rutas de días y citas.
     days.route('/days')
         .post(daysController.addDay);
 
@@ -41,8 +47,20 @@ db.once('open', function() {
 
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
-
+    
+    // Rutas de configuraciones.
+    configs.route('/configs/')
+        .post(configsController.addConfig);
+    
+    configs.route('/configs/:medicID')
+        .get(configsController.getConfig);    
+    
+    configs.route('/configs/:id')
+        .put(configsController.updateConfig);
+    
+    // Se aplican los routers a la API.
     app.use('/api', days);
+    app.use('/api', configs);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
     app.listen(1305, function() {

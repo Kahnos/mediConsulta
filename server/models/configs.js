@@ -1,5 +1,5 @@
 /*
-* Archivo: models/config.js
+* Archivo: models/configs.js
 * Provee el modelo de la estructura de la configuración en la BD noSQL, con un objeto de Mongoose y lo exporta.
 */
 
@@ -19,4 +19,4 @@ var configSchema = new mongoose.Schema({
     dayConfigs: [dayConfigSchema]
 });
 
-exports = module.exports = mongoose.model('Day', daySchema);
+exports = module.exports = mongoose.model('Config', configSchema);
