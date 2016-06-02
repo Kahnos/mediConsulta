@@ -32,8 +32,7 @@ db.once('open', function() {
     // Router de configuraciones.
     var configs = express.Router();
     
-    // Se asignan a las rutas para las solicitudes de citas sus respectivos manejadores.
-    
+    // Se asignan a las rutas para las solicitudes sus respectivos manejadores.
     // Rutas de días y citas.
     days.route('/days')
         .post(daysController.addDay);
