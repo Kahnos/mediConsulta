@@ -49,11 +49,11 @@ db.once('open', function() {
         .get(daysController.findAllDaysByDoctor);
     
     // Rutas de configuraciones.
+    configs.route('/configs/:medicID')
+        .get(configsController.getConfig);   
+    
     configs.route('/configs/')
         .post(configsController.addConfig);
-    
-    configs.route('/configs/:medicID')
-        .get(configsController.getConfig);    
     
     configs.route('/configs/:id')
         .put(configsController.updateConfig);

@@ -3,7 +3,7 @@
 * Provee los manejadores de solicitudes HTTP para la configuración.
 */
 
-var configs = require('../models/config.js');
+var configs = require('../models/configs.js');
 
 // GET - Retorna la configuración de un doctor específico.
 exports.getConfig = function(req, res) {
