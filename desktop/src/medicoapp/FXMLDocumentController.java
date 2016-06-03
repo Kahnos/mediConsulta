@@ -11,6 +11,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -28,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.joda.time.DateTime;
 /**
  *
  * @author Rusben Guzman
@@ -53,7 +55,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     TableColumn<Appointment, String> apellidoColumn;
     // @FXML
-    DatePicker date;
+    private DatePicker date;
     @FXML
     private VBox Vmenu;
     @FXML
@@ -68,6 +70,8 @@ public class FXMLDocumentController implements Initializable {
     private Label email_p_label;
     @FXML
     private Label telefono_p_label;
+    
+    Day[] dayMedic;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -101,6 +105,10 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        //Obtenemos los deias del medico
+        dayMedic = HTTPRequest.getDays("22824486");
+
         // Se inicializa el calendario y el popup
         DatePicker dp = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(dp);
@@ -135,9 +143,31 @@ public class FXMLDocumentController implements Initializable {
         
         
         dp.setOnAction(e -> {
-        
+               int i,j;
+               DateTime dt = new DateTime(dayMedic[0].getDate());
+               DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+               String selectedDateString = dtf.format(Date.from(this.date.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                
-        
+                System.out.println(selectedDateString);               
+               //Busco el dia en el arreglo segun el dia seleccionado
+               for (i=0; (i < dayMedic.length) ;i++) {
+                   System.out.println(dtf.format(dt.toDate()));
+                   
+                   if ( dtf.format(dt.toDate()).equals(selectedDateString) ){
+                       System.out.println("Esta fecha es igual: " + dtf.format(dt.toDate()));
+                       break;
+                   }
+                   dt = new DateTime(dayMedic[i].getDate());
+               }
+               
+               if ( i == dayMedic.length ) {
+                   System.out.println("Este dia no tiene citas");
+                   return;}
+               
+               for (j=0;j<dayMedic[i].getDayAppointments().length;j++){
+                   tableCitas.getItems().add(dayMedic[i].getDayAppointmentsPos(j));
+               }
+               
         });
         // Manejador del evento cuando se oprime una fila de la tableCitas
        tableCitas.setRowFactory( tv -> {
