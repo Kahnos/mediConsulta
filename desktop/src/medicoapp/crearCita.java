@@ -74,19 +74,17 @@ public class crearCita extends VBox {
                         System.out.println("Tiene que llenar los campos para poder insertar en la tablaa");
                         return;
                 }
-                //------------Prueba de imput------------------------------------
-                ObservableList<Appointment> productosSelect, allProductos;
+                //-----------------------------------------------
+                ObservableList<Appointment> citaSelect, allProductos;
                 allProductos = table.getItems();
-                productosSelect = table.getSelectionModel().getSelectedItems();
+                citaSelect = table.getSelectionModel().getSelectedItems();
                 Appointment np = new Appointment();
-                np.setStart(productosSelect.get(0).getStart());
-                np.setSlot(productosSelect.get(0).getSlot());
+                np.setStart(citaSelect.get(0).getStart());
+                np.setSlot(citaSelect.get(0).getSlot());
                 np.setPatientName(patient_cb.getValue());
                 np.setDescription(motivo_txta.getText());
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
-                //--------------------------------------------------------
-                //np.setPatientLastName(.getText()); 
-                //patient_cb.clear();
+                
                 motivo_txta.clear();  
                 window.close();
             });

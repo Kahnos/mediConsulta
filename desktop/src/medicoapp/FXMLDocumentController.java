@@ -74,6 +74,13 @@ public class FXMLDocumentController implements Initializable {
                 np.setDescription("");
                 allProductos.set(tableCitas.getSelectionModel().getSelectedIndex(), np);
 }
+    
+    @FXML
+    private void agregarPaciente(ActionEvent event) {
+        System.out.println("Se agrega un paciente a la BD");
+        Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
+        ap.display();
+    }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
