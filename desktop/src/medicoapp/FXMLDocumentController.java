@@ -5,6 +5,7 @@
  */
 package medicoapp;
 
+import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -17,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -47,8 +49,9 @@ public class FXMLDocumentController implements Initializable {
     TableColumn<Appointment, String> motivoColumn;
     @FXML
     TableColumn<Appointment, String> apellidoColumn;
-    @FXML
-    private DatePicker Calendario;
+   // @FXML
+    DatePicker date;
+    //private DatePicker Calendario;
     @FXML
     private VBox Vmenu;
     
@@ -84,8 +87,14 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Inicia el calendario con la fecha actual
-        Calendario.setValue(LocalDate.now());
+        // Se inicializa el calendario y el popup
+        DatePicker dp = new DatePicker(LocalDate.now());
+        DatePickerSkin datePickerSkin = new DatePickerSkin(dp);
+        date = dp;
+        Node popupContent = datePickerSkin.getPopupContent();
+        Vmenu.getChildren().addAll(popupContent);
+        //System.out.println("fecha :  "+dp.getValue());
+
         // Inicialización de las filas por bloque de horas en la tabla
         tableCitas.setEditable(true);
         Date date = new Date(2016,06,02,00,00,00);
@@ -106,8 +115,12 @@ public class FXMLDocumentController implements Initializable {
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
         motivoColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        // Manejador de los eventos de edicion de las tablas
+        // Manejador de los eventos de el calendario
+        dp.setOnAction(e -> {
         
+                
+        
+        });
         
     }  
     
