@@ -81,11 +81,8 @@
                         <TableView fx:id="tableCitas" prefHeight="389.0" prefWidth="459.0">
                           <columns>
                             <TableColumn fx:id="horaColumn" prefWidth="98.0" text="Hora" />
-                            <TableColumn fx:id="nombreColumn" prefWidth="115.0" text="Nombre" />
-                              <TableColumn prefWidth="124.0" text="Apellido" />
-                              <TableColumn fx:id="motivoColumn" minWidth="6.0" prefWidth="151.0" text="Motivo" />
-                              <TableColumn prefWidth="102.0" text="Telefono" />
-                              <TableColumn prefWidth="114.0" text="E-mail" />
+                            <TableColumn fx:id="nombreColumn" prefWidth="187.0" text="Paciente" />
+                              <TableColumn fx:id="motivoColumn" minWidth="6.0" prefWidth="419.0" text="Motivo" />
                           </columns>
                         </TableView>
                      </children></VBox>
