@@ -75,6 +75,11 @@ public class FXMLDocumentController implements Initializable {
                 allProductos.set(tableCitas.getSelectionModel().getSelectedIndex(), np);
 }
    
+    @FXML
+    private void verificarSolicitudHTTP(ActionEvent event) {
+        //HTTPRequest.getDays("22824486");
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inicia el calendario con la fecha actual
@@ -88,10 +93,10 @@ public class FXMLDocumentController implements Initializable {
         
         for (int i = 0;i < 24; i++) {
             Appointment a = new Appointment();
-            a.setStart(c.getTime());
+            a.setStart(dateFormat.format(c.getTime()));
             a.setSlot(dateFormat.format(c.getTime()) + " - ");
             c.add(Calendar.HOUR_OF_DAY, 1);
-            a.setEnd(c.getTime());
+            a.setEnd(dateFormat.format(c.getTime()));
             a.setSlot(a.getSlot()+dateFormat.format(c.getTime()));
             tableCitas.getItems().add(a);
         }

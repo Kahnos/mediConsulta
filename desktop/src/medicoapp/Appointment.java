@@ -9,8 +9,8 @@ import java.util.Date;
  */
 public class Appointment implements Comparable<Appointment>{
     
-    private Date start; 
-    private Date end; 
+    private String start; 
+    private String end; 
     private String slot;
     private String eventType;
     private String patientID;
@@ -21,8 +21,8 @@ public class Appointment implements Comparable<Appointment>{
     // Constructores
 
     public Appointment() {
-        this.start = new Date(); 
-        this.end = new Date(); 
+        this.start = ""; 
+        this.end = ""; 
         this.eventType = "";
         this.patientID = "";
         this.patientName = "";
@@ -32,7 +32,7 @@ public class Appointment implements Comparable<Appointment>{
         
     }
 
-    public Appointment(Date start, Date end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+    public Appointment(String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
         this.start = start;
         this.end = end;
         this.eventType = eventType;
@@ -45,11 +45,11 @@ public class Appointment implements Comparable<Appointment>{
     
     // Getters
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
@@ -83,11 +83,11 @@ public class Appointment implements Comparable<Appointment>{
     
     // Setters 
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 

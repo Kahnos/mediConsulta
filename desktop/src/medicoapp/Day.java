@@ -8,21 +8,22 @@ import java.util.Date;
  */
 public class Day {
     
-    private Date date;
+    private String date;
     private String medicID;
     private Boolean full;
     private Appointment[] dayAppointments;
+    private String testAttr;
     
     // Constructores 
 
     public Day() {
-        this.date = new Date();
+        this.date = "";
         this.medicID = "";
         this.full = false;
         this.dayAppointments = new Appointment[50];
     }
 
-    public Day(Date date, String medicID, Boolean full) {
+    public Day(String date, String medicID, Boolean full) {
         this.date = date;
         this.medicID = medicID;
         this.full = full;
@@ -31,11 +32,11 @@ public class Day {
 
     // Getters y Setters
     
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

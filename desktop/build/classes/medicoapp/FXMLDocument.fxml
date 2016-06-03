@@ -33,7 +33,7 @@
                         </Label>
                         <Button id="btnCrearEvento" fx:id="btnCrearEvento" layoutX="6.0" layoutY="58.0" mnemonicParsing="false" onAction="#crearEvento" prefHeight="25.0" prefWidth="180.0" text="Crear evento" />
                         <Button id="btnEliminarEvento" fx:id="btnEliminarEvento" layoutX="7.0" layoutY="89.0" mnemonicParsing="false" onAction="#eliminarEvento" prefHeight="25.0" prefWidth="180.0" text="Eliminar evento" />
-                        <Button id="btnVerificarCitas" fx:id="btnVerificarCitas" layoutX="6.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Verificar solicitudes de citas" />
+                        <Button id="btnVerificarCitas" fx:id="btnVerificarCitas" layoutX="6.0" layoutY="123.0" mnemonicParsing="false" onAction="#verificarSolicitudHTTP" prefHeight="25.0" prefWidth="180.0" text="Verificar solicitudes de citas" />
                         <Button id="btnRegistrarUsuarios" fx:id="btnRegistrarUsuarios" layoutX="7.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Registrar usuarios" />
                      </children>
                      <padding>

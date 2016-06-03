@@ -60,7 +60,7 @@ public final class HTTPRequest {
             JSONresult = buffer.toString();
 
             // Ejemplo de JSONresult para days = "{ \"date\": \"2016-05-22T00:00:00.000Z\",\"dayAppointments\": [{\"start\": \"2016-05-22T07:00:00.000Z\",\"end\": \"2016-05-22T09:00:00.000Z\",\"eventType\": \"Consulta\",\"patientID\": \"5642196\",\"patientName\": \"Ninfa Araque\",\"description\": \"Best mom ever.\"}],\"full\": true,\"medicID\": \"22824486\"}";
-            System.out.println("Day string: " + JSONresult);
+            System.out.println("Day string inside HTTPRequest: " + JSONresult);
         } catch (Exception e) {
             System.err.println("Error: " + e);
             
@@ -81,6 +81,7 @@ public final class HTTPRequest {
         return JSONresult;
     }
     
+    // Obtiene los días de un médico específico.
     public static Day[] getDays( String medicID ){  
         Day[] days;
         
@@ -90,8 +91,8 @@ public final class HTTPRequest {
         // Se transforma el resultado en JSON a objeto.
         Gson gson = new GsonBuilder().create();
         days = gson.fromJson(DaysString, Day[].class);
-        System.out.println(Arrays.toString(days));
-        System.out.println(gson.toJson(days));
+        System.out.println("Object Array to String: " + Arrays.toString(days));
+        System.out.println("Object Array to JSON: " + gson.toJson(days));
         
         return days;
     }
