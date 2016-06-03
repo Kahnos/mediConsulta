@@ -178,7 +178,7 @@ public final class HTTPRequest {
         return resultJSON;
     }
     
-    // Obtiene los días de un médico específico.
+    // Obtiene los días de un médico específico. - GET api/days/:medicID
     public static Day[] getDays( String medicID ){  
         Day[] days;
         
@@ -194,7 +194,7 @@ public final class HTTPRequest {
         return days;
     }
     
-    // Añade un nuevo día al calendario de un doctor.
+    // Añade un nuevo día al calendario de un doctor. - POST api/days
     public static Day addDay( Day dayParameter ){ 
         Day day;
         Gson gson = new GsonBuilder().create();
@@ -226,8 +226,24 @@ public final class HTTPRequest {
         
         // Se transforma el resultado en JSON a objeto.
         day = gson.fromJson(DayString, Day.class);
-        System.out.println("Object  to String: " + day);
-        System.out.println("Object Array to JSON: " + gson.toJson(day));
+        System.out.println("Object to String: " + day);
+        System.out.println("Object to JSON: " + gson.toJson(day));
+        
+        return day;
+    }
+    
+    // Elimina una cita del día de un doctor. - DELETE api/days/:id/:appointment_id
+    public static Day deleteAppointment( String dayID, String appointmentID ){  
+        Day day;
+        
+        // Se realiza la solicitud GET de los días del médico.
+        String DayString = executeRequest( "days/" + dayID + "/" + appointmentID , "DELETE" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        day = gson.fromJson(DayString, Day.class);
+        System.out.println("Object to String: " + day);
+        System.out.println("Object to JSON: " + gson.toJson(day));
         
         return day;
     }
