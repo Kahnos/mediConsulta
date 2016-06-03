@@ -57,7 +57,7 @@ Modifica una configuración existente con id = :id.
 GET api/patients/:id
 Obtiene la información específica de un paciente con id = :id.
 
-PUT api/configs/:id
+PUT api/patients/:id
 Modifica la información de un paciente con id = :id.
 
 POST api/patients/

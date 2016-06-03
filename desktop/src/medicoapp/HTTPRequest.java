@@ -276,6 +276,53 @@ public final class HTTPRequest {
         return config;
     }
     
-    // ---------- Solicitudes relacionadas a las configuraciones. ----------
+    // ---------- Solicitudes relacionadas a los pacientes. ----------
+    // Obtiene la información específica de un paciente. - GET api/patients/:id
+    public static Patient getPatient( String patientID ){  
+        Patient patient;
+        
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients/" + patientID, "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        patient = gson.fromJson(patientString, Patient.class);
+        System.out.println("Object to String: " + patient);
+        System.out.println("Object to JSON: " + gson.toJson(patient));
+        
+        return patient;
+    }
+    
+    // Modifica la información de un paciente. - PUT api/patients/:id
+    public static Patient updatePatient( String patientID, Patient patientParameter ){  //
+        Patient patient;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients/" + patientID, gson.toJson(patientParameter), "PUT" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        patient = gson.fromJson(patientString, Patient.class);
+        System.out.println("Object to String: " + patient);
+        System.out.println("Object to JSON: " + gson.toJson(patient));
+        
+        return patient;
+    }
+    
+    // Inserta un nuevo paciente. - POST api/patients/
+    public static Patient addPatient( Patient patientParameter ){ 
+        Patient patient;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients", gson.toJson(patientParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        patient = gson.fromJson(patientString, Patient.class);
+        System.out.println("Object to String: " + patient);
+        System.out.println("Object to JSON: " + gson.toJson(patient));
+        
+        return patient;
+    }
     
 }
