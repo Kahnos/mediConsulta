@@ -260,7 +260,7 @@ public final class HTTPRequest {
     }
     
     // ---------- Solicitudes relacionadas a las configuraciones. ----------
-    // Obtiene la configuración de un doctor específico. GET api/configs/:medicID
+    // Obtiene la configuración de un doctor específico. - GET api/configs/:medicID
     public static Config getConfig( String medicID ){  
         Config config;
         
@@ -269,6 +269,38 @@ public final class HTTPRequest {
         
         // Se transforma el resultado en JSON a objeto.
         Gson gson = new GsonBuilder().create();
+        config = gson.fromJson(configString, Config.class);
+        System.out.println("Object to String: " + config);
+        System.out.println("Object to JSON: " + gson.toJson(config));
+        
+        return config;
+    }
+    
+    // Inserta una nueva configuración. - POST api/configs/
+    public static Config addConfig( Config configParameter ){ 
+        Config config;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String configString = executeRequest( "configs", gson.toJson(configParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        config = gson.fromJson(configString, Config.class);
+        System.out.println("Object to String: " + config);
+        System.out.println("Object to JSON: " + gson.toJson(config));
+        
+        return config;
+    }
+    
+    // Modifica una configuración existente. - PUT api/configs/:id
+    public static Config updateConfig( String configID, Config configParameter ){  //
+        Config config;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String configString = executeRequest( "configs/" + configID, gson.toJson(configParameter), "PUT" );
+        
+        // Se transforma el resultado en JSON a objeto.
         config = gson.fromJson(configString, Config.class);
         System.out.println("Object to String: " + config);
         System.out.println("Object to JSON: " + gson.toJson(config));
