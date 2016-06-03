@@ -16,23 +16,18 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 /**
  *
  * @author Rusben Guzman
@@ -57,12 +52,22 @@ public class FXMLDocumentController implements Initializable {
     TableColumn<Appointment, String> motivoColumn;
     @FXML
     TableColumn<Appointment, String> apellidoColumn;
-   // @FXML
+    // @FXML
     DatePicker date;
-    //private DatePicker Calendario;
     @FXML
     private VBox Vmenu;
-    
+    @FXML
+    private AnchorPane pacientes_pane; 
+    @FXML
+    private Label nombre_p_label;
+    @FXML
+    private Label apellido_p_label;
+    @FXML
+    private Label cedula_p_label;
+    @FXML
+    private Label email_p_label;
+    @FXML
+    private Label telefono_p_label;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -140,8 +145,14 @@ public class FXMLDocumentController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Appointment rowData = row.getItem();
-                    // Aqui se pasa la informacion del paciente 
                     
+                    /*
+                    nombre_p_label.setText();
+                    apellido_p_label.setText();
+                    cedula_p_label.setText();
+                    email_p_label.setText();
+                    telefono_p_label.setText();
+                    */
                     System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription());
                 }
             });
