@@ -69,7 +69,7 @@ public class FXMLDocumentController implements Initializable {
             ObservableList<Appointment> productosSelect, allProductos;
             allProductos = tableCitas.getItems();
             productosSelect = tableCitas.getSelectionModel().getSelectedItems();
-           // productosSelect.forEach(allProductos::remove);
+                // POST: eleminar una cita del dia
                 Appointment np = new Appointment();
                 np.setStart(productosSelect.get(0).getStart());
                 np.setSlot(productosSelect.get(0).getSlot());
@@ -118,7 +118,7 @@ public class FXMLDocumentController implements Initializable {
         // Manejador de los eventos de el calendario
         dp.setOnAction(e -> {
         
-                
+               // GET: obtener las citas de un dia
         
         });
         

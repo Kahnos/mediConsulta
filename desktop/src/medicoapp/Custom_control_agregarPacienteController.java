@@ -72,7 +72,7 @@ public class Custom_control_agregarPacienteController extends VBox {
                         return;
                 }
                 
-                // Hacer el POST 
+                // Hacer el POST: agregar un paciente a la BD
                  
             });
        
