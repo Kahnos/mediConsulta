@@ -9,10 +9,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<!--<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">-->
-
-<AnchorPane id="AnchorPane" prefHeight="283.0" prefWidth="441.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="medicoapp.Custom_control_agregarPacienteController">
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane id="AnchorPane" fx:id="mainPanel" prefHeight="283.0" prefWidth="441.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@custom_control_agregarpaciente.css" />
     </stylesheets>
@@ -68,27 +66,27 @@
          <center>
             <VBox prefHeight="238.0" prefWidth="216.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField prefHeight="25.0" prefWidth="228.0">
+                  <TextField fx:id="nombre_tf" prefHeight="25.0" prefWidth="228.0">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="apellido_tf">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="cedula_tf">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="email_tf">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="telefono_tf">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
@@ -102,12 +100,12 @@
          <bottom>
             <Pane prefHeight="42.0" prefWidth="384.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="114.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Cancelar" />
-                  <Button layoutX="229.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Agregar" />
+                  <Button fx:id="btn_cancelar" layoutX="114.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Cancelar" />
+                  <Button fx:id="btn_add" layoutX="229.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Agregar" />
                </children>
             </Pane>
          </bottom>
       </BorderPane>
    </children>
 </AnchorPane>
-<!--</fx:root>-->
+</fx:root>

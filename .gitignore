@@ -1,4 +1,5 @@
 server/node_modules/*
+desktop/build/*
 
 # Windows image file caches
 Thumbs.db
