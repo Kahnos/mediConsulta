@@ -9,16 +9,15 @@
 <?import javafx.scene.layout.*?>
 
 <fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-<Pane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<Pane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btn_cancelar" layoutX="133.0" layoutY="163.0" mnemonicParsing="false" text="Cancelar" />
-      <Button fx:id="btn_aceptar" layoutX="217.0" layoutY="163.0" mnemonicParsing="false" text="Aceptar" />
-      <TextField fx:id="tf_nombre" layoutX="200.0" layoutY="35.0" />
-      <TextField fx:id="tf_hora" layoutX="200.0" layoutY="76.0" />
-      <TextField fx:id="tf_motivo" layoutX="200.0" layoutY="118.0" />
-      <Label layoutX="95.0" layoutY="39.0" text="Nombre" />
-      <Label layoutX="95.0" layoutY="80.0" text="Hora" />
-      <Label layoutX="95.0" layoutY="122.0" text="Motivo" />
+      <Button fx:id="btn_cancelar" layoutX="88.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Cancelar" />
+      <Button fx:id="btn_aceptar" layoutX="239.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Aceptar" />
+      <Label layoutX="32.0" layoutY="25.0" text="Paciente" />
+      <Label layoutX="35.0" layoutY="73.0" text="Motivo" />
+      <ComboBox fx:id="patient_cb" layoutX="89.0" layoutY="21.0" prefWidth="150.0" />
+      <Button fx:id="btn_add_patient" layoutX="257.0" layoutY="21.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Agregar Paciente" />
+      <TextArea fx:id="motivo_txta" layoutX="88.0" layoutY="65.0" prefHeight="87.0" prefWidth="287.0" />
    </children>
 </Pane>
 </fx:root>
