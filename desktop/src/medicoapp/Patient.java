@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * Clase Patient: Contiene la información de un Patient.
- * @author JD
+ * @author Kahnos <josed1305@gmail.com>
  */
 public class Patient {
     
@@ -22,9 +22,9 @@ public class Patient {
     private String sex;
     private Integer weight;
     private Integer height;
-    private String medicalBackgrounds[];
-    private String allergies[];
-    private Diagnostic diagnostics[];
+    private String[] medicalBackgrounds;
+    private String[] allergies;
+    private Diagnostic[] diagnostics;
 
     public Patient(String id, String patientID, String name, Date birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
         this.id = id;
@@ -142,7 +142,7 @@ public class Patient {
         
         private Date date;
         private String diagnostic;
-        private Treatment treatment[];
+        private Treatment[] treatment;
         private TreatmentResult treatmentResult;
 
         public Diagnostic(Date date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {

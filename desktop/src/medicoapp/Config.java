@@ -7,13 +7,13 @@ package medicoapp;
 
 /**
  * Clase Config: Contiene la configuración de un médico.
- * @author JD
+ * @author Kahnos <josed1305@gmail.com>
  */
 public class Config {
     
     private String id;
     private String medicID;
-    private dayConfig dayConfigs[];
+    private dayConfig[] dayConfigs;
 
     public Config(String id, String medicID, dayConfig[] dayConfigs) {
         this.id = id;
