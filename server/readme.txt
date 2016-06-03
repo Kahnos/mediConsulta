@@ -9,7 +9,11 @@ node app.js
 
 "npm install" instalará todas las dependencias requeridas, mientras que "node app.js" iniciará el servidor en el puerto 1305 de localhost (http://localhost:1305). 
 
+Para poder utilizar el servidor, se deberá tener mongod (servidor de MongoDB) corriendo en el sistema.
+
 URLs:
+
+- Días y citas:
 
 POST api/days
 Añade un nuevo día. 
@@ -26,6 +30,7 @@ Añade un nuevo evento en el día con id = :id. Se debe pasar un objeto dayAppoi
     "eventType": "Consulta",
     "patientID": "4588796",
     "patientName": "Kvothe",
+    "patientLastName": "Sinsangre",
     "description": "Arcanist.", Nota: Descripción es el motivo de la cita médica, no de la persona. 
     "_id": ObjectId("574290705811965c156210dd")
 }
@@ -36,41 +41,26 @@ Elimina un evento existente con id = appointment_id en el día con id = :id.
 GET api/days/:medicID
 Obtiene todos los días del médico con medicID = :medicID. Nota: medicID se pensó como la C.I. del médico.
 
-Ejemplo del JSON:
+- Configuración:
 
-{
-    "_id": ObjectId("57427a3d3485541421cf66bd"),
-    "__v": 7,
-    "date": ISODate("2016-05-22T00:00:00.000Z"),
-    "dayAppointments": [
-        {
-            "start": ISODate("2016-05-22T07:00:00.000Z"),
-            "end": ISODate("2016-05-22T09:00:00.000Z"),
-            "eventType": "Consulta",
-            "patientID": "5642196",
-            "patientName": "Ninfa Araque",
-            "description": "Best mom ever.",
-            "_id": ObjectId("57428a5fca57a1e00d3d782b")
-        },
-        {
-            "start": ISODate("2016-05-22T13:00:00.000Z"),
-            "end": ISODate("2016-05-22T15:00:00.000Z"),
-            "eventType": "Consulta",
-            "patientID": "4588796",
-            "patientName": "Kvothe",
-            "description": "Arcanist.",
-            "_id": ObjectId("574290705811965c156210dd")
-        },
-        {
-            "start": ISODate("2016-05-22T17:00:00.000Z"),
-            "end": ISODate("2016-05-22T18:00:00.000Z"),
-            "eventType": "Consulta",
-            "patientID": "455221",
-            "patientName": "Bast",
-            "description": "Fata.",
-            "_id": ObjectId("574290905811965c156210de")
-        }
-    ],
-    "full": true,
-    "medicID": "22824486"
-}
+GET api/configs/:medicID
+Obtiene la configuración para un médico específico con medicID = :medicID.
+
+POST api/configs/
+Inserta una nueva configuración.
+
+PUT api/configs/:id
+Modifica una configuración existente con id = :id.
+
+- Pacientes:
+
+GET api/patients/:id
+Obtiene la información específica de un paciente con id = :id.
+
+PUT api/configs/:id
+Modifica la información de un paciente con id = :id.
+
+POST api/patients/
+Inserta un nuevo paciente.
+
+NOTA: Los ejemplos de los JSONs se pueden encontrar en la carpeta test del proyecto.
