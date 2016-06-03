@@ -77,7 +77,7 @@ public class FXMLDocumentController implements Initializable {
    
     @FXML
     private void verificarSolicitudHTTP(ActionEvent event) {
-        //HTTPRequest.getDays("22824486");
+        //HTTPRequest.addDay();
     }
     
     @Override

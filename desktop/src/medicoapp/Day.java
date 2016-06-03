@@ -12,7 +12,6 @@ public class Day {
     private String medicID;
     private Boolean full;
     private Appointment[] dayAppointments;
-    private String testAttr;
     
     // Constructores 
 
