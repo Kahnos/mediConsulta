@@ -16,15 +16,23 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 /**
  *
  * @author Rusben Guzman
@@ -58,7 +66,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void crearEvento(ActionEvent event) {
-        System.out.println("Se agrega un elemento a la lista");
+        System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
         cr.display(tableCitas);
     }
@@ -66,6 +74,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void eliminarEvento(ActionEvent event) throws IOException{
+        System.out.println("Se abre la ventana para eliminar un elemento de la lista");
             ObservableList<Appointment> productosSelect, allProductos;
             allProductos = tableCitas.getItems();
             productosSelect = tableCitas.getSelectionModel().getSelectedItems();
@@ -80,7 +89,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void agregarPaciente(ActionEvent event) {
-        System.out.println("Se agrega un paciente a la BD");
+        System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
         ap.display();
     }
@@ -116,12 +125,29 @@ public class FXMLDocumentController implements Initializable {
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
         motivoColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         // Manejador de los eventos de el calendario
+        
+        //GET: obtener todos los dias y ponerlos en un arreglo de appointment
+        
+        
         dp.setOnAction(e -> {
         
-               // GET: obtener las citas de un dia
+               
         
         });
-        
-    }  
+        // Manejador del evento cuando se oprime una fila de la tableCitas
+       tableCitas.setRowFactory( tv -> {
+            TableRow<Appointment> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
+                    Appointment rowData = row.getItem();
+                    // Aqui se pasa la informacion del paciente 
+                    
+                    System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription());
+                }
+            });
+            return row ;
+        });
+
+    }
     
 }
