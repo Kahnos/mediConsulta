@@ -1,0 +1,33 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class JsonTest {
+
+    public static void main(String[] args) {
+        
+        String reader = "{ \"date\": \"2016-05-22T00:00:00.000Z\",\"dayAppointments\": [{\"start\": \"2016-05-22T07:00:00.000Z\",\"end\": \"2016-05-22T09:00:00.000Z\",\"eventType\": \"Consulta\",\"patientID\": \"5642196\",\"patientName\": \"Ninfa Araque\",\"description\": \"Best mom ever.\"}],\"full\": true,\"medicID\": \"22824486\"}";
+     
+        Gson gson = new GsonBuilder().create();
+        Day p = gson.fromJson(reader, Day.class);
+        System.out.println(p);
+        System.out.println(gson.toJson(p));
+    }
+    
+}
+
+class Day {
+    private String date;
+    private dayAppointment[] dayAppointments;
+    private String full;
+    private String medicID;
+
+}
+
+class dayAppointment {
+    private String start;
+    private String end;
+    private String eventType;
+    private String patientID;
+    private String patientName;
+    private String description;
+}
