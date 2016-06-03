@@ -178,6 +178,7 @@ public final class HTTPRequest {
         return resultJSON;
     }
     
+    // ---------- Solicitudes relacionadas a los días y sus eventos. ----------
     // Obtiene los días de un médico específico. - GET api/days/:medicID
     public static Day[] getDays( String medicID ){  
         Day[] days;
@@ -198,28 +199,6 @@ public final class HTTPRequest {
     public static Day addDay( Day dayParameter ){ 
         Day day;
         Gson gson = new GsonBuilder().create();
-        
-        /*String testJSON = "{\n" +
-            "  \"medicID\": \"22824486\",\n" +
-            "  \"date\": \"2016-05-31T13:00:00.000Z\",\n" +
-            "  \"full\": false,\n" +
-            "  \"dayAppointments\": [\n" +
-            "    {\n" +
-            "      \"start\": \"2016-05-31T13:00:00.000Z\",\n" +
-            "      \"end\": \"2016-05-31T15:00:00.000Z\",\n" +
-            "      \"eventType\": \"Consulta\",\n" +
-            "      \"patientID\": \"5642196\",\n" +
-            "      \"patientName\": \"Bast\",\n" +
-            "      \"patientLastName\": \"Fata\",\n" +
-            "      \"description\": \"Dolor de cabeza, nauseas.\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"start\": \"2016-05-31T15:00:00.000Z\",\n" +
-            "      \"end\": \"2016-05-31T17:00:00.000Z\",\n" +
-            "      \"eventType\": \"Vacaciones\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";*/
                 
         // Se realiza la solicitud GET de los días del médico.
         String DayString = executeRequest( "days", gson.toJson(dayParameter), "POST" );
@@ -247,5 +226,40 @@ public final class HTTPRequest {
         
         return day;
     }
+    
+    // Actualiza el día de un médico. - PUT api/days/:id
+    public static Day updateDay( String dayID, Day dayParameter ){  //
+        Day day;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String DayString = executeRequest( "days/" + dayID, gson.toJson(dayParameter), "PUT" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        day = gson.fromJson(DayString, Day.class);
+        System.out.println("Object to String: " + day);
+        System.out.println("Object to JSON: " + gson.toJson(day));
+        
+        return day;
+    }
+    
+    // Añade un evento al día de un médico. - POST api/days/:id
+    public static Appointment addAppointment( String dayID, Appointment appointmentParameter ){ 
+        Appointment appointment;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String appointmentString = executeRequest( "days/" + dayID, gson.toJson(appointmentParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        appointment = gson.fromJson(appointmentString, Appointment.class);
+        System.out.println("Object to String: " + appointment);
+        System.out.println("Object to JSON: " + gson.toJson(appointment));
+        
+        return appointment;
+    }
+    
+    // ---------- Solicitudes relacionadas a las configuraciones. ----------
+    
     
 }

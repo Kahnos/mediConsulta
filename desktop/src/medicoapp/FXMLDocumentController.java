@@ -77,7 +77,7 @@ public class FXMLDocumentController implements Initializable {
    
     @FXML
     private void verificarSolicitudHTTP(ActionEvent event) {
-        HTTPRequest.deleteAppointment( "5751b61187f7efac09c03f8d", "5751b61187f7efac09c03f8e");
+        //HTTPRequest.updateDay("5751b61187f7efac09c03f8d");
     }
     
     @Override
