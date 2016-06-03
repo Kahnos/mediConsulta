@@ -260,6 +260,22 @@ public final class HTTPRequest {
     }
     
     // ---------- Solicitudes relacionadas a las configuraciones. ----------
+    // Obtiene la configuración de un doctor específico. GET api/configs/:medicID
+    public static Config getConfig( String medicID ){  
+        Config config;
+        
+        // Se realiza la solicitud GET de los días del médico.
+        String configString = executeRequest( "configs/" + medicID, "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        config = gson.fromJson(configString, Config.class);
+        System.out.println("Object to String: " + config);
+        System.out.println("Object to JSON: " + gson.toJson(config));
+        
+        return config;
+    }
     
+    // ---------- Solicitudes relacionadas a las configuraciones. ----------
     
 }
