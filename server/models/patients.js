@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 // Contiene el feedback de un tratamiento para un diagnóstico. Subdocumento de diagnóstico.
 var treatmentResultSchema = new mongoose.Schema({
-    Rating: { type: Number }
+    rating: { type: Number }
 });
 
 // Contiene el tratamiento de un diagnóstico. Subdocumento de diagnóstico.
@@ -36,7 +36,7 @@ var patientSchema = new mongoose.Schema({
     sex: { type: String, trim: true },
     weight: { type: Number },
     height: { type: Number },
-    medicalBackground: [{ type: String, trim: true }],
+    medicalBackgrounds: [{ type: String, trim: true }],
     allergies: [{ type: String, trim: true }],
     diagnostics: [diagnosticSchema]
 });
