@@ -1,5 +1,5 @@
-server/node_modules/*
-desktop/build/*
+server/node_modules/
+desktop/build/
 desktop/nbproject/private/
 desktop/build/
 desktop/nbbuild/
