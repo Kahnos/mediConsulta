@@ -1,0 +1,35 @@
+{
+    "medicID": "22824486",
+    "dayConfigs": [
+      {
+        "day": "Lunes",
+        "scheduleStart": "08:00",
+        "scheduleEnd": "17:00",
+        "slotLength": "01:00"
+      },
+      {
+        "day": "Martes",
+        "scheduleStart": "09:00",
+        "scheduleEnd": "17:00",
+        "slotLength": "01:00"
+      },
+      {
+        "day": "Miércoles",
+        "scheduleStart": "10:00",
+        "scheduleEnd": "17:00",
+        "slotLength": "01:00"
+      },
+      {
+        "day": "Jueves",
+        "scheduleStart": "08:00",
+        "scheduleEnd": "14:00",
+        "slotLength": "01:00"
+      },
+      {
+        "day": "Viernes",
+        "scheduleStart": "08:00",
+        "scheduleEnd": "17:00",
+        "slotLength": "01:00"
+      }
+    ]
+}

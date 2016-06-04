@@ -1,0 +1,54 @@
+{
+    "patientID": "5642195",
+    "name": "Fela",
+    "birthdate": "1994-05-13T13:00:00.000Z",
+    "email": "fela@gmail.com",
+    "phoneNumber": "0424-2456123",
+    "sex": "Mujer",
+    "weight": 70.5,
+    "height": 1.68,
+    "medicalBackgrounds": [
+        "Antecedentes cardiacos",
+        "Gripe"
+    ],
+    "allergies": [
+        "Mariscos",
+        "Penicilina"
+    ],
+    "diagnostics": [
+        {
+            "date": "2016-05-22T13:00:00.000Z",
+            "diagnostic": "Fractura de brazo",
+            "treatment": [
+                {
+                    "medication": "Analgésico",
+                    "quantity": "5mg",
+                    "duration": "5 semanas",
+                    "frequency": "8 horas"
+                },
+                {
+                    "medication": "Yeso inmobilizador",
+                    "duration": "2 meses"
+                }
+            ],
+            "treatmentResult": {
+                "rating": 4
+            }
+        },
+        {
+            "date": "2016-04-10T14:00:00.000Z",
+            "diagnostic": "Gripe",
+            "treatment": [
+                {
+                    "medication": "Antigripal",
+                    "quantity": "400mg",
+                    "duration": "2 semanas",
+                    "frequency": "6 horas"
+                }
+            ],
+            "treatmentResult": {
+                "rating": 2
+            }
+        }
+    ]
+}
