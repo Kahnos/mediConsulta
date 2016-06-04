@@ -75,6 +75,7 @@ public class crearCita extends VBox {
                         return;
                 }
                 //-----------------------------------------------
+                // POST: agregar una cita al dia
                 ObservableList<Appointment> citaSelect, allProductos;
                 allProductos = table.getItems();
                 citaSelect = table.getSelectionModel().getSelectedItems();

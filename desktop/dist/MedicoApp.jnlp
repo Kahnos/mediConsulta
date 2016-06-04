@@ -11,8 +11,9 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="MedicoApp.jar" size="23221" download="eager" />
+    <jar href="MedicoApp.jar" size="26891" download="eager" />
     <jar href="lib/gson-2.3.1.jar" size="210856" download="eager" />
+    <jar href="lib/joda-time-2.4.jar" size="586201" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="MedicoApp" >
     <param name="requiredFXVersion" value="2.2+"/>
