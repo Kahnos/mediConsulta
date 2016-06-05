@@ -5,6 +5,17 @@
 
 var patients = require('../models/patients.js');
 
+// GET - Obtiene todos los pacientes en la base de datos.
+exports.getAllPatients = function(req, res) {
+    console.log('GET /patients/');
+    patients.find(function(err, patients) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        res.status(200).jsonp(patients);
+    });
+}
+
 // GET - Retorna un paciente específico.
 exports.getPatient = function(req, res) {
     console.log('GET /patients/:id');
