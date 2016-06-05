@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var appointmentSchema = new mongoose.Schema({
     start: { type: String, trim: true },
     end: { type: String, trim: true },
-    eventType: { type: String, enum: ['Consulta', 'Vacaciones', 'Reunión', 'Seminario', 'Personal', 'Descanso'] },
+    eventType: { type: String, trim: true },
     patientID: { type: String, trim: true },
     patientName: { type: String, trim: true },
     patientLastName: { type: String, trim: true },
