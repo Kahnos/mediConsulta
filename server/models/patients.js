@@ -30,6 +30,7 @@ var diagnosticSchema = new mongoose.Schema({
 var patientSchema = new mongoose.Schema({
     patientID: { type: String, trim: true },
     name: { type: String, trim: true },
+    lastName: { type: String, trim: true },
     birthdate: { type: Date, trim: true },
     email: { type: String, trim: true },
     phoneNumber: { type: String, trim: true },

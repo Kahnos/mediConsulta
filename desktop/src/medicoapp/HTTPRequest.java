@@ -309,6 +309,22 @@ public final class HTTPRequest {
     }
     
     // ---------- Solicitudes relacionadas a los pacientes. ----------
+    // Obtiene la información de todos los pacientes. - GET api/patients/
+    public static Patient[] getAllPatients(){  
+        Patient[] patients;
+        
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        patients = gson.fromJson(patientString, Patient[].class);
+        System.out.println("Object Array to String: " + Arrays.toString(patients));
+        System.out.println("Object Array to JSON: " + gson.toJson(patients));
+        
+        return patients;
+    }
+    
     // Obtiene la información específica de un paciente. - GET api/patients/:id
     public static Patient getPatient( String patientID ){  
         Patient patient;
