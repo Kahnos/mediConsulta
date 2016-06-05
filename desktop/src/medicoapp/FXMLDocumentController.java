@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -72,7 +73,7 @@ public class FXMLDocumentController implements Initializable {
     private Label telefono_p_label;
     
     Day[] dayMedic;
-    Patient patients;
+    Patient[] patients;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -109,7 +110,9 @@ public class FXMLDocumentController implements Initializable {
 
         //Obtenemos los deias del medico y los mete en el arreglo dayMedic
         dayMedic = HTTPRequest.getDays("22824486");
-
+        // Se obtienen todos los pacientes de la bd
+        patients = HTTPRequest.getAllPatients();
+        System.out.println(patients[0].getEmail());
         // Se inicializa el calendario y el popup
         DatePicker dp = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(dp);
@@ -232,16 +235,21 @@ public class FXMLDocumentController implements Initializable {
                         return;
                     } 
                     
-                    patients = HTTPRequest.getPatient(rowData.getPatientID());
-                    
-                    System.out.println("patietn :" + patients.getPatientID());
-                   
-                    nombre_p_label.setText(patients.getName());
-                    apellido_p_label.setText(patients.getLastName());
-                    cedula_p_label.setText(patients.getPatientID());
-                    email_p_label.setText(patients.getEmail());
-                    telefono_p_label.setText(patients.getPhoneNumber());
-                    
+                    // Se busca el paciente de la fila seleccionada
+                    System.out.println();
+                    int i;
+                    for (i = 0; i < patients.length ; i++ ) {
+                        System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
+                        //if (patients[i].getId().equals(rowData.getPatientID()))
+                            break;
+                    }
+                    /*
+                    nombre_p_label.setText(patients[i].getName());
+                    apellido_p_label.setText(patients[i].getLastName());
+                    cedula_p_label.setText(patients[i].getPatientID());
+                    email_p_label.setText(patients[i].getEmail());
+                    telefono_p_label.setText(patients[i].getPhoneNumber());
+                    */
                     System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
                 }
             });
