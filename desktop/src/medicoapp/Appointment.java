@@ -7,7 +7,7 @@ import java.util.Date;
  * Clase Appointment: contiene la información de las citas, será una agregación de day
  * @author los Appeadores
  */
-public class Appointment implements Comparable<Appointment>{
+public class Appointment implements Comparable<Appointment>, Cloneable{
     
     private String start; 
     private String end; 
@@ -120,4 +120,13 @@ public class Appointment implements Comparable<Appointment>{
     public int compareTo(Appointment a) {
         return getStart().compareTo(a.getStart());
     }
+    
+    	public Appointment clone() {
+		try {
+			return (Appointment) super.clone();
+		} catch (CloneNotSupportedException e) {		
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
 }

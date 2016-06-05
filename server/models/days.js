@@ -7,8 +7,8 @@ var mongoose = require('mongoose');
 
 // Contiene la información de las citas. Subdocumento de daySchema.
 var appointmentSchema = new mongoose.Schema({
-    start: { type: Date },
-    end: { type: Date },
+    start: { type: String, trim: true },
+    end: { type: String, trim: true },
     eventType: { type: String, enum: ['Consulta', 'Vacaciones', 'Reunión', 'Seminario', 'Personal', 'Descanso'] },
     patientID: { type: String, trim: true },
     patientName: { type: String, trim: true },

@@ -72,6 +72,7 @@ public class FXMLDocumentController implements Initializable {
     private Label telefono_p_label;
     
     Day[] dayMedic;
+    Patient patients;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -106,22 +107,23 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //Obtenemos los deias del medico
+        //Obtenemos los deias del medico y los mete en el arreglo dayMedic
         dayMedic = HTTPRequest.getDays("22824486");
 
         // Se inicializa el calendario y el popup
         DatePicker dp = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(dp);
-        date = dp;
+        this.date = dp;
+        // Se obtine el poopup del calendario
         Node popupContent = datePickerSkin.getPopupContent();
         Vmenu.getChildren().addAll(popupContent);
         //System.out.println("fecha :  "+dp.getValue());
 
         // Inicialización de las filas por bloque de horas en la tabla
         tableCitas.setEditable(true);
-        Date date = new Date(2016,06,02,00,00,00);
+        Date dte = new Date(2016,06,02,00,00,00);
         Calendar c = Calendar.getInstance();
-        c.setTime(date);
+        c.setTime(dte);
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         
         for (int i = 0;i < 24; i++) {
@@ -140,50 +142,107 @@ public class FXMLDocumentController implements Initializable {
         // Manejador de los eventos de el calendario
         
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
-        
-        
         dp.setOnAction(e -> {
                int i,j;
+               // Se hace el parce de ISOdate a 
+               System.out.println(dayMedic[0].getDate());
                DateTime dt = new DateTime(dayMedic[0].getDate());
+               // Formato de comparacion de las fehcas
                DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+               // Se obtiene la fecha que se selecciono en el calendario
                String selectedDateString = dtf.format(Date.from(this.date.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                
-                System.out.println(selectedDateString);               
-               //Busco el dia en el arreglo segun el dia seleccionado
+               System.out.println("Fecha seleccionada del calendario: " + selectedDateString);               
+               
+                //Busco el dia en el arreglo segun el dia seleccionado en el calendario 
                for (i=0; (i < dayMedic.length) ;i++) {
                    System.out.println(dtf.format(dt.toDate()));
-                   
+                   //Si encuentra el dia en el arreglo hace break y se obtiene la posicion del dia con "i"
                    if ( dtf.format(dt.toDate()).equals(selectedDateString) ){
                        System.out.println("Esta fecha es igual: " + dtf.format(dt.toDate()));
                        break;
                    }
+                   // Se pasa al siguiente dia
                    dt = new DateTime(dayMedic[i].getDate());
                }
-               
+               // Si no encuentre el dia en el arreglo retorna
                if ( i == dayMedic.length ) {
                    System.out.println("Este dia no tiene citas");
                    return;}
-               
+               // Se recorren los appointments y se insertan en su slot correspondiente de la tabla
                for (j=0;j<dayMedic[i].getDayAppointments().length;j++){
-                   tableCitas.getItems().add(dayMedic[i].getDayAppointmentsPos(j));
+                   Appointment aux = dayMedic[i].getDayAppointmentsPos(j);
+                   // Se la asigna el slot al dia
+                   String strStart = aux.getStart();
+                   
+                   aux.setSlot(aux.getStart() + " - " + aux.getEnd());
+                  
+                    // Se imprimen los datos para verificar que son correctos
+                   System.out.println("Appointment " + j + ":");
+                   System.out.println("Start: " + aux.getStart());
+                   System.out.println("End: " + aux.getEnd());
+                   System.out.println("slot: " + aux.getSlot());
+                   System.out.println("Type: " + aux.getEventType());
+                   
+                   // Se verifica si es el slot correspondiente y se inserta ç
+                   String strSlot;
+                   for (int k = 0;k < tableCitas.getItems().size();k++) {
+                       strSlot = tableCitas.getItems().get(k).getSlot();
+                       if (aux.getSlot().equals(strSlot)) {
+                           // Si es una hora de descanso o el doctor no va a estar
+                           if (!aux.getEventType().equals("Consulta")){
+                               aux.setDescription(aux.getEventType());
+                           }
+                           // Se crea un nuevo appointemenet y se inserta en la posicion del slot
+                           Appointment appSlot = new Appointment(aux.getStart(),aux.getEnd(),
+                           aux.getEventType(),aux.getPatientID(),aux.getPatientName(),aux.getDescription()
+                           ,aux.getPatientLastName(),aux.getStart(),aux.getEnd());
+                           appSlot.setSlot(aux.getSlot());
+                           tableCitas.getItems().set(k, appSlot);
+                           break;
+                       }
+                   } 
                }
                
         });
-        // Manejador del evento cuando se oprime una fila de la tableCitas
+        //------------------- Manejador del evento cuando se oprime una fila de la tableCitas ------------
        tableCitas.setRowFactory( tv -> {
             TableRow<Appointment> row = new TableRow<>();
+            
+           /*System.out.println(row.getIndex());
+           // Appointment a = ((Appointment) row.getItem()).clone();
+            //a.getSlot();
+//            if (row.getItem().getDescription().equals("Descanso")) {
+                                    row.setStyle("    -fx-background-color: green;\n" +
+                                "    -fx-background-insets: 0, 1, 2;\n" +
+                                "    -fx-background: -fx-accent;\n");
+//            }
+            
+            */
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Appointment rowData = row.getItem();
                     
-                    /*
-                    nombre_p_label.setText();
-                    apellido_p_label.setText();
-                    cedula_p_label.setText();
-                    email_p_label.setText();
-                    telefono_p_label.setText();
-                    */
-                    System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription());
+                    if (rowData.getPatientName().equals("")) {
+                        nombre_p_label.setText("");
+                        apellido_p_label.setText("");
+                        cedula_p_label.setText("");
+                        email_p_label.setText("");
+                        telefono_p_label.setText("");
+                        return;
+                    } 
+                    
+                    patients = HTTPRequest.getPatient(rowData.getPatientID());
+                    
+                    System.out.println("patietn :" + patients.getPatientID());
+                   
+                    nombre_p_label.setText(patients.getName());
+                    apellido_p_label.setText(patients.getLastName());
+                    cedula_p_label.setText(patients.getPatientID());
+                    email_p_label.setText(patients.getEmail());
+                    telefono_p_label.setText(patients.getPhoneNumber());
+                    
+                    System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
                 }
             });
             return row ;

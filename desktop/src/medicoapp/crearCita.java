@@ -85,7 +85,7 @@ public class crearCita extends VBox {
                 np.setPatientName(patient_cb.getValue());
                 np.setDescription(motivo_txta.getText());
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
-                
+                HTTPRequest.addAppointment("5750b36cce70cbdc1e46a8b9", np);
                 motivo_txta.clear();  
                 window.close();
             });

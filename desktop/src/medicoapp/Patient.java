@@ -16,20 +16,22 @@ public class Patient {
     private String id;
     private String patientID;
     private String name;
-    private Date birthdate;
+    private String lastName;
+    private String birthdate;
     private String email;
     private String phoneNumber;
     private String sex;
-    private Integer weight;
-    private Integer height;
+    private double weight;
+    private double height;
     private String[] medicalBackgrounds;
     private String[] allergies;
     private Diagnostic[] diagnostics;
 
-    public Patient(String id, String patientID, String name, Date birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
+    public Patient(String id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics, String lastName) {
         this.id = id;
         this.patientID = patientID;
         this.name = name;
+        this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -65,11 +67,19 @@ public class Patient {
         this.name = name;
     }
 
-    public Date getBirthdate() {
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -97,15 +107,15 @@ public class Patient {
         this.sex = sex;
     }
 
-    public Integer getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public Integer getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -140,23 +150,23 @@ public class Patient {
     // Clase Diagnostic: Contiene la información de un diagnóstico.
     public class Diagnostic {
         
-        private Date date;
+        private String date;
         private String diagnostic;
         private Treatment[] treatment;
         private TreatmentResult treatmentResult;
 
-        public Diagnostic(Date date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
+        public Diagnostic(String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
             this.date = date;
             this.diagnostic = diagnostic;
             this.treatment = treatment;
             this.treatmentResult = treatmentResult;
         }
 
-        public Date getDate() {
+        public String getDate() {
             return date;
         }
 
-        public void setDate(Date date) {
+        public void setDate(String date) {
             this.date = date;
         }
 
