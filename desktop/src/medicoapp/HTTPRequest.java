@@ -244,19 +244,19 @@ public final class HTTPRequest {
     }
     
     // Añade un evento al día de un médico. - POST api/days/:id
-    public static Appointment addAppointment( String dayID, Appointment appointmentParameter ){ 
-        Appointment appointment;
+    public static Day addAppointment( String dayID, Appointment appointmentParameter ){ 
+        Day day;
         Gson gson = new GsonBuilder().create();
                 
         // Se realiza la solicitud GET de los días del médico.
-        String appointmentString = executeRequest( "days/" + dayID, gson.toJson(appointmentParameter), "POST" );
+        String dayString = executeRequest( "days/" + dayID, gson.toJson(appointmentParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
-        appointment = gson.fromJson(appointmentString, Appointment.class);
-        System.out.println("Object to String: " + appointment);
-        System.out.println("Object to JSON: " + gson.toJson(appointment));
+        day = gson.fromJson(dayString, Day.class);
+        System.out.println("Object to String: " + day);
+        System.out.println("Object to JSON: " + gson.toJson(day));
         
-        return appointment;
+        return day;
     }
     
     // ---------- Solicitudes relacionadas a las configuraciones. ----------
