@@ -44,7 +44,18 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.description = description;
         this.slot = slot;
     }
-
+    
+    public Appointment( String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+        this.start = start;
+        this.end = end;
+        this.eventType = eventType;
+        this.patientID = patientID;
+        this.patientName = patientName;
+        this.patientLastName = patientLastName;
+        this.description = description;
+        this.slot = slot;
+    }    
+    
     public String getId() {
         return _id;
     }

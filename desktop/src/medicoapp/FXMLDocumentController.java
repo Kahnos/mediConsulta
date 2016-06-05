@@ -240,16 +240,16 @@ public class FXMLDocumentController implements Initializable {
                     int i;
                     for (i = 0; i < patients.length ; i++ ) {
                         System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        //if (patients[i].getId().equals(rowData.getPatientID()))
+                        if (patients[i].getId().equals(rowData.getPatientID()))
                             break;
                     }
-                    /*
+                    
                     nombre_p_label.setText(patients[i].getName());
                     apellido_p_label.setText(patients[i].getLastName());
                     cedula_p_label.setText(patients[i].getPatientID());
                     email_p_label.setText(patients[i].getEmail());
                     telefono_p_label.setText(patients[i].getPhoneNumber());
-                    */
+                    
                     System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
                 }
             });

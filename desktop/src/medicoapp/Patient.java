@@ -1,4 +1,4 @@
-﻿package medicoapp;
+package medicoapp;
 
 import java.util.Date;
 
@@ -22,6 +22,21 @@ public class Patient {
     private String[] allergies;
     private Diagnostic[] diagnostics;
 
+    public Patient() {
+        this._id = "";
+        this.patientID = "";
+        this.name = "";
+        this.lastName = "";
+        this.birthdate = "";
+        this.email = "";
+        this.phoneNumber = "";
+        this.sex = "";
+        this.weight = 0;
+        this.height = 0;
+    }
+
+    
+    
     public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
         this._id = _id;
         this.patientID = patientID;
@@ -114,7 +129,7 @@ public class Patient {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
