@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Day {
     
+    private String _id;
     private String date;
     private String medicID;
     private Boolean full;
@@ -22,7 +23,8 @@ public class Day {
         this.dayAppointments = new Appointment[50];
     }
 
-    public Day(String date, String medicID, Boolean full) {
+    public Day(String _id, String date, String medicID, Boolean full) {
+        this._id = _id;
         this.date = date;
         this.medicID = medicID;
         this.full = full;
@@ -30,6 +32,14 @@ public class Day {
     }
 
     // Getters y Setters
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
+    }
     
     public String getDate() {
         return date;

@@ -1,4 +1,4 @@
-package medicoapp;
+﻿package medicoapp;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Patient {
     
-    private String id;
+    private String _id;
     private String patientID;
     private String name;
     private String lastName;
@@ -22,8 +22,8 @@ public class Patient {
     private String[] allergies;
     private Diagnostic[] diagnostics;
 
-    public Patient(String id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics, String lastName) {
-        this.id = id;
+    public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
+        this._id = _id;
         this.patientID = patientID;
         this.name = name;
         this.lastName = lastName;
@@ -39,11 +39,11 @@ public class Patient {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public String getPatientID() {
@@ -144,19 +144,29 @@ public class Patient {
     
     // Clase Diagnostic: Contiene la información de un diagnóstico.
     public class Diagnostic {
-        
+
+        private String _id;
         private String date;
         private String diagnostic;
         private Treatment[] treatment;
         private TreatmentResult treatmentResult;
 
-        public Diagnostic(String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
+        public Diagnostic(String _id, String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
+            this._id = _id;
             this.date = date;
             this.diagnostic = diagnostic;
             this.treatment = treatment;
             this.treatmentResult = treatmentResult;
         }
 
+        public String getId() {
+            return _id;
+        }
+
+        public void setId(String _id) {
+            this._id = _id;
+        }
+        
         public String getDate() {
             return date;
         }
@@ -192,18 +202,28 @@ public class Patient {
         // Clase Treatment: Contiene la información de un tratamiento.
         public class Treatment {
             
+            private String _id;
             private String medication;
             private String quantity;
             private String duration;
             private String frequency;
 
-            public Treatment(String medication, String quantity, String duration, String frequency) {
+            public Treatment(String _id, String medication, String quantity, String duration, String frequency) {
+                this._id = _id;
                 this.medication = medication;
                 this.quantity = quantity;
                 this.duration = duration;
                 this.frequency = frequency;
             }
 
+            public String getId() {
+                return _id;
+            }
+
+            public void setId(String _id) {
+                this._id = _id;
+            }
+            
             public String getMedication() {
                 return medication;
             }
@@ -241,12 +261,22 @@ public class Patient {
         // Clase TreatmentResult: Contiene la información del feedback de un tratamiento.
         public class TreatmentResult {
             
+            private String _id;
             private int rating;
 
-            public TreatmentResult(int rating) {
+            public TreatmentResult(String _id, int rating) {
+                this._id = _id;
                 this.rating = rating;
             }
 
+            public String getId() {
+                return _id;
+            }
+
+            public void setId(String _id) {
+                this._id = _id;
+            }
+            
             public int getRating() {
                 return rating;
             }

@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Appointment implements Comparable<Appointment>, Cloneable{
     
+    private String _id;
     private String start; 
     private String end; 
     private String slot;
@@ -32,7 +33,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         
     }
 
-    public Appointment(String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+    public Appointment(String _id, String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+        this._id = _id;
         this.start = start;
         this.end = end;
         this.eventType = eventType;
@@ -41,6 +43,14 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.patientLastName = patientLastName;
         this.description = description;
         this.slot = slot;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
     }
     
     // Getters
