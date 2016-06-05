@@ -16,6 +16,7 @@ public class Patient {
     private String id;
     private String patientID;
     private String name;
+    private String lastName;
     private Date birthdate;
     private String email;
     private String phoneNumber;
@@ -61,10 +62,18 @@ public class Patient {
         return name;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
     public Date getBirthdate() {
         return birthdate;
     }
