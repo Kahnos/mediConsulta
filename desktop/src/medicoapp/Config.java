@@ -11,22 +11,22 @@ package medicoapp;
  */
 public class Config {
     
-    private String id;
+    private String _id;
     private String medicID;
     private dayConfig[] dayConfigs;
 
-    public Config(String id, String medicID, dayConfig[] dayConfigs) {
-        this.id = id;
+    public Config(String _id, String medicID, dayConfig[] dayConfigs) {
+        this._id = _id;
         this.medicID = medicID;
         this.dayConfigs = dayConfigs;
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getMedicID() {
@@ -48,18 +48,28 @@ public class Config {
     // Clase que contiene la configuración de un día específico. Subclase de Config.
     public class dayConfig {
         
+        private String _id;
         private String day;
         private String scheduleStart;
         private String scheduleEnd;
         private String slotLength;
 
-        public dayConfig(String day, String scheduleStart, String scheduleEnd, String slotLength) {
+        public dayConfig(String _id, String day, String scheduleStart, String scheduleEnd, String slotLength) {
+            this._id = _id;
             this.day = day;
             this.scheduleStart = scheduleStart;
             this.scheduleEnd = scheduleEnd;
             this.slotLength = slotLength;
         }
 
+        public String getId() {
+            return _id;
+        }
+
+        public void setId(String _id) {
+            this._id = _id;
+        }
+        
         public String getDay() {
             return day;
         }
