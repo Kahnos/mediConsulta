@@ -67,6 +67,7 @@ db.once('open', function() {
         .put(patientsController.updatePatient);
     
     patients.route('/patients/')
+        .get(patientsController.getAllPatients)
         .post(patientsController.addPatient);
     
     // Se aplican los routers a la API.

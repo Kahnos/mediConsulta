@@ -1,6 +1,7 @@
 {
     "patientID": "5642195",
     "name": "Fela",
+    "lastName": "Stone",
     "birthdate": "1994-05-13T13:00:00.000Z",
     "email": "fela@gmail.com",
     "phoneNumber": "0424-2456123",
