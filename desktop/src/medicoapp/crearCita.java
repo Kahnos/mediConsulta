@@ -80,10 +80,13 @@ public class crearCita extends VBox {
                 allProductos = table.getItems();
                 citaSelect = table.getSelectionModel().getSelectedItems();
                 Appointment np = new Appointment();
+                np.setPatientID("5750f2c8871a6fa01b01ee9d");
                 np.setStart(citaSelect.get(0).getStart());
+                np.setEnd(citaSelect.get(0).getEnd());
                 np.setSlot(citaSelect.get(0).getSlot());
                 np.setPatientName(patient_cb.getValue());
                 np.setDescription(motivo_txta.getText());
+                np.setEventType("Consulta");
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
                 HTTPRequest.addAppointment("5750b36cce70cbdc1e46a8b9", np);
                 motivo_txta.clear();  
