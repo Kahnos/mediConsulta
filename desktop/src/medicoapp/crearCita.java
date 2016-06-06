@@ -55,17 +55,18 @@ public class crearCita extends VBox {
      * display: 
      */
     @FXML
-    public void display (TableView<Appointment> table)
-    {
+    public void display (TableView<Appointment> table, Patient[] patients, Day dayMedic) {
        
-       // Se declara una window 
+       // Se declara una window y se inicializa  
        Stage window = new Stage(); 
        window.initModality(Modality.APPLICATION_MODAL);
        window.setTitle("mediConsulta - Crear evento");
        window.setMinWidth(250);
-     
-        // Se inicializan los elementos de la comboBox
-       patient_cb.getItems().addAll("Rosben","Lobny","Doniel","Josus");
+       
+       // Agregando los pacientes a la combobox
+       for (int i = 0; i < patients.length ; i++){
+           patient_cb.getItems().add(patients[i].getName());
+       }
 
         //Se crean los manejadores de eventos de los controles
         btn_aceptar.setOnAction((ActionEvent e) -> {
@@ -74,27 +75,47 @@ public class crearCita extends VBox {
                         System.out.println("Tiene que llenar los campos para poder insertar en la tablaa");
                         return;
                 }
-                //-----------------------------------------------
-                // POST: agregar una cita al dia
+
+        //-----------------------------------------------
+        // POST: agregar una cita al dia
+                // Se obtitne el index el paciente seleccionado en el combobox para obtener sus datos
+                // del arreglo de pacientes
+                int patientIndex = patient_cb.getSelectionModel().getSelectedIndex();
+                // Se obtiene la lista de los appointment del dia
                 ObservableList<Appointment> citaSelect, allProductos;
                 allProductos = table.getItems();
+                // Se obtiene el appointment seleccionado
                 citaSelect = table.getSelectionModel().getSelectedItems();
+                Appointment appointmentSelect = citaSelect.get(0);
+                // Se crea un appointment auxiliar
                 Appointment np = new Appointment();
-                np.setPatientID("5750f2c8871a6fa01b01ee9d");
-                np.setStart(citaSelect.get(0).getStart());
-                np.setEnd(citaSelect.get(0).getEnd());
-                np.setSlot(citaSelect.get(0).getSlot());
+                // Se le asignan los datos al appoinment
+                // ID del documento
+                np.setPatientID(patients[patientIndex].getPatientID());
+                // Start
+                np.setStart(appointmentSelect.getStart());
+                // End
+                np.setEnd(appointmentSelect.getEnd());
+                //  Slot
+                np.setSlot(appointmentSelect.getSlot());
+                // Nombre del paciente
                 np.setPatientName(patient_cb.getValue());
+                // Descripcion del paciente
                 np.setDescription(motivo_txta.getText());
+                // Tipo de evento 
                 np.setEventType("Consulta");
+                // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
-                HTTPRequest.addAppointment("5750b36cce70cbdc1e46a8b9", np);
+                // Se hace el Post
+                //HTTPRequest.addAppointment(dayMedic.getId(), np);
+                // Se vacia el text area de motivo
                 motivo_txta.clear();  
                 window.close();
             });
        
        btn_cancelar.setOnAction((ActionEvent e) -> {
-           window.close();
+            //System.out.println(patient_cb.getSelectionModel().getSelectedIndex());
+            window.close();
        });
        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
        VBox vb = new VBox();

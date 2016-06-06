@@ -64,7 +64,7 @@ public class Custom_control_agregarPacienteController extends VBox {
      * display: 
      */
     @FXML
-    public void display ()
+    public void display (Patient[] patients)
     {
        
        // Se declara una window 
@@ -82,7 +82,8 @@ public class Custom_control_agregarPacienteController extends VBox {
                     System.out.println("El peso o la altura no es numero, revisa porfavor eso...");
                     return;
                 }
-            
+                // Verifica que hallan valores en los campos obligatorios 
+                // Campos obligatorios: nombre, apellido, cedula, altura, peso telefono o email
                 if (nombre_tf.getText().equals("") || 
                     apellido_tf.getText().equals("") ||
                     cedula_tf.getText().equals("") ||
@@ -95,21 +96,30 @@ public class Custom_control_agregarPacienteController extends VBox {
                 
                 // Hacer el POST: agregar un paciente a la BD
                 Patient patientAdd = new Patient();
-                
+                //Nombre
                 patientAdd.setName(nombre_tf.getText());
+                //Apellido
                 patientAdd.setLastName(apellido_tf.getText());
-                patientAdd.setId(cedula_tf.getText());
+                //cedula
+                patientAdd.setPatientID(cedula_tf.getText());
+                //email
                 patientAdd.setEmail(email_tf.getText());
+                //telefono
                 patientAdd.setPhoneNumber(telefono_tf.getText());
+                //sexo
                 patientAdd.setSex(sex_cb.getValue());
+                //altura
                 patientAdd.setHeight(Double.parseDouble(peso_tf.getText()));
+                //peso
                 patientAdd.setWeight(Double.parseDouble(peso_tf.getText()));
                 // Hace un parse de Localdate a Date y de Date a ISOdate
                 LocalDate localDatePatient = fn_dtpk.getValue();
                 Date datePatient = Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 DateTime dt = new DateTime(datePatient);
-                //  System.out.println(Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                //System.out.println(Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 patientAdd.setBirthdate(dt.toString());
+                System.out.println("Appointmet: " + patientAdd.getLastName());
+                //patients[patients.length] = patientAdd;
                 HTTPRequest.addPatient(patientAdd);
                 
             });

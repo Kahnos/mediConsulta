@@ -73,13 +73,14 @@ public class FXMLDocumentController implements Initializable {
     private Label telefono_p_label;
     
     Day[] dayMedic;
+    int currentDayMedicIndex;
     Patient[] patients;
     
     @FXML
     private void crearEvento(ActionEvent event) {
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        cr.display(tableCitas);
+        cr.display(tableCitas, patients, dayMedic[currentDayMedicIndex]);
     }
     
     
@@ -102,13 +103,14 @@ public class FXMLDocumentController implements Initializable {
     private void agregarPaciente(ActionEvent event) {
         System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
-        ap.display();
+        ap.display(patients);
     }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         //Obtenemos los deias del medico y los mete en el arreglo dayMedic
+        // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = HTTPRequest.getDays("22824486");
         // Se obtienen todos los pacientes de la bd
         patients = HTTPRequest.getAllPatients();
@@ -163,6 +165,7 @@ public class FXMLDocumentController implements Initializable {
                    //Si encuentra el dia en el arreglo hace break y se obtiene la posicion del dia con "i"
                    if ( dtf.format(dt.toDate()).equals(selectedDateString) ){
                        System.out.println("Esta fecha es igual: " + dtf.format(dt.toDate()));
+                       currentDayMedicIndex = i;
                        break;
                    }
                    // Se pasa al siguiente dia
@@ -212,16 +215,6 @@ public class FXMLDocumentController implements Initializable {
        tableCitas.setRowFactory( tv -> {
             TableRow<Appointment> row = new TableRow<>();
             
-           /*System.out.println(row.getIndex());
-           // Appointment a = ((Appointment) row.getItem()).clone();
-            //a.getSlot();
-//            if (row.getItem().getDescription().equals("Descanso")) {
-                                    row.setStyle("    -fx-background-color: green;\n" +
-                                "    -fx-background-insets: 0, 1, 2;\n" +
-                                "    -fx-background: -fx-accent;\n");
-//            }
-            
-            */
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Appointment rowData = row.getItem();
@@ -240,7 +233,7 @@ public class FXMLDocumentController implements Initializable {
                     int i;
                     for (i = 0; i < patients.length ; i++ ) {
                         System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        if (patients[i].getId().equals(rowData.getPatientID()))
+                        if (patients[i].getPatientID().equals(rowData.getPatientID()))
                             break;
                     }
                     
