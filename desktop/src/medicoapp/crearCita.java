@@ -35,11 +35,12 @@ public class crearCita extends VBox {
     @FXML private Button btn_aceptar;
     @FXML private Button btn_cancelar;
     @FXML private Pane mainPanel;
-    
+    private Day dayMedic;
     /*
      * crearCita: constructor del FXML_custom_control
      */
     public crearCita() {
+        
         // Carga el archivo FXML
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("custom_control_crearCita.fxml"));
         fxmlLoader.setRoot(this);
@@ -55,10 +56,9 @@ public class crearCita extends VBox {
      * display: 
      */
     @FXML
-    public void display (TableView<Appointment> table, Patient[] patients, Day dayMedic) {
-       
+    public Day display (TableView<Appointment> table, Patient[] patients, Day dayM) {
         // Verificar si el dia existe: si no existe crea el dia en la bd
-        // 
+        dayMedic = dayM;
         
        // Se declara una window y se inicializa  
        Stage window = new Stage(); 
@@ -93,7 +93,7 @@ public class crearCita extends VBox {
                 // Se crea un appointment auxiliar
                 Appointment np = new Appointment();
                 // Se le asignan los datos al appoinment
-                // ID del documento
+                // ID del paciente
                 np.setPatientID(patients[patientIndex].getPatientID());
                 // Start
                 np.setStart(appointmentSelect.getStart());
@@ -103,6 +103,8 @@ public class crearCita extends VBox {
                 np.setSlot(appointmentSelect.getSlot());
                 // Nombre del paciente
                 np.setPatientName(patient_cb.getValue());
+                // Apellido del paciente
+                np.setPatientLastName(patients[patientIndex].getLastName());
                 // Descripcion del paciente
                 np.setDescription(motivo_txta.getText());
                 // Tipo de evento 
@@ -110,7 +112,8 @@ public class crearCita extends VBox {
                 // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
                 // Se hace el Post
-                HTTPRequest.addAppointment(dayMedic.getId(), np);
+                this.dayMedic = HTTPRequest.addAppointment(dayMedic.getId(), np);
+                System.out.println("En la creacion del evento: " + dayMedic.getDayAppointmentsPos(dayMedic.getDayAppointments().length-1).getId());
                 // Se vacia el text area de motivo
                 motivo_txta.clear();  
                 window.close();
@@ -127,6 +130,7 @@ public class crearCita extends VBox {
        Scene scene = new Scene(vb);
        window.setScene(scene);
        window.showAndWait();
+       return dayMedic;
     
     }
 }

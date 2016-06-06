@@ -80,9 +80,15 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void crearEvento(ActionEvent event) {
+        int index = tableCitas.getSelectionModel().getSelectedIndex();
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        cr.display(tableCitas, patients, dayMedic[currentDayMedicIndex]);
+        dayMedic[currentDayMedicIndex] = cr.display(tableCitas, patients, dayMedic[currentDayMedicIndex]);
+        Day dauAux = dayMedic[currentDayMedicIndex];
+        Appointment appAux = dauAux.getDayAppointments()[dauAux.getDayAppointments().length - 1];
+        tableCitas.getItems().set(index, appAux);
+        System.out.println("Despues de crear el evento: " + appAux.getId() );
+        System.out.println("IndexItem: " + tableCitas.getSelectionModel().getSelectedIndex());
     }
     
     
@@ -103,9 +109,9 @@ public class FXMLDocumentController implements Initializable {
                 np.setSlot(cita.getSlot());
                 np.setPatientName("");
                 np.setDescription("");
-                System.out.println("En la eleiminacion " +cita.getId());
+                System.out.println("En la eleiminacion " + cita.getId());
                 dayMedic[currentDayMedicIndex] = HTTPRequest.deleteAppointment(dayMedic[currentDayMedicIndex].getId(), cita.getId());
-                allProductos.set(tableCitas.getSelectionModel().getSelectedIndex(), np);
+               allProductos.set(tableCitas.getSelectionModel().getSelectedIndex(), np);
                 
     }
     
