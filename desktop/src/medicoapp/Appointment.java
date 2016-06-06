@@ -137,6 +137,18 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     }
     
     
+    public void print(){
+        System.out.println();
+        System.out.println("Appointment: " + this._id);
+        System.out.println(this.patientName + this.patientLastName);
+        System.out.println(this.start);
+        System.out.println(this.end);
+        System.out.println(this.slot);
+        System.out.println(this.description);
+        System.out.println(this.eventType);
+        System.out.println();
+    }
+    
     @Override 
     public int compareTo(Appointment a) {
         return getStart().compareTo(a.getStart());

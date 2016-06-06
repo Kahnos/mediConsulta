@@ -5,6 +5,8 @@
  */
 package medicoapp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
 import java.net.URL;
@@ -86,18 +88,26 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void eliminarEvento(ActionEvent event) throws IOException{
-        System.out.println("Se abre la ventana para eliminar un elemento de la lista");
-            ObservableList<Appointment> productosSelect, allProductos;
+        System.out.println("Se elimina un elemento de la lista");
+            ObservableList<Appointment> citaSelect, allProductos;
             allProductos = tableCitas.getItems();
-            productosSelect = tableCitas.getSelectionModel().getSelectedItems();
+            citaSelect = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment cita = citaSelect.get(0);
+            System.out.println(cita);
+            System.out.println(cita.getPatientID());
+            //System.out.println(cita);
+            
                 // POST: eleminar una cita del dia
                 Appointment np = new Appointment();
-                np.setStart(productosSelect.get(0).getStart());
-                np.setSlot(productosSelect.get(0).getSlot());
+                np.setStart(cita.getStart());
+                np.setSlot(cita.getSlot());
                 np.setPatientName("");
                 np.setDescription("");
+                System.out.println("En la eleiminacion " +cita.getId());
+                dayMedic[currentDayMedicIndex] = HTTPRequest.deleteAppointment(dayMedic[currentDayMedicIndex].getId(), cita.getId());
                 allProductos.set(tableCitas.getSelectionModel().getSelectedIndex(), np);
-}
+                
+    }
     
     @FXML
     private void agregarPaciente(ActionEvent event) {
@@ -165,6 +175,7 @@ public class FXMLDocumentController implements Initializable {
                    //Si encuentra el dia en el arreglo hace break y se obtiene la posicion del dia con "i"
                    if ( dtf.format(dt.toDate()).equals(selectedDateString) ){
                        System.out.println("Esta fecha es igual: " + dtf.format(dt.toDate()));
+                      // System.out.println(dayMedic[i].getDayAppointments());
                        currentDayMedicIndex = i;
                        break;
                    }
@@ -173,11 +184,13 @@ public class FXMLDocumentController implements Initializable {
                }
                // Si no encuentre el dia en el arreglo retorna
                if ( i == dayMedic.length ) {
+                   currentDayMedicIndex = -1;
                    System.out.println("Este dia no tiene citas");
                    return;}
                // Se recorren los appointments y se insertan en su slot correspondiente de la tabla
                for (j=0;j<dayMedic[i].getDayAppointments().length;j++){
                    Appointment aux = dayMedic[i].getDayAppointmentsPos(j);
+                   
                    // Se la asigna el slot al dia
                    String strStart = aux.getStart();
                    
@@ -199,8 +212,9 @@ public class FXMLDocumentController implements Initializable {
                            if (!aux.getEventType().equals("Consulta")){
                                aux.setDescription(aux.getEventType());
                            }
+                           //aux.print();
                            // Se crea un nuevo appointemenet y se inserta en la posicion del slot
-                           Appointment appSlot = new Appointment(aux.getStart(),aux.getEnd(),
+                           Appointment appSlot = new Appointment(aux.getId(),aux.getStart(),aux.getEnd(),
                            aux.getEventType(),aux.getPatientID(),aux.getPatientName(),aux.getDescription()
                            ,aux.getPatientLastName(),aux.getStart(),aux.getEnd());
                            appSlot.setSlot(aux.getSlot());
@@ -232,7 +246,7 @@ public class FXMLDocumentController implements Initializable {
                     System.out.println();
                     int i;
                     for (i = 0; i < patients.length ; i++ ) {
-                        System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
+                        //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
                         if (patients[i].getPatientID().equals(rowData.getPatientID()))
                             break;
                     }
@@ -242,8 +256,8 @@ public class FXMLDocumentController implements Initializable {
                     cedula_p_label.setText(patients[i].getPatientID());
                     email_p_label.setText(patients[i].getEmail());
                     telefono_p_label.setText(patients[i].getPhoneNumber());
-                    
-                    System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
+                    //rowData.print();
+                    //System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
                 }
             });
             return row ;

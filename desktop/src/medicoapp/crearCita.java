@@ -57,6 +57,9 @@ public class crearCita extends VBox {
     @FXML
     public void display (TableView<Appointment> table, Patient[] patients, Day dayMedic) {
        
+        // Verificar si el dia existe: si no existe crea el dia en la bd
+        // 
+        
        // Se declara una window y se inicializa  
        Stage window = new Stage(); 
        window.initModality(Modality.APPLICATION_MODAL);
@@ -107,7 +110,7 @@ public class crearCita extends VBox {
                 // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
                 // Se hace el Post
-                //HTTPRequest.addAppointment(dayMedic.getId(), np);
+                HTTPRequest.addAppointment(dayMedic.getId(), np);
                 // Se vacia el text area de motivo
                 motivo_txta.clear();  
                 window.close();
