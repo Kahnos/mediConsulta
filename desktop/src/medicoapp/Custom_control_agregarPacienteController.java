@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.joda.time.DateTime;
 
 /**
@@ -43,7 +44,8 @@ public class Custom_control_agregarPacienteController extends VBox {
         
         // Panel principal
         @FXML private AnchorPane mainPanel;
-        
+       
+        private Patient[] patietnsAux;
     
         public Custom_control_agregarPacienteController() {
         // Carga el archivo FXML
@@ -66,9 +68,9 @@ public class Custom_control_agregarPacienteController extends VBox {
     @FXML
     public void display (Patient[] patients)
     {
-       
+       patietnsAux = patients;
        // Se declara una window 
-       Stage window = new Stage(); 
+       Stage window = new Stage();
        window.initModality(Modality.APPLICATION_MODAL);
        window.setTitle("mediConsulta - Agregar paciente");
        window.setMinWidth(250);
@@ -134,6 +136,8 @@ public class Custom_control_agregarPacienteController extends VBox {
        Scene scene = new Scene(vb);
        window.setScene(scene);
        window.showAndWait();
+       
+       
     
     }
     

@@ -36,6 +36,7 @@ public class crearCita extends VBox {
     @FXML private Button btn_cancelar;
     @FXML private Pane mainPanel;
     private Day dayMedic;
+    private boolean cancel;
     /*
      * crearCita: constructor del FXML_custom_control
      */
@@ -121,6 +122,7 @@ public class crearCita extends VBox {
        
        btn_cancelar.setOnAction((ActionEvent e) -> {
             //System.out.println(patient_cb.getSelectionModel().getSelectedIndex());
+            this.cancel = true;
             window.close();
        });
        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
@@ -130,7 +132,19 @@ public class crearCita extends VBox {
        Scene scene = new Scene(vb);
        window.setScene(scene);
        window.showAndWait();
+       
+       window.setOnCloseRequest(e ->{
+           System.out.println("Cancelado desde la x");
+           this.cancel = true;
+       });
+       
        return dayMedic;
     
     }
+
+    public boolean isCancel() {
+        return cancel;
+    }
+    
+    
 }
