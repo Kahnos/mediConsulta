@@ -101,7 +101,7 @@ public class crearCita extends VBox {
                 // End
                 np.setEnd(appointmentSelect.getEnd());
                 //  Slot
-                np.setSlot(appointmentSelect.getSlot());
+                np.setSlot(np.getStart() + " - " + np.getEnd());
                 // Nombre del paciente
                 np.setPatientName(patient_cb.getValue());
                 // Apellido del paciente
@@ -111,10 +111,12 @@ public class crearCita extends VBox {
                 // Tipo de evento 
                 np.setEventType("Consulta");
                 // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
+                System.out.println("Start: " + np.getStart() + " end: " + np.getEnd() + "slot: " + np.getSlot());
                 allProductos.set(table.getSelectionModel().getSelectedIndex(), np);
                 // Se hace el Post
                 this.dayMedic = HTTPRequest.addAppointment(dayMedic.getId(), np);
                 System.out.println("En la creacion del evento: " + dayMedic.getDayAppointmentsPos(dayMedic.getDayAppointments().length-1).getId());
+                System.out.println("Start: " + np.getStart() + " end: " + np.getEnd() + "slot: " + np.getSlot());
                 // Se vacia el text area de motivo
                 motivo_txta.clear();  
                 window.close();
