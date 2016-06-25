@@ -38,6 +38,7 @@ exports.addPatient = function(req, res) {
     patient = new patients({
         patientID : req.body.patientID,
         name : req.body.name,
+		lastName : req.body.lastName,
         birthdate : req.body.birthdate,
         email : req.body.email,
         phoneNumber : req.body.phoneNumber,
@@ -68,6 +69,7 @@ exports.updatePatient = function(req, res) {
 
         patient.patientID = req.body.patientID || patient.patientID;
         patient.name = req.body.name || patient.name;
+		patient.lastName = req.body.lastName || patient.lastName;
         patient.birthdate = req.body.birthdate || patient.birthdate;
         patient.email = req.body.email || patient.email;
         patient.phoneNumber = req.body.phoneNumber || patient.phoneNumber;

@@ -7,7 +7,7 @@ import java.util.Date;
  * Clase Appointment: contiene la información de las citas, será una agregación de day
  * @author los Appeadores
  */
-public class Appointment implements Comparable<Appointment>{
+public class Appointment implements Comparable<Appointment>, Cloneable{
     
     private String _id;
     private String start; 
@@ -44,7 +44,18 @@ public class Appointment implements Comparable<Appointment>{
         this.description = description;
         this.slot = slot;
     }
-
+    
+    public Appointment( String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+        this.start = start;
+        this.end = end;
+        this.eventType = eventType;
+        this.patientID = patientID;
+        this.patientName = patientName;
+        this.patientLastName = patientLastName;
+        this.description = description;
+        this.slot = slot;
+    }    
+    
     public String getId() {
         return _id;
     }
@@ -126,8 +137,29 @@ public class Appointment implements Comparable<Appointment>{
     }
     
     
+    public void print(){
+        System.out.println();
+        System.out.println("Appointment: " + this._id);
+        System.out.println(this.patientName + this.patientLastName);
+        System.out.println(this.start);
+        System.out.println(this.end);
+        System.out.println(this.slot);
+        System.out.println(this.description);
+        System.out.println(this.eventType);
+        System.out.println();
+    }
+    
     @Override 
     public int compareTo(Appointment a) {
         return getStart().compareTo(a.getStart());
     }
+    
+    	public Appointment clone() {
+		try {
+			return (Appointment) super.clone();
+		} catch (CloneNotSupportedException e) {		
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
 }

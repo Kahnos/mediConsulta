@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package medicoapp;
 
 import java.util.Date;
@@ -21,16 +16,32 @@ public class Patient {
     private String email;
     private String phoneNumber;
     private String sex;
-    private Integer weight;
-    private Integer height;
+    private double weight;
+    private double height;
     private String[] medicalBackgrounds;
     private String[] allergies;
     private Diagnostic[] diagnostics;
 
+    public Patient() {
+        this._id = "";
+        this.patientID = "";
+        this.name = "";
+        this.lastName = "";
+        this.birthdate = "";
+        this.email = "";
+        this.phoneNumber = "";
+        this.sex = "";
+        this.weight = 0;
+        this.height = 0;
+    }
+
+    
+    
     public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
         this._id = _id;
         this.patientID = patientID;
         this.name = name;
+        this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -73,7 +84,7 @@ public class Patient {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getBirthdate() {
         return birthdate;
     }
@@ -106,19 +117,19 @@ public class Patient {
         this.sex = sex;
     }
 
-    public Integer getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public Integer getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
@@ -148,7 +159,7 @@ public class Patient {
     
     // Clase Diagnostic: Contiene la información de un diagnóstico.
     public class Diagnostic {
-        
+
         private String _id;
         private String date;
         private String diagnostic;
