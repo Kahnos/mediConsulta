@@ -9,8 +9,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-<AnchorPane id="AnchorPane" fx:id="mainPanel" prefHeight="425.0" prefWidth="438.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="mainPanel" prefHeight="671.0" prefWidth="438.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@custom_control_agregarpaciente.css" />
     </stylesheets>
@@ -30,7 +30,7 @@
             </Label>
          </top>
          <left>
-            <VBox prefHeight="292.0" prefWidth="131.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="292.0" prefWidth="131.0" spacing="2.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Nombre">
                      <VBox.margin>
@@ -74,6 +74,21 @@
                   </Label>
                   <Label text="Fecha de nacimiento">
                      <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Alergias">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="53.0" prefWidth="28.0">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Antecedentes">
+                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </VBox.margin>
                   </Label>
@@ -84,7 +99,7 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="292.0" prefWidth="339.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="292.0" prefWidth="339.0" spacing="2.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="nombre_tf" prefHeight="25.0" prefWidth="228.0">
                      <VBox.margin>
@@ -131,6 +146,30 @@
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </DatePicker>
+                  <VBox prefHeight="116.0" prefWidth="206.0" spacing="1.0">
+                     <children>
+                        <TextField fx:id="alergias_tx" />
+                        <HBox prefHeight="28.0" prefWidth="206.0">
+                           <children>
+                              <Button fx:id="btn_add_alergia" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Agregar" />
+                              <Button fx:id="btn_del_alergia" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Quitar" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="list_alergias" prefHeight="65.0" prefWidth="206.0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="262.0" prefHeight="116.0" prefWidth="206.0" spacing="1.0">
+                     <children>
+                        <TextField fx:id="ant_tx" />
+                        <HBox prefHeight="28.0" prefWidth="206.0">
+                           <children>
+                              <Button fx:id="btn_add_ant" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Agregar" />
+                              <Button fx:id="btn_del_ant" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Quitar" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="list_ant" prefHeight="65.0" prefWidth="206.0" />
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </center>
@@ -142,6 +181,9 @@
                <children>
                   <Button fx:id="btn_cancelar" layoutX="134.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Cancelar" />
                   <Button fx:id="btn_add" layoutX="249.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Agregar" />
+                  <RadioButton fx:id="rbtn_add" layoutY="-8.0" mnemonicParsing="false" text="Agregar" />
+                  <RadioButton fx:id="rbtn_del" layoutY="13.0" mnemonicParsing="false" text="Eliminar" />
+                  <RadioButton fx:id="rbtn_up" layoutY="34.0" mnemonicParsing="false" text="Modificar" />
                </children>
             </Pane>
          </bottom>

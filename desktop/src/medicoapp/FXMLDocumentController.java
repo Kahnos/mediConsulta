@@ -235,7 +235,6 @@ public class FXMLDocumentController implements Initializable {
                     cedula_p_label.setText(patients[i].getPatientID());
                     email_p_label.setText(patients[i].getEmail());
                     telefono_p_label.setText(patients[i].getPhoneNumber());
-                    //System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
                 }
             });
             return row;

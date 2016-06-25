@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.joda.time.DateTime;
 
 /**
@@ -37,10 +39,26 @@ public class Custom_control_agregarPacienteController extends VBox {
         @FXML private TextField altura_tf;
         @FXML private TextField peso_tf;
         @FXML private DatePicker fn_dtpk;
+        @FXML private TextField alergias_tx;
+        @FXML private TextField ant_tx;
         
         // Botones de accion
         @FXML private Button btn_add;
         @FXML private Button btn_cancelar;
+        @FXML private Button btn_add_alergia;
+        @FXML private Button btn_add_ant;
+        @FXML private Button btn_del_alergia;
+        @FXML private Button btn_del_ant;
+        
+        // Listas
+        @FXML private ListView<String> list_alergias;
+        @FXML private ListView<String> list_ant;
+        
+        // Radio Buttons 
+        @FXML private RadioButton rbtn_add;
+        @FXML private RadioButton rbtn_del;
+        @FXML private RadioButton rbtn_up;
+        
         
         // Panel principal
         @FXML private AnchorPane mainPanel;
@@ -119,17 +137,68 @@ public class Custom_control_agregarPacienteController extends VBox {
                 LocalDate localDatePatient = fn_dtpk.getValue();
                 Date datePatient = Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 DateTime dt = new DateTime(datePatient);
-                //System.out.println(Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 patientAdd.setBirthdate(dt.toString());
-                System.out.println("Appointmet: " + patientAdd.getLastName());
-                //patients[patients.length] = patientAdd;
+                // Agregar alergias
+                ObservableList<String> items_alergias = list_alergias.getItems();
+                String[] alergiasAux = new String[items_alergias.size()];
+                for (int i = 0; i < items_alergias.size() ; i++) {
+                    alergiasAux[i] = items_alergias.get(i);
+                }
+                patientAdd.setAllergies(alergiasAux);
+                //  Agregar antecedentes
+                ObservableList<String> items_ant = list_ant.getItems();
+                String[] antAux = new String[items_ant.size()];
+                for (int i = 0; i < items_ant.size() ; i++) {
+                    antAux[i] = items_ant.get(i);
+                }
+                patientAdd.setMedicalBackgrounds(antAux);
+                //System.out.println("Appointmet: " + patientAdd.getLastName());
                 HTTPRequest.addPatient(patientAdd);
-                
             });
+        
+        // Agregar/Quitar alergias
+        btn_add_alergia.setOnAction(e -> {
+            if (alergias_tx.getText().equals("") || alergias_tx.getText() == null) {
+            } else {
+                list_alergias.getItems().add(alergias_tx.getText());
+            } 
+        });
+        
+        btn_del_alergia.setOnAction(e -> {
+            ObservableList<String> allAlergias, alergiaSelect;
+            allAlergias = list_alergias.getItems();
+            alergiaSelect = list_alergias.getSelectionModel().getSelectedItems();
+            
+            if (!alergiaSelect.isEmpty()) {
+                allAlergias.remove(alergiaSelect.get(0));
+            }
+            
+        });
        
-       btn_cancelar.setOnAction((ActionEvent e) -> {
+        // Agregar/Quitar antecedentes
+        btn_add_ant.setOnAction(e -> {
+            if (ant_tx.getText().equals("") || ant_tx.getText() == null) {
+            } else {
+                list_ant.getItems().add(ant_tx.getText());
+            }
+            
+        });
+        
+        btn_del_ant.setOnAction(e -> {
+            ObservableList<String> allAnt, antSelect;
+            allAnt = list_ant.getItems();
+            antSelect = list_ant.getSelectionModel().getSelectedItems();
+            
+            if (!antSelect.isEmpty()) {
+                allAnt.remove(antSelect.get(0));
+            }    
+        });
+        
+        
+        
+        btn_cancelar.setOnAction((ActionEvent e) -> {
            window.close();
-       });
+        });
        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
        VBox vb = new VBox();
        vb.getChildren().addAll(mainPanel);
@@ -137,9 +206,6 @@ public class Custom_control_agregarPacienteController extends VBox {
        Scene scene = new Scene(vb);
        window.setScene(scene);
        window.showAndWait();
-       
-       
-    
     }
     
     }
