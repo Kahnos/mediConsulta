@@ -64,7 +64,8 @@ db.once('open', function() {
     // Rutas de pacientes.
     patients.route('/patients/:id')
         .get(patientsController.getPatient)
-        .put(patientsController.updatePatient);
+        .put(patientsController.updatePatient)
+        .post(patientsController.addDiagnostic);
     
     patients.route('/patients/')
         .get(patientsController.getAllPatients)

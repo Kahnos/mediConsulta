@@ -111,9 +111,29 @@ exports.getDiagnostic = function(req, res) {
     });
 }
 
+// POST - Añade un nuevo diagnóstico a un paciente.
+exports.addDiagnostic = function(req, res) {
+    console.log('POST /patients/:id');
+    console.log(req.body);
 
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo evento.
+    patients.findById(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
 
+        // Se añade los datos de la solicitud al arreglo de diagnósticos.
+        patient.diagnostics.addToSet(req.body);
 
+        patient.save(function(err) {
+            if ( err )
+                return res.status(500).send(err.message);
+
+            res.status(200).jsonp(patient);
+        });
+    });
+}
+
+// Controladores relacionados al tratamiento para el diagnóstico de un paciente.
 
 
 
