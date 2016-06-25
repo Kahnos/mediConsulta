@@ -24,7 +24,7 @@ var diagnosticSchema = new mongoose.Schema({
     diagnostic: { type: String, trim: true },
     treatment: [treatmentSchema],
     treatmentResult: treatmentResultSchema,
-    shared: { type: Boolean, default: false }
+    shared: { type: Boolean }
 });
 
 // Contiene la información de los usuarios pacientes, incluyendo su historial médico y feedback de sus tratamientos.
