@@ -72,7 +72,8 @@ db.once('open', function() {
         .post(patientsController.addPatient);
     
     patients.route('/patients/:id/:diagnosticID')
-        .get(patientsController.getDiagnostic);
+        .get(patientsController.getDiagnostic)
+        .post(patientsController.addTreatmentFeedback);
     
     // Se aplican los routers a la API.
     app.use('/api', days);

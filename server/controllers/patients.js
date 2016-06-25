@@ -116,7 +116,7 @@ exports.addDiagnostic = function(req, res) {
     console.log('POST /patients/:id');
     console.log(req.body);
 
-    // Se busca el documento por su id, si se encuentra, se le añade un nuevo evento.
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo diagnóstico.
     patients.findById(req.params.id, function(err, patient) {
         if ( err )
             return res.status(500).send(err.message);
@@ -133,20 +133,31 @@ exports.addDiagnostic = function(req, res) {
     });
 }
 
-// Controladores relacionados al tratamiento para el diagnóstico de un paciente.
+// POST - Añade el feedback de un paciente.
+exports.addTreatmentFeedback = function(req, res) {
+    console.log('POST /patients/:id/:diagnosticID');
+    console.log(req.body);
 
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo feedback.
+    patients.findById(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
 
+        var diagnostic = null;
+        diagnostic = patient.diagnostics.id(req.params.diagnosticID);
+        
+        if ( diagnostic != null ) {
+            diagnostic.treatmentResult = req.body;
+            
+            patient.save(function(err) {
+                if ( err )
+                    return res.status(500).send(err.message);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                res.status(200).jsonp(diagnostic);
+            });            
+        }
+        else {
+            return res.status(500).send("Diagnostic with id " + req.params.diagnosticID + " does not exist.");
+        }
+    });
+}
