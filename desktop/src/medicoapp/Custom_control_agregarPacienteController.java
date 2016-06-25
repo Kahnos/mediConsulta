@@ -57,6 +57,7 @@ public class Custom_control_agregarPacienteController extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+       //-------------------------
         sex_cb.getItems().add("Masculino");
         sex_cb.getItems().add("Femenino");
    

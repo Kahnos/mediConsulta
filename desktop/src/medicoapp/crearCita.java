@@ -41,7 +41,7 @@ public class crearCita extends VBox {
      * crearCita: constructor del FXML_custom_control
      */
     public crearCita() {
-        
+   
         // Carga el archivo FXML
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("custom_control_crearCita.fxml"));
         fxmlLoader.setRoot(this);
@@ -75,9 +75,9 @@ public class crearCita extends VBox {
         //Se crean los manejadores de eventos de los controles
         btn_aceptar.setOnAction((ActionEvent e) -> {
                  if (motivo_txta.getText().equals("") || 
-                     patient_cb.getValue().equals("") ) { 
-                        System.out.println("Tiene que llenar los campos para poder insertar en la tablaa");
-                        return;
+                    patient_cb.getValue().equals("") ) { 
+                    System.out.println("Tiene que llenar los campos para poder insertar en la tablaa");
+                    return;
                 }
 
         //-----------------------------------------------
@@ -121,9 +121,12 @@ public class crearCita extends VBox {
             });
        
        btn_cancelar.setOnAction((ActionEvent e) -> {
-            //System.out.println(patient_cb.getSelectionModel().getSelectedIndex());
             this.cancel = true;
             window.close();
+       });
+       
+       patient_cb.setOnAction((ActionEvent e) -> {
+           System.out.println("Seleccionaste un nombre");
        });
        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
        VBox vb = new VBox();
@@ -131,13 +134,11 @@ public class crearCita extends VBox {
        vb.setAlignment(Pos.CENTER);
        Scene scene = new Scene(vb);
        window.setScene(scene);
-       window.showAndWait();
-       
        window.setOnCloseRequest(e ->{
            System.out.println("Cancelado desde la x");
            this.cancel = true;
        });
-       
+       window.showAndWait();
        return dayMedic;
     
     }
