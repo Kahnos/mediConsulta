@@ -130,7 +130,7 @@ public class Custom_control_agregarPacienteController extends VBox {
                 //sexo
                 patientAdd.setSex(sex_cb.getValue());
                 //altura
-                patientAdd.setHeight(Double.parseDouble(peso_tf.getText()));
+                patientAdd.setHeight(Double.parseDouble(altura_tf.getText()));
                 //peso
                 patientAdd.setWeight(Double.parseDouble(peso_tf.getText()));
                 // Hace un parse de Localdate a Date y de Date a ISOdate
@@ -152,7 +152,6 @@ public class Custom_control_agregarPacienteController extends VBox {
                     antAux[i] = items_ant.get(i);
                 }
                 patientAdd.setMedicalBackgrounds(antAux);
-                //System.out.println("Appointmet: " + patientAdd.getLastName());
                 HTTPRequest.addPatient(patientAdd);
             });
         

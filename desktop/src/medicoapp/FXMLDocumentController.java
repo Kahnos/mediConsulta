@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,10 +28,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -79,6 +80,9 @@ public class FXMLDocumentController implements Initializable {
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
     Patient[] patients;
+    
+    @FXML private ListView<String> list_alergias;
+    @FXML private ListView<String> list_ant;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -218,6 +222,10 @@ public class FXMLDocumentController implements Initializable {
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
+                        ObservableList<String> list1 = FXCollections.observableArrayList();
+                        ObservableList<String> list2 = FXCollections.observableArrayList();
+                        list_alergias.setItems(list1);
+                        list_ant.setItems(list2);
                         return;
                     } 
                     
@@ -235,6 +243,13 @@ public class FXMLDocumentController implements Initializable {
                     cedula_p_label.setText(patients[i].getPatientID());
                     email_p_label.setText(patients[i].getEmail());
                     telefono_p_label.setText(patients[i].getPhoneNumber());
+                    // Se recorren las alergias para mostrarlas en la informacion del paciente 
+                    for (int j = 0; j < patients[i].getAllergies().length ; j++) {
+                        list_alergias.getItems().add(patients[i].getAllergies()[j]);
+                    }
+                    for (int j = 0; j < patients[i].getMedicalBackgrounds().length ; j++) {
+                        list_ant.getItems().add(patients[i].getMedicalBackgrounds()[j]);
+                    }
                 }
             });
             return row;
@@ -258,8 +273,7 @@ public class FXMLDocumentController implements Initializable {
                         a.setSlot(a.getSlot()+dateFormat.format(c.getTime()));
                         this.tableCitas.getItems().add(a);
                     }
-        
-    }
+            }
 
     public void vaciarAppointmentsSelect(Calendar c, DateFormat dateFormat){
                     // Se vacia la tabla para luego llenarla con los appoinmets correespondientes

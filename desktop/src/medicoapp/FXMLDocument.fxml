@@ -66,6 +66,22 @@
                                     <Label fx:id="cedula_p_label" layoutX="96.0" layoutY="99.0" prefHeight="17.0" prefWidth="173.0" />
                                     <Label fx:id="email_p_label" layoutX="96.0" layoutY="134.0" prefHeight="17.0" prefWidth="173.0" />
                                     <Label fx:id="telefono_p_label" layoutX="96.0" layoutY="174.0" />
+                                    <HBox layoutX="15.0" layoutY="216.0" prefHeight="142.0" prefWidth="272.0" spacing="4.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="124.0" prefWidth="134.0">
+                                             <children>
+                                                <Label text="Alergias:" />
+                                                <ListView fx:id="list_alergias" prefHeight="200.0" prefWidth="200.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="124.0" prefWidth="129.0">
+                                             <children>
+                                                <Label text="Antecedentes:" />
+                                                <ListView fx:id="list_ant" prefHeight="200.0" prefWidth="200.0" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
                                  </children></AnchorPane>
                         </content>
                       </Tab>
