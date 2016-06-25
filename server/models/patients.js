@@ -24,6 +24,7 @@ var diagnosticSchema = new mongoose.Schema({
     diagnostic: { type: String, trim: true },
     treatment: [treatmentSchema],
     treatmentResult: treatmentResultSchema,
+    medicID: { type: String, trim: true },
     shared: { type: Boolean }
 });
 
