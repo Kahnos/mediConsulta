@@ -6,6 +6,7 @@
 package medicoapp;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -67,7 +68,7 @@ public class crearCita extends VBox {
      * display: 
      */
     @FXML
-    public Day display (TableView<Appointment> table, Patient[] patients, Day dayM) {
+    public Day display (TableView<Appointment> table, ArrayList<Patient> patients, Day dayM) {
         // Verificar si el dia existe: si no existe crea el dia en la bd
         dayMedic = dayM;
         
@@ -135,14 +136,14 @@ public class crearCita extends VBox {
                 // Se obtitne el index el paciente seleccionado en el combobox para obtener sus datos
                 // del arreglo de pacientes
                 int patientIndex = 0, i;
-                for (i = 0; i < patients.length ; i++) {
-                    if (patient_tx.getText().equals(patients[i].getPatientID())) {
+                for (i = 0; i < patients.size() ; i++) {
+                    if (patient_tx.getText().equals(patients.get(i).getPatientID())) {
                         patientIndex = i;
                         break;
                     }
                 }
                 // Se verifica si el paciente no esta registrado
-                if (i == patients.length) {
+                if (i == patients.size()) {
                     return;
                 }
                 // Se le asignan los datos al appoinment
@@ -194,15 +195,15 @@ public class crearCita extends VBox {
                             {
                                 System.out.println("Textfield out focus");
                                 int i;
-                                for (i = 0; i < patients.length ; i++) {
-                                    if (patient_tx.getText().equals(patients[i].getPatientID())) {
-                                        nombre_l.setText(patients[i].getName());
-                                        apellido_l.setText(patients[i].getLastName());
+                                for (i = 0; i < patients.size() ; i++) {
+                                    if (patient_tx.getText().equals(patients.get(i).getPatientID())) {
+                                        nombre_l.setText(patients.get(i).getName());
+                                        apellido_l.setText(patients.get(i).getLastName());
                                         break;
                                     }
                                 }
                                 
-                                if (i == patients.length) {
+                                if (i == patients.size()) {
                                     nombre_l.setText("Paciente no \n registrado");
                                 }
                             }

@@ -79,7 +79,7 @@ public class FXMLDocumentController implements Initializable {
     
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
-    Patient[] patients;
+    ArrayList<Patient> patients;
     
     @FXML private ListView<String> list_alergias;
     @FXML private ListView<String> list_ant;
@@ -122,7 +122,7 @@ public class FXMLDocumentController implements Initializable {
         
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas, patients, dayMedic.get(currentDayMedicIndex)));
+        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex)));
         Day dauAux = dayMedic.get(currentDayMedicIndex);
         if (cr.isCancel()) {
         } else { 
@@ -176,7 +176,7 @@ public class FXMLDocumentController implements Initializable {
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
         // Se obtienen todos los pacientes de la bd
-        patients = HTTPRequest.getAllPatients();
+        patients = new ArrayList<Patient>(Arrays.asList(HTTPRequest.getAllPatients()));
         //System.out.println(patients[0].getEmail());
         // Se inicializa el calendario y el popup
         DatePicker dp = new DatePicker(LocalDate.now());
@@ -232,23 +232,23 @@ public class FXMLDocumentController implements Initializable {
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
-                    for (i = 0; i < patients.length ; i++) {
+                    for (i = 0; i < patients.size() ; i++) {
                         //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        if (patients[i].getPatientID().equals(rowData.getPatientID()))
+                        if (patients.get(i).getPatientID().equals(rowData.getPatientID()))
                             break;
                     }
                     
-                    nombre_p_label.setText(patients[i].getName());
-                    apellido_p_label.setText(patients[i].getLastName());
-                    cedula_p_label.setText(patients[i].getPatientID());
-                    email_p_label.setText(patients[i].getEmail());
-                    telefono_p_label.setText(patients[i].getPhoneNumber());
+                    nombre_p_label.setText(patients.get(i).getName());
+                    apellido_p_label.setText(patients.get(i).getLastName());
+                    cedula_p_label.setText(patients.get(i).getPatientID());
+                    email_p_label.setText(patients.get(i).getEmail());
+                    telefono_p_label.setText(patients.get(i).getPhoneNumber());
                     // Se recorren las alergias para mostrarlas en la informacion del paciente 
-                    for (int j = 0; j < patients[i].getAllergies().length ; j++) {
-                        list_alergias.getItems().add(patients[i].getAllergies()[j]);
+                    for (int j = 0; j < patients.get(i).getAllergies().length ; j++) {
+                        list_alergias.getItems().add(patients.get(i).getAllergies()[j]);
                     }
-                    for (int j = 0; j < patients[i].getMedicalBackgrounds().length ; j++) {
-                        list_ant.getItems().add(patients[i].getMedicalBackgrounds()[j]);
+                    for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
+                        list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
                     }
                 }
             });
@@ -370,10 +370,7 @@ public class FXMLDocumentController implements Initializable {
                            tableCitas.getItems().set(k, appSlot);
                            break;
                        }
-                   
                    }
-                   
-                   
                }
     
     }

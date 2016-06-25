@@ -3,6 +3,7 @@ package medicoapp;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,7 +64,7 @@ public class Custom_control_agregarPacienteController extends VBox {
         // Panel principal
         @FXML private AnchorPane mainPanel;
        
-        private Patient[] patietnsAux;
+        private ArrayList<Patient> patietnsAux;
     
         public Custom_control_agregarPacienteController() {
         // Carga el archivo FXML
@@ -85,17 +86,15 @@ public class Custom_control_agregarPacienteController extends VBox {
      * display: 
      */
     @FXML
-    public void display (Patient[] patients)
+    public void display (ArrayList<Patient> patients)
     {
-       patietnsAux = patients;
-       // Se declara una window 
-       Stage window = new Stage();
-       window.initModality(Modality.APPLICATION_MODAL);
-       window.setTitle("mediConsulta - Agregar paciente");
-       window.setMinWidth(250);
-
-
-
+        patietnsAux = patients;
+        // Se declara una window 
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("mediConsulta - Agregar paciente");
+        window.setMinWidth(250);
+       
         //Se crean los manejadores de eventos de los controles
         btn_add.setOnAction((ActionEvent e) -> {
                 // Verifica si la altura y la y  
@@ -152,7 +151,8 @@ public class Custom_control_agregarPacienteController extends VBox {
                     antAux[i] = items_ant.get(i);
                 }
                 patientAdd.setMedicalBackgrounds(antAux);
-                HTTPRequest.addPatient(patientAdd);
+                patients.add(HTTPRequest.addPatient(patientAdd));
+                
             });
         
         // Agregar/Quitar alergias
