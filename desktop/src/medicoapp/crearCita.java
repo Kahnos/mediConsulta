@@ -220,6 +220,7 @@ public class crearCita extends VBox {
            System.out.println("Cancelado desde la x");
            this.cancel = true;
        });
+       
        window.showAndWait();
        return dayMedic;
     
