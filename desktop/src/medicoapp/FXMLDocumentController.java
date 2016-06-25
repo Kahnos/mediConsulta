@@ -130,7 +130,6 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    
     @FXML
     private void eliminarEvento(ActionEvent event) throws IOException{
         ObservableList<Appointment> citaSelect, allProductos;
