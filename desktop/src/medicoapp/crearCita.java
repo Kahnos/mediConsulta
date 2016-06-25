@@ -117,7 +117,10 @@ public class crearCita extends VBox {
                 // Apellido del paciente
                 np.setPatientLastName("");
                 // Descripcion del paciente
-                np.setDescription(motivo_txta.getText());
+                if (motivo_txta.getText().equals("")) {
+                   np.setDescription(tipo_e_cb.getValue());
+               } else
+                    np.setDescription(motivo_txta.getText());
                 // Tipo de evento 
                 np.setEventType(tipo_e_cb.getValue());
             } else if (motivo_txta.getText().equals("") ||  // no tiene descripcion

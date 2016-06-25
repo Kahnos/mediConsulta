@@ -200,10 +200,10 @@ public class FXMLDocumentController implements Initializable {
         
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
-                    // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
-                    vaciarAppointmentsSelect(c, dateFormat);            
-                    InsertarAppointments(c, dateFormat);
-                   });
+                // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
+                vaciarAppointmentsSelect(c, dateFormat);            
+                InsertarAppointments(c, dateFormat);
+                });
         //------------------- Manejador del evento cuando se oprime una fila de la tableCitas ------------
        tableCitas.setRowFactory( tv -> {
             TableRow<Appointment> row = new TableRow<>();
@@ -224,7 +224,7 @@ public class FXMLDocumentController implements Initializable {
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
-                    for (i = 0; i < patients.length ; i++ ) {
+                    for (i = 0; i < patients.length ; i++) {
                         //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
                         if (patients[i].getPatientID().equals(rowData.getPatientID()))
                             break;
