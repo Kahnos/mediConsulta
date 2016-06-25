@@ -86,35 +86,35 @@
 45 verbose addNameRange registry:https://registry.npmjs.org/mongoose not in flight; fetching
 46 verbose request uri https://registry.npmjs.org/express
 47 verbose request no auth needed
-48 info attempt registry request try #1 at 17:15:49
-49 verbose request id 4b8ed3746de5c716
+48 info attempt registry request try #1 at 21:54:21
+49 verbose request id 328452124bc74fa0
 50 http request GET https://registry.npmjs.org/express
 51 verbose request uri https://registry.npmjs.org/body-parser
 52 verbose request no auth needed
-53 info attempt registry request try #1 at 17:15:49
+53 info attempt registry request try #1 at 21:54:21
 54 http request GET https://registry.npmjs.org/body-parser
 55 verbose request uri https://registry.npmjs.org/mongoose
 56 verbose request no auth needed
-57 info attempt registry request try #1 at 17:15:49
+57 info attempt registry request try #1 at 21:54:21
 58 http request GET https://registry.npmjs.org/mongoose
 59 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
 60 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
 61 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
-62 info attempt registry request try #2 at 17:16:00
+62 info attempt registry request try #2 at 21:54:31
 63 http request GET https://registry.npmjs.org/express
-64 info attempt registry request try #2 at 17:16:00
-65 http request GET https://registry.npmjs.org/body-parser
-66 info attempt registry request try #2 at 17:16:00
-67 http request GET https://registry.npmjs.org/mongoose
-68 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
+64 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
+65 info attempt registry request try #2 at 21:54:31
+66 http request GET https://registry.npmjs.org/mongoose
+67 info attempt registry request try #2 at 21:54:31
+68 http request GET https://registry.npmjs.org/body-parser
 69 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
 70 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
-71 info attempt registry request try #3 at 17:17:00
+71 info attempt registry request try #3 at 21:55:31
 72 http request GET https://registry.npmjs.org/express
-73 info attempt registry request try #3 at 17:17:00
-74 http request GET https://registry.npmjs.org/body-parser
-75 info attempt registry request try #3 at 17:17:00
-76 http request GET https://registry.npmjs.org/mongoose
+73 info attempt registry request try #3 at 21:55:31
+74 http request GET https://registry.npmjs.org/mongoose
+75 info attempt registry request try #3 at 21:55:31
+76 http request GET https://registry.npmjs.org/body-parser
 77 verbose stack Error: tunneling socket could not be established, cause=Parse Error
 77 verbose stack     at ClientRequest.onError (C:\Program Files\nodejs\node_modules\npm\node_modules\request\node_modules\tunnel-agent\index.js:176:17)
 77 verbose stack     at ClientRequest.g (events.js:260:16)

@@ -123,12 +123,12 @@ public class FXMLDocumentController implements Initializable {
         if (cr.isCancel()) {
         } else { 
             Appointment appAux = dauAux.getDayAppointments()[dauAux.getDayAppointments().length - 1];
+            appAux.setSlot(appAux.getStart() + " - " + appAux.getEnd());
             tableCitas.getItems().set(index, appAux);
             System.out.println("Despues de crear el evento: " + appAux.getId() );
             System.out.println("IndexItem: " + tableCitas.getSelectionModel().getSelectedIndex());
         }
     }
-    
     
     @FXML
     private void eliminarEvento(ActionEvent event) throws IOException{
