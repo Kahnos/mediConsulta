@@ -92,8 +92,6 @@ public class Custom_control_agregarPacienteController extends VBox {
        rbtn_add.setToggleGroup(group);
        rbtn_del.setToggleGroup(group);
        rbtn_up.setToggleGroup(group); 
-       
-       rbtn_add.setSelected(true);
 }
         
 /*
@@ -102,6 +100,7 @@ public class Custom_control_agregarPacienteController extends VBox {
     @FXML
     public void display (ArrayList<Patient> patients)
     {
+        
         patietnsAux = patients;
         // Se declara una window 
         Stage window = new Stage();
@@ -109,18 +108,17 @@ public class Custom_control_agregarPacienteController extends VBox {
         window.setTitle("mediConsulta - Modulo Pacientes");
         window.setMinWidth(250);
        
-            group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); 
-               System.out.println("Selected Radio Button - "+chk.getText());
+               System.out.println("Selected Radio Button - " + chk.getText());
                // Eventos cuando se selecciona agregar
                if (chk.getText().equals("Agregar")) {
                    btn_add.setText("Agregar");   
                    enableAdd();
                    actionAgregar(patients);
                    actionAddDeleteLists();
-               
                // Eventos cuando se selecciona modificar    
                } else if (chk.getText().equals("Modificar")) {
                     btn_add.setText("Modificar");
@@ -134,7 +132,9 @@ public class Custom_control_agregarPacienteController extends VBox {
                
             }
         });
-            
+        
+        rbtn_add.setSelected(true);    
+  
         // Evento para cerrar la ventana con el boton cancelar      
         btn_cancelar.setOnAction((ActionEvent e) -> {
            window.close();
@@ -183,6 +183,7 @@ public class Custom_control_agregarPacienteController extends VBox {
     }
     
     public void focusFindPatient() {
+        
         cedula_tf.setOnAction(e -> {
         // se busca el pàciente
                     int i;

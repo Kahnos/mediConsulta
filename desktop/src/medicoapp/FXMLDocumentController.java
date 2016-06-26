@@ -90,16 +90,17 @@ public class FXMLDocumentController implements Initializable {
         int index = tableCitas.getSelectionModel().getSelectedIndex();
         System.out.println("Index tableCitas: " + index);
         System.out.println("Index tableCitas: " + this.currentDayMedicIndex);
+        // Se verifica si el ususario ha seleccionado un slot de la tabla
+        if (index == -1) {
+            System.out.println("No ha seleccionado ningun item");
+            return;
+        }
+        // Se verifica si el slot no esta lleno aun
         if (!tableCitas.getSelectionModel().getSelectedItem().getDescription().equals("")) {
             System.out.println("No puedes crear un evento en un evento existente");
             return;
         }
         
-        if (index == -1)
-        {
-            System.out.println("No ha seleccionado ningun item");
-            return;
-        }
         
         // Si el dia no existe en la bd se crea y luego se crea el appointment
         if (currentDayMedicIndex  == -1 ) {
