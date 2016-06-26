@@ -1,0 +1,11 @@
+{
+    "userID": "17884787",
+    "password": "polarman",
+    "userType": "Médico",
+    "name": "Guillermo",
+    "lastName": "Díaz",
+    "birthdate": "1988-08-04T12:00:00.000Z",
+    "email": "guillermodz@gmail.com",
+    "phoneNumber": "0424-9401455",
+    "sex": "Male"
+}

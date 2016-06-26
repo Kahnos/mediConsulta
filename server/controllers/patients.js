@@ -21,7 +21,7 @@ exports.getAllPatients = function(req, res) {
 exports.getPatient = function(req, res) {
     console.log('GET /patients/:id');
     
-    // Se busca el documento por su id, si se encuentra, se modifica.
+    // Se busca el documento por su id, si se encuentra, se retorna.
     patients.findById(req.params.id, function(err, patient) {
         if ( err )
             return res.status(500).send(err.message);
