@@ -220,17 +220,16 @@ public class FXMLDocumentController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Appointment rowData = row.getItem();
-                    
+                    ObservableList<String> list1 = FXCollections.observableArrayList();
+                    ObservableList<String> list2 = FXCollections.observableArrayList();
+                    list_alergias.setItems(list1);
+                        list_ant.setItems(list2);
                     if (rowData.getPatientName().equals("")) {
                         nombre_p_label.setText("");
                         apellido_p_label.setText("");
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
-                        ObservableList<String> list1 = FXCollections.observableArrayList();
-                        ObservableList<String> list2 = FXCollections.observableArrayList();
-                        list_alergias.setItems(list1);
-                        list_ant.setItems(list2);
                         return;
                     } 
                     
