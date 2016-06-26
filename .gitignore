@@ -1,5 +1,13 @@
 server/node_modules/
-desktop/
+desktop/build/
+desktop/nbproject/private/
+desktop/build/
+desktop/nbbuild/
+desktop/dist/
+desktop/nbdist/
+desktop/nbactions.xml
+desktop/.nb-gradle/
+.gitignore
 
 # Windows image file caches
 Thumbs.db
