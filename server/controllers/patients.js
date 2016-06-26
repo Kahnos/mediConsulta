@@ -1,10 +1,11 @@
 /*
-* Archivo: routes/patients.js
+* Archivo: controllers/patients.js
 * Provee los manejadores de solicitudes HTTP para los pacientes.
 */
 
 var patients = require('../models/patients.js');
 
+// Controladores relacionados a un paciente.
 // GET - Obtiene todos los pacientes en la base de datos.
 exports.getAllPatients = function(req, res) {
     console.log('GET /patients/');
@@ -20,7 +21,7 @@ exports.getAllPatients = function(req, res) {
 exports.getPatient = function(req, res) {
     console.log('GET /patients/:id');
     
-    // Se busca el documento por su id, si se encuentra, se modifica.
+    // Se busca el documento por su id, si se encuentra, se retorna.
     patients.findById(req.params.id, function(err, patient) {
         if ( err )
             return res.status(500).send(err.message);
@@ -58,7 +59,7 @@ exports.addPatient = function(req, res) {
     });
 };
 
-// PUT - Actualiza una configuración existente en la base de datos.
+// PUT - Actualiza un paciente existente en la base de datos.
 exports.updatePatient = function(req, res) {
     console.log('PUT /patients/:id');
 
@@ -88,3 +89,75 @@ exports.updatePatient = function(req, res) {
         });
     });
 };
+
+// Controladores relacionados al diagnóstico de un paciente.
+// GET - Obtiene un diagnóstico específico.
+exports.getDiagnostic = function(req, res) {
+    console.log('GET /patients/:id/:diagnosticID');
+    
+    // Se busca el documento por su id, si se encuentra, se modifica.
+    patients.findById(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        var diagnostic = null;
+        diagnostic = patient.diagnostics.id(req.params.diagnosticID);
+        
+        if ( diagnostic != null )
+            return res.status(200).jsonp(diagnostic);
+        else {
+            return res.status(500).send("Diagnostic with id " + req.params.diagnosticID + " does not exist.");
+        }
+    });
+}
+
+// POST - Añade un nuevo diagnóstico a un paciente.
+exports.addDiagnostic = function(req, res) {
+    console.log('POST /patients/:id');
+    console.log(req.body);
+
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo diagnóstico.
+    patients.findById(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        // Se añade los datos de la solicitud al arreglo de diagnósticos.
+        patient.diagnostics.addToSet(req.body);
+
+        patient.save(function(err) {
+            if ( err )
+                return res.status(500).send(err.message);
+
+            res.status(200).jsonp(patient);
+        });
+    });
+}
+
+// POST - Añade el feedback de un paciente.
+exports.addTreatmentFeedback = function(req, res) {
+    console.log('POST /patients/:id/:diagnosticID');
+    console.log(req.body);
+
+    // Se busca el documento por su id, si se encuentra, se le añade un nuevo feedback.
+    patients.findById(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        var diagnostic = null;
+        diagnostic = patient.diagnostics.id(req.params.diagnosticID);
+        
+        if ( diagnostic != null ) {
+            diagnostic.treatmentResult = req.body;
+            
+            patient.save(function(err) {
+                if ( err )
+                    return res.status(500).send(err.message);
+
+                res.status(200).jsonp(diagnostic);
+            });            
+        }
+        else {
+            return res.status(500).send("Diagnostic with id " + req.params.diagnosticID + " does not exist.");
+        }
+    });
+}

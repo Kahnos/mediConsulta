@@ -1,5 +1,5 @@
 /*
-* Archivo: routes/days.js
+* Archivo: controllers/days.js
 * Provee los manejadores de solicitudes HTTP para las citas.
 */
 
