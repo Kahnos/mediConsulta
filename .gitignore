@@ -1,5 +1,6 @@
 server/node_modules/
 desktop/
+.gitignore
 
 # Windows image file caches
 Thumbs.db
