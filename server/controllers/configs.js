@@ -1,5 +1,5 @@
 /*
-* Archivo: routes/configs.js
+* Archivo: controllers/configs.js
 * Provee los manejadores de solicitudes HTTP para la configuración.
 */
 
