@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -112,6 +113,8 @@ public class Custom_control_agregarPacienteController extends VBox {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); 
+               cedula_tf.setText("");
+               vaciarInputs();
                System.out.println("Selected Radio Button - " + chk.getText());
                // Eventos cuando se selecciona agregar
                if (chk.getText().equals("Agregar")) {
@@ -122,12 +125,12 @@ public class Custom_control_agregarPacienteController extends VBox {
                // Eventos cuando se selecciona modificar    
                } else if (chk.getText().equals("Modificar")) {
                     btn_add.setText("Modificar");
-                    enableAdd();
+                    disableDelete();
+                    actionUpdate(patients);
                // Eventos cuando se selecciona eliminar   
                } if (chk.getText().equals("Eliminar")) {
                    btn_add.setText("Eliminar"); 
                    actionEliminar();
-                   disableDelete();
                }
                
             }
@@ -168,24 +171,22 @@ public class Custom_control_agregarPacienteController extends VBox {
         btn_add_ant.setDisable(true);
         btn_del_alergia.setDisable(true);
         btn_del_ant.setDisable(true);
-        
-        // Listas
-        //list_alergias.setDisable(true);
-        //list_ant.setDisable(true);
     }
     
     public void actionEliminar() {
-        focusFindPatient();
+        disableDelete();
+        focusFindPatient(1);
         btn_add.setOnAction(e -> {
-            // Eliminar un paciente de la BD
+        // Eliminar un paciente de la BD
             
         });
     }
     
-    public void focusFindPatient() {
+    public void focusFindPatient(int mode) {
         
         cedula_tf.setOnAction(e -> {
         // se busca el pàciente
+                    vaciarInputs();
                     int i;
                     for (i = 0; i < patietnsAux.size() ; i++) {
                         if (cedula_tf.getText().equals(patietnsAux.get(i).getPatientID())) {
@@ -196,7 +197,10 @@ public class Custom_control_agregarPacienteController extends VBox {
                     
                     if ( i != patietnsAux.size()) {
                         fillInputs(p);
-                    }
+                        if (mode == 2) enableAdd();
+                    } else {
+                        disableDelete();
+                    }          
         });
         cedula_tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -207,6 +211,7 @@ public class Custom_control_agregarPacienteController extends VBox {
                 {
                     System.out.println("Cedula_tf out focus");
                     // se busca el pàciente
+                    vaciarInputs();
                     int i;
                     for (i = 0; i < patietnsAux.size() ; i++) {
                         if (cedula_tf.getText().equals(patietnsAux.get(i).getPatientID())) {
@@ -217,13 +222,34 @@ public class Custom_control_agregarPacienteController extends VBox {
                     
                     if ( i != patietnsAux.size()) {
                         fillInputs(p);
-                    } 
-                    
+                        if (mode == 2) enableAdd();
+                    } else {
+                        disableDelete();
+                    }                
                 }
             }
             });
     
         }
+    
+    public void vaciarInputs() {
+        //inputs
+        nombre_tf.setText("");
+        apellido_tf.setText("");
+        email_tf.setText("");
+        telefono_tf.setText("");
+        sex_cb.setValue("");
+        altura_tf.setText("");
+        peso_tf.setText("");
+        // Asignacion de la fecha
+        fn_dtpk.setValue(null);
+        // Asignacion de alergias
+        ObservableList<String> list1 = FXCollections.observableArrayList();
+        ObservableList<String> list2 = FXCollections.observableArrayList();
+        list_alergias.setItems(list1);
+        list_ant.setItems(list2);
+    }
+    
     public void fillInputs(Patient p) {
                 //inputs
                 nombre_tf.setText(p.getName());
@@ -231,7 +257,7 @@ public class Custom_control_agregarPacienteController extends VBox {
                 email_tf.setText(p.getEmail());
                 telefono_tf.setText(p.getPhoneNumber());
                 sex_cb.setValue(p.getSex());
-                altura_tf.setText(Double.toHexString(p.getHeight()));
+                altura_tf.setText(Double.toString(p.getHeight()));
                 peso_tf.setText(Double.toString(p.getWeight()));
                 // Asignacion de la fecha
                 DateTime dt = new DateTime(p.getBirthdate());
@@ -373,7 +399,73 @@ public class Custom_control_agregarPacienteController extends VBox {
             }    
         });
     }
-    // Funciones para modificar un paciente
-    
+    //-------------------  FUNCIONES PARA MODIFICAR UN PACIENTE ----------------------------
+    // Manejadores de eventos para
+    public void actionUpdate(ArrayList<Patient> patients) {
+        disableDelete();
+        focusFindPatient(2);
+        btn_add.setOnAction((ActionEvent e) -> {
+                // Verifica si la altura y la y  
+                if (!(Validations.isDouble(peso_tf.getText())) || !(Validations.isDouble(altura_tf.getText())) ){
+                    System.out.println("El peso o la altura no es numero, revisa porfavor eso...");
+                    return;
+                }
+                // Verifica que hallan valores en los campos obligatorios 
+                // Campos obligatorios: nombre, apellido, cedula, altura, peso telefono o email
+                if (nombre_tf.getText().equals("") || 
+                    apellido_tf.getText().equals("") ||
+                    cedula_tf.getText().equals("") ||
+                    (telefono_tf.getText().equals("") && email_tf.getText().equals("")) ||
+                     sex_cb.getValue().equals("") ||
+                     fn_dtpk.getValue() == null    ) { 
+                        System.out.println("Tiene que llenar los campos para poder insertar en la tabla");
+                        return;
+                }
+                
+                // Hacer el POST: agregar un paciente a la BD
+                Patient patientAdd = new Patient();
+                //Nombre
+                patientAdd.setName(nombre_tf.getText());
+                //Apellido
+                patientAdd.setLastName(apellido_tf.getText());
+                //cedula
+                patientAdd.setPatientID(cedula_tf.getText());
+                //email
+                patientAdd.setEmail(email_tf.getText());
+                //telefono
+                patientAdd.setPhoneNumber(telefono_tf.getText());
+                //sexo
+                patientAdd.setSex(sex_cb.getValue());
+                //altura
+                patientAdd.setHeight(Double.parseDouble(altura_tf.getText()));
+                //peso
+                patientAdd.setWeight(Double.parseDouble(peso_tf.getText()));
+                // Hace un parse de Localdate a Date y de Date a ISOdate
+                LocalDate localDatePatient = fn_dtpk.getValue();
+                Date datePatient = Date.from(fn_dtpk.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                DateTime dt = new DateTime(datePatient);
+                patientAdd.setBirthdate(dt.toString());
+                // Agregar alergias
+                ObservableList<String> items_alergias = list_alergias.getItems();
+                String[] alergiasAux = new String[items_alergias.size()];
+                for (int i = 0; i < items_alergias.size() ; i++) {
+                    alergiasAux[i] = items_alergias.get(i);
+                }
+                patientAdd.setAllergies(alergiasAux);
+                //  Agregar antecedentes
+                ObservableList<String> items_ant = list_ant.getItems();
+                String[] antAux = new String[items_ant.size()];
+                for (int i = 0; i < items_ant.size() ; i++) {
+                    antAux[i] = items_ant.get(i);
+                }
+                patientAdd.setMedicalBackgrounds(antAux);
+                for (int i = 0; i < patients.size() ; i++) {
+                    if (patients.get(i).getPatientID().equals(patientAdd.getPatientID())) {
+                        patients.set(i,HTTPRequest.updatePatient(patients.get(i).getId(),patientAdd));
+                        break;
+                    }
+                }           
+            });
+        }  
     }
     
