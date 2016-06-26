@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -59,7 +63,10 @@ public class Custom_control_agregarPacienteController extends VBox {
         @FXML private RadioButton rbtn_add;
         @FXML private RadioButton rbtn_del;
         @FXML private RadioButton rbtn_up;
+        final ToggleGroup group = new ToggleGroup();    
         
+        //Variables auxiliares
+        Patient p;
         
         // Panel principal
         @FXML private AnchorPane mainPanel;
@@ -79,7 +86,14 @@ public class Custom_control_agregarPacienteController extends VBox {
        //-------------------------
         sex_cb.getItems().add("Masculino");
         sex_cb.getItems().add("Femenino");
-   
+        
+       // ----- grupos de los radio buttons
+
+       rbtn_add.setToggleGroup(group);
+       rbtn_del.setToggleGroup(group);
+       rbtn_up.setToggleGroup(group); 
+       
+       rbtn_add.setSelected(true);
 }
         
 /*
@@ -92,9 +106,173 @@ public class Custom_control_agregarPacienteController extends VBox {
         // Se declara una window 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("mediConsulta - Agregar paciente");
+        window.setTitle("mediConsulta - Modulo Pacientes");
         window.setMinWidth(250);
        
+            group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+               RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); 
+               System.out.println("Selected Radio Button - "+chk.getText());
+               // Eventos cuando se selecciona agregar
+               if (chk.getText().equals("Agregar")) {
+                   btn_add.setText("Agregar");   
+                   enableAdd();
+                   actionAgregar(patients);
+                   actionAddDeleteLists();
+               
+               // Eventos cuando se selecciona modificar    
+               } else if (chk.getText().equals("Modificar")) {
+                    btn_add.setText("Modificar");
+                    enableAdd();
+               // Eventos cuando se selecciona eliminar   
+               } if (chk.getText().equals("Eliminar")) {
+                   btn_add.setText("Eliminar"); 
+                   actionEliminar();
+                   disableDelete();
+               }
+               
+            }
+        });
+            
+        // Evento para cerrar la ventana con el boton cancelar      
+        btn_cancelar.setOnAction((ActionEvent e) -> {
+           window.close();
+        });
+        
+       // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
+       VBox vb = new VBox();
+       vb.getChildren().addAll(mainPanel);
+       vb.setAlignment(Pos.CENTER);
+       Scene scene = new Scene(vb);
+       window.setScene(scene);
+       window.showAndWait();
+    }
+    
+    
+    // ----------------------------- FUNCIONES PARA ELIMINAR UN PACIENTE ---------------------------------
+    public void disableDelete() {
+        //inputs
+        nombre_tf.setDisable(true);
+        apellido_tf.setDisable(true);
+        email_tf.setDisable(true);
+        telefono_tf.setDisable(true);
+        sex_cb.setDisable(true);
+        altura_tf.setDisable(true);
+        peso_tf.setDisable(true);
+        fn_dtpk.setDisable(true);
+        alergias_tx.setDisable(true);
+        ant_tx.setDisable(true);
+        //botones
+        btn_add_alergia.setDisable(true);
+        btn_add_ant.setDisable(true);
+        btn_del_alergia.setDisable(true);
+        btn_del_ant.setDisable(true);
+        
+        // Listas
+        //list_alergias.setDisable(true);
+        //list_ant.setDisable(true);
+    }
+    
+    public void actionEliminar() {
+        focusFindPatient();
+        btn_add.setOnAction(e -> {
+            // Eliminar un paciente de la BD
+            
+        });
+    }
+    
+    public void focusFindPatient() {
+        cedula_tf.setOnAction(e -> {
+        // se busca el pàciente
+                    int i;
+                    for (i = 0; i < patietnsAux.size() ; i++) {
+                        if (cedula_tf.getText().equals(patietnsAux.get(i).getPatientID())) {
+                            p = patietnsAux.get(i);
+                            break;
+                        }
+                    }
+                    
+                    if ( i != patietnsAux.size()) {
+                        fillInputs(p);
+                    }
+        });
+        cedula_tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (newPropertyValue) {
+                    System.out.println("Cedula_tf on focus");
+                } else
+                {
+                    System.out.println("Cedula_tf out focus");
+                    // se busca el pàciente
+                    int i;
+                    for (i = 0; i < patietnsAux.size() ; i++) {
+                        if (cedula_tf.getText().equals(patietnsAux.get(i).getPatientID())) {
+                            p = patietnsAux.get(i);
+                            break;
+                        }
+                    }
+                    
+                    if ( i != patietnsAux.size()) {
+                        fillInputs(p);
+                    } 
+                    
+                }
+            }
+            });
+    
+        }
+    public void fillInputs(Patient p) {
+                //inputs
+                nombre_tf.setText(p.getName());
+                apellido_tf.setText(p.getLastName());
+                email_tf.setText(p.getEmail());
+                telefono_tf.setText(p.getPhoneNumber());
+                sex_cb.setValue(p.getSex());
+                altura_tf.setText(Double.toHexString(p.getHeight()));
+                peso_tf.setText(Double.toString(p.getWeight()));
+                // Asignacion de la fecha
+                DateTime dt = new DateTime(p.getBirthdate());
+                Date date = dt.toDate();
+                LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                fn_dtpk.setValue(ldt);
+                // Asignacion de alergias
+                for (int i = 0; i < p.getAllergies().length ; i++) {
+                    list_alergias.getItems().add(p.getAllergies()[i]);
+                }
+                // Asignacion de los antecedentes
+                for (int i = 0; i < p.getMedicalBackgrounds().length ; i++) {
+                    list_ant.getItems().add(p.getMedicalBackgrounds()[i]);
+                }
+            }
+    
+    //------------------------- FUNCIONES PARA AGREGAR UN PACIENTE -------------------------------------
+    public void enableAdd() {
+        //inputs
+        nombre_tf.setDisable(false);
+        apellido_tf.setDisable(false);
+        //cedula_tf.setDisable(true);
+        email_tf.setDisable(false);
+        telefono_tf.setDisable(false);
+        sex_cb.setDisable(false);
+        altura_tf.setDisable(false);
+        peso_tf.setDisable(false);
+        fn_dtpk.setDisable(false);
+        alergias_tx.setDisable(false);
+        ant_tx.setDisable(false);
+        //botones
+        btn_add_alergia.setDisable(false);
+        btn_add_ant.setDisable(false);
+        btn_del_alergia.setDisable(false);
+        btn_del_ant.setDisable(false);
+        
+        // Listas
+        list_alergias.setDisable(false);
+        list_ant.setDisable(false);
+    }
+    
+    public void actionAgregar(ArrayList<Patient> patients){
         //Se crean los manejadores de eventos de los controles
         btn_add.setOnAction((ActionEvent e) -> {
                 // Verifica si la altura y la y  
@@ -152,10 +330,11 @@ public class Custom_control_agregarPacienteController extends VBox {
                 }
                 patientAdd.setMedicalBackgrounds(antAux);
                 patients.add(HTTPRequest.addPatient(patientAdd));
-                
             });
-        
-        // Agregar/Quitar alergias
+    }
+    
+    public void actionAddDeleteLists() {
+            // Agregar/Quitar alergias
         btn_add_alergia.setOnAction(e -> {
             if (alergias_tx.getText().equals("") || alergias_tx.getText() == null) {
             } else {
@@ -192,20 +371,8 @@ public class Custom_control_agregarPacienteController extends VBox {
                 allAnt.remove(antSelect.get(0));
             }    
         });
-        
-        
-        
-        btn_cancelar.setOnAction((ActionEvent e) -> {
-           window.close();
-        });
-       // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
-       VBox vb = new VBox();
-       vb.getChildren().addAll(mainPanel);
-       vb.setAlignment(Pos.CENTER);
-       Scene scene = new Scene(vb);
-       window.setScene(scene);
-       window.showAndWait();
     }
+    // Funciones para modificar un paciente
     
     }
     
