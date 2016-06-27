@@ -165,7 +165,9 @@ public class Patient {
         private String diagnostic;
         private Treatment[] treatment;
         private TreatmentResult treatmentResult;
-
+        private boolean shared;
+        private String medicID;
+        
         public Diagnostic(String _id, String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
             this._id = _id;
             this.date = date;

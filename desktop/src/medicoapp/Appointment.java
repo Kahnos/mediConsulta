@@ -18,6 +18,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     private String patientName;
     private String patientLastName;
     private String description;
+    private String sex;
+    private String age;
     
     // Constructores
 

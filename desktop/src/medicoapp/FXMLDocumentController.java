@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,13 +28,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javax.lang.model.element.Element;
 import org.joda.time.DateTime;
 /**
  *
@@ -78,7 +79,10 @@ public class FXMLDocumentController implements Initializable {
     
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
-    Patient[] patients;
+    ArrayList<Patient> patients;
+    
+    @FXML private ListView<String> list_alergias;
+    @FXML private ListView<String> list_ant;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -86,14 +90,19 @@ public class FXMLDocumentController implements Initializable {
         int index = tableCitas.getSelectionModel().getSelectedIndex();
         System.out.println("Index tableCitas: " + index);
         System.out.println("Index tableCitas: " + this.currentDayMedicIndex);
-        if (index == -1)
-        {
+        // Se verifica si el ususario ha seleccionado un slot de la tabla
+        if (index == -1) {
             System.out.println("No ha seleccionado ningun item");
             return;
         }
+        // Se verifica si el slot no esta lleno aun
+        if (!tableCitas.getSelectionModel().getSelectedItem().getDescription().equals("")) {
+            System.out.println("No puedes crear un evento en un evento existente");
+            return;
+        }
+        
         
         // Si el dia no existe en la bd se crea y luego se crea el appointment
-        // NO FUNCIONA AUN
         if (currentDayMedicIndex  == -1 ) {
              System.out.println("El dia no existe. Se tiene que agregar a la BD"); 
              Day newDay = new Day();
@@ -118,7 +127,7 @@ public class FXMLDocumentController implements Initializable {
         
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas, patients, dayMedic.get(currentDayMedicIndex)));
+        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex)));
         Day dauAux = dayMedic.get(currentDayMedicIndex);
         if (cr.isCancel()) {
         } else { 
@@ -168,12 +177,11 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         //Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
         // Se obtienen todos los pacientes de la bd
-        patients = HTTPRequest.getAllPatients();
+        patients = new ArrayList<Patient>(Arrays.asList(HTTPRequest.getAllPatients()));
         //System.out.println(patients[0].getEmail());
         // Se inicializa el calendario y el popup
         DatePicker dp = new DatePicker(LocalDate.now());
@@ -190,16 +198,9 @@ public class FXMLDocumentController implements Initializable {
         Calendar c = Calendar.getInstance();
         c.setTime(dte);
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        
-        for (int i = 0;i < 24; i++) {
-            Appointment a = new Appointment();
-            a.setStart(dateFormat.format(c.getTime()));
-            a.setSlot(dateFormat.format(c.getTime()) + " - ");
-            c.add(Calendar.HOUR_OF_DAY, 1);
-            a.setEnd(dateFormat.format(c.getTime()));
-            a.setSlot(a.getSlot()+dateFormat.format(c.getTime()));
-            tableCitas.getItems().add(a);
-        }
+        vaciarAppointmentsInit(c, dateFormat);
+        InsertarAppointments(c, dateFormat);
+
         // Inicializacion de las columnas de la tabla
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
@@ -208,6 +209,59 @@ public class FXMLDocumentController implements Initializable {
         
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
+                // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
+                vaciarAppointmentsSelect(c, dateFormat);            
+                InsertarAppointments(c, dateFormat);
+                });
+        //------------------- Manejador del evento cuando se oprime una fila de la tableCitas ------------
+       tableCitas.setRowFactory( tv -> {
+            TableRow<Appointment> row = new TableRow<>();
+            
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
+                    Appointment rowData = row.getItem();
+                    ObservableList<String> list1 = FXCollections.observableArrayList();
+                    ObservableList<String> list2 = FXCollections.observableArrayList();
+                    list_alergias.setItems(list1);
+                        list_ant.setItems(list2);
+                    if (rowData.getPatientName().equals("")) {
+                        nombre_p_label.setText("");
+                        apellido_p_label.setText("");
+                        cedula_p_label.setText("");
+                        email_p_label.setText("");
+                        telefono_p_label.setText("");
+                        return;
+                    } 
+                    
+                    // Se busca el paciente de la fila seleccionada
+                    System.out.println();
+                    int i;
+                    for (i = 0; i < patients.size() ; i++) {
+                        //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
+                        if (patients.get(i).getPatientID().equals(rowData.getPatientID()))
+                            break;
+                    }
+                    
+                    nombre_p_label.setText(patients.get(i).getName());
+                    apellido_p_label.setText(patients.get(i).getLastName());
+                    cedula_p_label.setText(patients.get(i).getPatientID());
+                    email_p_label.setText(patients.get(i).getEmail());
+                    telefono_p_label.setText(patients.get(i).getPhoneNumber());
+                    // Se recorren las alergias para mostrarlas en la informacion del paciente 
+                    for (int j = 0; j < patients.get(i).getAllergies().length ; j++) {
+                        list_alergias.getItems().add(patients.get(i).getAllergies()[j]);
+                    }
+                    for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
+                        list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
+                    }
+                }
+            });
+            return row;
+        });
+    
+    }
+    
+    public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
                     // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
                     Date newdte = new Date(2016,06,02,00,00,00);
                     Calendar calen = Calendar.getInstance();
@@ -221,12 +275,32 @@ public class FXMLDocumentController implements Initializable {
                         c.add(Calendar.HOUR_OF_DAY, 1);
                         a.setEnd(dateFormat.format(c.getTime()));
                         a.setSlot(a.getSlot()+dateFormat.format(c.getTime()));
-                        tableCitas.getItems().set(l, a);
+                        this.tableCitas.getItems().add(a);
                     }
-            
-            
+            }
+
+    public void vaciarAppointmentsSelect(Calendar c, DateFormat dateFormat){
+                    // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
+                    Date newdte = new Date(2016,06,02,00,00,00);
+                    Calendar calen = Calendar.getInstance();
+                    c.setTime(newdte);
+                    DateFormat dateformt = new SimpleDateFormat("HH:mm");
+
+                    for (int l = 0;l < 24; l++) {
+                        Appointment a = new Appointment();
+                        a.setStart(dateFormat.format(c.getTime()));
+                        a.setSlot(dateFormat.format(c.getTime()) + " - ");
+                        c.add(Calendar.HOUR_OF_DAY, 1);
+                        a.setEnd(dateFormat.format(c.getTime()));
+                        a.setSlot(a.getSlot()+dateFormat.format(c.getTime()));
+                        this.tableCitas.getItems().set(l,a);
+                    }
+        
+    }
+    
+    public void InsertarAppointments(Calendar c, DateFormat dateFormat){    
                int i,j;
-               // Se hace el parce de ISOdate a 
+                
                if (dayMedic.isEmpty()){
                    System.out.println("dayMedic esta vacio");
                    currentDayMedicIndex = -1;
@@ -281,14 +355,7 @@ public class FXMLDocumentController implements Initializable {
                    String strStart = aux.getStart();
                    
                    aux.setSlot(aux.getStart() + " - " + aux.getEnd());
-                  
-                    // Se imprimen los datos para verificar que son correctos
-                   /*System.out.println("Appointment " + j + ":");
-                   System.out.println("Start: " + aux.getStart());
-                   System.out.println("End: " + aux.getEnd());
-                   System.out.println("slot: " + aux.getSlot());
-                   System.out.println("Type: " + aux.getEventType());
-                   */
+                 
                    // Se verifica si es el slot correspondiente y se inserta ç
                    String strSlot;
                    for (int k = 0;k < tableCitas.getItems().size();k++) {
@@ -296,7 +363,7 @@ public class FXMLDocumentController implements Initializable {
                        if (aux.getSlot().equals(strSlot)) {
                            // Si es una hora de descanso o el doctor no va a estar
                            if (!aux.getEventType().equals("Consulta")){
-                               aux.setDescription(aux.getEventType());
+                               aux.setDescription(aux.getDescription());
                            }
                            //aux.print();
                            // Se crea un nuevo appointemenet y se inserta en la posicion del slot
@@ -307,51 +374,9 @@ public class FXMLDocumentController implements Initializable {
                            tableCitas.getItems().set(k, appSlot);
                            break;
                        }
-                   
                    }
-                   
-                   
                }
-               
-        });
-        //------------------- Manejador del evento cuando se oprime una fila de la tableCitas ------------
-       tableCitas.setRowFactory( tv -> {
-            TableRow<Appointment> row = new TableRow<>();
-            
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
-                    Appointment rowData = row.getItem();
-                    
-                    if (rowData.getPatientName().equals("")) {
-                        nombre_p_label.setText("");
-                        apellido_p_label.setText("");
-                        cedula_p_label.setText("");
-                        email_p_label.setText("");
-                        telefono_p_label.setText("");
-                        return;
-                    } 
-                    
-                    // Se busca el paciente de la fila seleccionada
-                    System.out.println();
-                    int i;
-                    for (i = 0; i < patients.length ; i++ ) {
-                        //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        if (patients[i].getPatientID().equals(rowData.getPatientID()))
-                            break;
-                    }
-                    
-                    nombre_p_label.setText(patients[i].getName());
-                    apellido_p_label.setText(patients[i].getLastName());
-                    cedula_p_label.setText(patients[i].getPatientID());
-                    email_p_label.setText(patients[i].getEmail());
-                    telefono_p_label.setText(patients[i].getPhoneNumber());
-                    //rowData.print();
-                    //System.out.println(rowData + "\n" + rowData.getPatientName() + "\n" + rowData.getDescription() + " " + row.getIndex());
-                }
-            });
-            return row ;
-        });
-
+    
     }
     
 }
