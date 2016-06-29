@@ -32,9 +32,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import medicoapp.Patient.Diagnostic.Treatment;
 import org.joda.time.DateTime;
 /**
  *
@@ -83,6 +86,24 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML private ListView<String> list_alergias;
     @FXML private ListView<String> list_ant;
+    
+    // Componenetes de la tab diagnosticos
+    @FXML private TextArea diagnostico_tx;
+    
+    @FXML private TableView<Treatment> table_tratamiento;
+    @FXML private TableColumn<Treatment, String> tab_medicamento;
+    @FXML private TableColumn<Treatment, String> tab_cantidad;
+    @FXML private TableColumn<Treatment, String> tab_duracion;
+    @FXML private TableColumn<Treatment, String> tab_frecuencia;
+    
+    @FXML private TextField medicamento_tx;
+    @FXML private TextField cantidad_tx;
+    @FXML private TextField duracion_tx;
+    @FXML private TextField frecuencia_tx;
+    
+    @FXML private Button btn_guardard;
+    @FXML private Button btn_addt;
+    
     
     @FXML
     private void crearEvento(ActionEvent event) {

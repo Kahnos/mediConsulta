@@ -165,6 +165,8 @@ public class crearCita extends VBox {
                 np.setDescription(motivo_txta.getText());
                 // Tipo de evento 
                 np.setEventType(tipo_e_cb.getValue());
+                // sexo
+                
             }
             // POST: agregar una cita al dia
             // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
