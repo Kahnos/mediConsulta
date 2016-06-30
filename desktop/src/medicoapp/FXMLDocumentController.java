@@ -276,13 +276,25 @@ public class FXMLDocumentController implements Initializable {
                     for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
                         list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
                     }
+
+                    // Se busca el diagnostico del paciente correspondiente a la cita
+                    Diagnostic d = null;
+                    int j;
+                    for (j = 0; j < patients.get(i).getDiagnostics().length ; j++) {
+                        if (patients.get(i).getDiagnostics()[j].getAppointmentID().equals(rowData.getId())) {
+                            d = patients.get(i).getDiagnostics()[j];
+                            break;
+                        }
+                    }
                     // Si tiene diagnostico en la bd se muestra la informacion y se deshabilita las pestañas
-                    
-                }
-                
-                
-                
-                
+                    if (d == null || d.getDiagnostic().equals("")) {
+                        enablePest();
+                        vaciarPest();
+                    } else {
+                        disableHist();
+                        fillDiagnostico(d);
+                    }
+                }   
             });
             return row;
         });
@@ -305,7 +317,7 @@ public class FXMLDocumentController implements Initializable {
             }
             
             Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
-                                           chk_shared.isSelected(),"22824486"); 
+                                          chk_shared.isSelected(),"22824486", a.getId()); 
             
             String s = null;
             int i;
@@ -473,15 +485,50 @@ public class FXMLDocumentController implements Initializable {
     }
     
     public void disableHist() {
-        pest_histM.setDisable(true);
-        pest_consulta.setDisable(true);
-        diagnostico_tx.setDisable(true);
+        diagnostico_tx.setEditable(false);
+        medicamento_tx.setEditable(false);
+        cantidad_tx.setEditable(false);
+        duracion_tx.setEditable(false);
+        frecuencia_tx.setEditable(false);
+        medicamento_tx.setText("");
+        cantidad_tx.setText("");
+        duracion_tx.setText("");
+        frecuencia_tx.setText("");
+        btn_addt.setDisable(true);
+        btn_delt.setDisable(true);
+        btn_guardard.setDisable(true);
+        chk_shared.setSelected(false);
     }
     
     public void enablePest() {
+        diagnostico_tx.setEditable(true);
+        medicamento_tx.setEditable(true);
+        cantidad_tx.setEditable(true);
+        duracion_tx.setEditable(true);
+        frecuencia_tx.setEditable(true);
         pest_histM.setDisable(false);
         pest_consulta.setDisable(false);
         diagnostico_tx.setDisable(false);
+        btn_addt.setDisable(false);
+        btn_delt.setDisable(false);
+        btn_guardard.setDisable(false);
+    }
+    
+    public void vaciarPest() {
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        diagnostico_tx.setText("");
+        chk_shared.setSelected(false);
+        table_tratamiento.setItems(list1);
+    }
+    
+    public void fillDiagnostico(Diagnostic d) {
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        diagnostico_tx.setText(d.getDiagnostic());
+        chk_shared.setSelected(d.isShared());
+        for (int i = 0; i < d.getTreatment().length; i++) {
+            list1.add(d.getTreatment()[i]);
+        }
+        table_tratamiento.setItems(list1);
     }
     
     public LocalDate ISO2LocalDate(String iso) {

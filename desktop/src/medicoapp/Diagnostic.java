@@ -110,9 +110,17 @@ public class Diagnostic {
         this.medicID = medicID;
     }
 
+    public String getAppointmentID() {
+        return appointmentID;
+    }
+
+    public void setAppointmentID(String appointmentID) {
+        this.appointmentID = appointmentID;
+    }
+
     @Override
     public String toString() {
-        return "Diagnostic{" + "_id=" + _id + ", date=" + date + ", diagnostic=" + diagnostic + ", treatment=" + treatment + ", treatmentResult=" + treatmentResult + ", shared=" + shared + ", medicID=" + medicID + '}';
+        return "Diagnostic{" + "_id=" + _id + ", date=" + date + ", diagnostic=" + diagnostic + ", treatment=" + treatment + ", treatmentResult=" + treatmentResult + ", shared=" + shared + ", medicID=" + medicID + ", appointmentID=" + appointmentID + '}';
     }
     
 }
