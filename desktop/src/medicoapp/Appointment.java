@@ -18,8 +18,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     private String patientName;
     private String patientLastName;
     private String description;
-    private String sex;
-    private String age;
+    private String patientSex;
+    private String patientAge;
     
     // Constructores
 
@@ -71,8 +71,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.patientLastName = patientLastName;
         this.description = description;
         this.slot = slot;
-        this.sex = sex;
-        this.age = age;
+        this.patientSex = sex;
+        this.patientAge = age;
     }
     
     public String getId() {
@@ -117,12 +117,12 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         return slot;
     }
 
-    public String getSex() {
-        return sex;
+    public String getPatientSex() {
+        return patientSex;
     }
 
-    public String getAge() {
-        return age;
+    public String getPatientAge() {
+        return patientAge;
     }
     
     // Setters 
@@ -159,12 +159,12 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.slot = slot;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setPatientSex(String patientSex) {
+        this.patientSex = patientSex;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setPatientAge(String patientAge) {
+        this.patientAge = patientAge;
     }
     
     public void print(){
@@ -181,7 +181,7 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
 
     @Override
     public String toString() {
-        return "Appointment{" + "_id=" + _id + ", start=" + start + ", end=" + end + ", slot=" + slot + ", eventType=" + eventType + ", patientID=" + patientID + ", patientName=" + patientName + ", patientLastName=" + patientLastName + ", description=" + description + ", sex=" + sex + ", age=" + age + '}';
+        return "Appointment{" + "_id=" + _id + ", start=" + start + ", end=" + end + ", slot=" + slot + ", eventType=" + eventType + ", patientID=" + patientID + ", patientName=" + patientName + ", patientLastName=" + patientLastName + ", description=" + description + ", sex=" + patientSex + ", age=" + patientAge + '}';
     }
     
     @Override 

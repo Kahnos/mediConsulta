@@ -1,7 +1,5 @@
 package medicoapp;
 
-import java.util.Date;
-
 /**
  * Clase Patient: Contiene la información de un Patient.
  * @author Kahnos <josed1305@gmail.com>

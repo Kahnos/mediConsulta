@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import medicoapp.Diagnostic.TreatmentResult;
 
 /**
  * Contiene todas las solicitudes HTTP al servidor. Código basado en la solicitud HTTP de Sunshine para el curso de aplicaciones Android en Udacity.
@@ -200,7 +201,7 @@ public final class HTTPRequest {
         Day day;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
+        // Se realiza la solicitud POST de un día del médico.
         String DayString = executeRequest( "days", gson.toJson(dayParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -215,7 +216,7 @@ public final class HTTPRequest {
     public static Day deleteAppointment( String dayID, String appointmentID ){  
         Day day;
         
-        // Se realiza la solicitud GET de los días del médico.
+        // Se realiza la solicitud DELETE de los días del médico.
         String DayString = executeRequest( "days/" + dayID + "/" + appointmentID , "DELETE" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -232,7 +233,7 @@ public final class HTTPRequest {
         Day day;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
+        // Se realiza la solicitud PUT de los días del médico.
         String DayString = executeRequest( "days/" + dayID, gson.toJson(dayParameter), "PUT" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -248,7 +249,7 @@ public final class HTTPRequest {
         Day day;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
+        // Se realiza la solicitud POST de los días del médico.
         String dayString = executeRequest( "days/" + dayID, gson.toJson(appointmentParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -264,7 +265,6 @@ public final class HTTPRequest {
     public static Config getConfig( String medicID ){  
         Config config;
         
-        // Se realiza la solicitud GET de los días del médico.
         String configString = executeRequest( "configs/" + medicID, "GET" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -281,7 +281,6 @@ public final class HTTPRequest {
         Config config;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
         String configString = executeRequest( "configs", gson.toJson(configParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -297,7 +296,6 @@ public final class HTTPRequest {
         Config config;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
         String configString = executeRequest( "configs/" + configID, gson.toJson(configParameter), "PUT" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -313,7 +311,6 @@ public final class HTTPRequest {
     public static Patient[] getAllPatients(){  
         Patient[] patients;
         
-        // Se realiza la solicitud GET de los días del médico.
         String patientString = executeRequest( "patients", "GET" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -329,7 +326,6 @@ public final class HTTPRequest {
     public static Patient getPatient( String patientID ){  
         Patient patient;
         
-        // Se realiza la solicitud GET de los días del médico.
         String patientString = executeRequest( "patients/" + patientID, "GET" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -346,7 +342,6 @@ public final class HTTPRequest {
         Patient patient;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
         String patientString = executeRequest( "patients/" + patientID, gson.toJson(patientParameter), "PUT" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -362,7 +357,6 @@ public final class HTTPRequest {
         Patient patient;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
         String patientString = executeRequest( "patients", gson.toJson(patientParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
@@ -374,15 +368,29 @@ public final class HTTPRequest {
     }
     
     // ---------- Solicitudes relacionadas a los diagnósticos. ----------
-    // Obtiene la información específica de un paciente. - GET api/patients/:id
-    /*public static Patient.Diagnostic getDiagnostic( String patientID, String diagnosticID ){  
+    // Obtiene la información específica de un diagnóstico. - GET api/patients/:id
+    public static Diagnostic getDiagnostic( String patientID, String diagnosticID ){  
         Diagnostic diagnostic;
         
-        // Se realiza la solicitud GET de los días del médico.
-        String patientString = executeRequest( "patients/" + patientID + "/" + diagnosticID, "GET" );
+        String diagnosticString = executeRequest( "patients/" + patientID + "/" + diagnosticID, "GET" );
         
         // Se transforma el resultado en JSON a objeto.
         Gson gson = new GsonBuilder().create();
+        diagnostic = gson.fromJson(diagnosticString, Diagnostic.class);
+        System.out.println("Object to String: " + diagnostic);
+        System.out.println("Object to JSON: " + gson.toJson(diagnostic));
+        
+        return diagnostic;
+    }
+    
+    // Inserta un nuevo diagnóstico y retorna al paciente actualizado. - POST api/patients/:id
+    public static Patient addDiagnostic( String patientID, Diagnostic diagnosticParameter ){ 
+        Patient patient;
+        Gson gson = new GsonBuilder().create();
+                
+        String patientString = executeRequest( "patients/" + patientID, gson.toJson(diagnosticParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
         patient = gson.fromJson(patientString, Patient.class);
         System.out.println("Object to String: " + patient);
         System.out.println("Object to JSON: " + gson.toJson(patient));
@@ -390,20 +398,68 @@ public final class HTTPRequest {
         return patient;
     }
     
-    // Inserta un nuevo paciente. - POST api/patients/
-    public static Patient addPatient( Patient patientParameter ){ 
-        Patient patient;
+    // Inserta un nuevo diagnóstico y retorna al paciente actualizado. - POST api/patients/:id/:diagnosticID
+    public static Diagnostic addFeedback( String patientID, String diagnosticID, TreatmentResult resultParameter ){ 
+        Diagnostic diagnostic;
         Gson gson = new GsonBuilder().create();
                 
-        // Se realiza la solicitud GET de los días del médico.
-        String patientString = executeRequest( "patients", gson.toJson(patientParameter), "POST" );
+        String diagnosticString = executeRequest( "patients/" + patientID + "/" + diagnosticID, gson.toJson(resultParameter), "POST" );
         
         // Se transforma el resultado en JSON a objeto.
-        patient = gson.fromJson(patientString, Patient.class);
-        System.out.println("Object to String: " + patient);
-        System.out.println("Object to JSON: " + gson.toJson(patient));
+        diagnostic = gson.fromJson(diagnosticString, Diagnostic.class);
+        System.out.println("Object to String: " + diagnostic);
+        System.out.println("Object to JSON: " + gson.toJson(diagnostic));
         
-        return patient;
-    }*/
+        return diagnostic;
+    }
+    
+    // ---------- Solicitudes relacionadas a los usuarios. ----------
+    // Obtiene la información específica de un usuario. - GET api/users/:id
+    public static User getUser( String userID ){  
+        User user;
+        
+        // Se realiza la solicitud GET del usuario.
+        String userString = executeRequest( "users/" + userID, "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        user = gson.fromJson(userString, User.class);
+        System.out.println("Object to String: " + user);
+        System.out.println("Object to JSON: " + gson.toJson(user));
+        
+        return user;
+    }
+    
+    // Modifica la información de un usuario. - PUT api/users/:id
+    public static User updatePatient( String userID, User userParameter ){  //
+        User user;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud PUT del usuario.
+        String userString = executeRequest( "users/" + userID, gson.toJson(userParameter), "PUT" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        user = gson.fromJson(userString, User.class);
+        System.out.println("Object to String: " + user);
+        System.out.println("Object to JSON: " + gson.toJson(user));
+        
+        return user;
+    }
+    
+    // Inserta un nuevo usuario. - POST api/users/
+    public static User addUser( User userParameter ){ 
+        User user;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud POST del usuario.
+        String userString = executeRequest( "users", gson.toJson(userParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        user = gson.fromJson(userString, User.class);
+        System.out.println("Object to String: " + user);
+        System.out.println("Object to JSON: " + gson.toJson(user));
+        
+        return user;
+    }
     
 }
