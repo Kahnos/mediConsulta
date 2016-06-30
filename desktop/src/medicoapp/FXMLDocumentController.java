@@ -29,6 +29,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -45,40 +47,24 @@ import org.joda.time.DateTime;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Button btnCrearEvento;
-    @FXML
-    private Button btnEliminarEvento;
-    @FXML
-    private Button btnVerificarCitas;
-    @FXML
-    private Button btnRegistrarUsusarios;
-    @FXML
-    private TableView<Appointment> tableCitas;
-    @FXML
-    TableColumn<Appointment, String> nombreColumn;
-    @FXML
-    TableColumn<Appointment, String> horaColumn;
-    @FXML
-    TableColumn<Appointment, String> motivoColumn;
-    @FXML
-    TableColumn<Appointment, String> apellidoColumn;
+    @FXML private Button btnCrearEvento;
+    @FXML private Button btnEliminarEvento;
+    @FXML private Button btnVerificarCitas;
+    @FXML private Button btnRegistrarUsusarios;
+    @FXML private TableView<Appointment> tableCitas;
+    @FXML TableColumn<Appointment, String> nombreColumn;
+    @FXML TableColumn<Appointment, String> horaColumn;
+    @FXML TableColumn<Appointment, String> motivoColumn;
+    @FXML TableColumn<Appointment, String> apellidoColumn;
     // @FXML
     private DatePicker date;
-    @FXML
-    private VBox Vmenu;
-    @FXML
-    private AnchorPane pacientes_pane; 
-    @FXML
-    private Label nombre_p_label;
-    @FXML
-    private Label apellido_p_label;
-    @FXML
-    private Label cedula_p_label;
-    @FXML
-    private Label email_p_label;
-    @FXML
-    private Label telefono_p_label;
+    @FXML private VBox Vmenu;
+    @FXML private AnchorPane pacientes_pane; 
+    @FXML private Label nombre_p_label;
+    @FXML private Label apellido_p_label;
+    @FXML private Label cedula_p_label;
+    @FXML private Label email_p_label;
+    @FXML private Label telefono_p_label;
     
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
@@ -104,6 +90,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Button btn_guardard;
     @FXML private Button btn_addt;
     
+    @FXML private TabPane tabPane_info;
+    @FXML private Tab pest_histM;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -198,7 +186,7 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Obtenemos los deias del medico y los mete en el arreglo dayMedic
+        // Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
         // Se obtienen todos los pacientes de la bd
@@ -226,8 +214,8 @@ public class FXMLDocumentController implements Initializable {
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
         motivoColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        // Manejador de los eventos de el calendario
         
+        // Manejador de los eventos de el calendario
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
                 // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
@@ -280,6 +268,27 @@ public class FXMLDocumentController implements Initializable {
             return row;
         });
     
+        //----------------------- Inicializacion de los componenetes de diagnosticos -------------------------------
+        tab_medicamento.setCellValueFactory(new PropertyValueFactory<>("medication"));
+        tab_cantidad.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        tab_duracion.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        tab_frecuencia.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+        
+       //
+       
+        // Manejadores de eventos de los botones
+        btn_guardard.setOnAction(e -> {
+            System.out.println("Se supone que aqui se guarda en la BD");
+        });
+        
+        btn_addt.setOnAction(e -> {
+            Treatment t = new Treatment(medicamento_tx.getText(), cantidad_tx.getText(),
+                                        duracion_tx.getText(),frecuencia_tx.getText());
+        });
+        // Llenar los inputs cuando se seleccione un appointment
+        /*pest_histM.setOnSelectionChanged(e -> {
+            System.out.println("Dentro o fuera" + pest_histM.isSelected());
+        });*/
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){

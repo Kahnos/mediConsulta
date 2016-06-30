@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Patient {
     
+    
     private String _id;
     private String patientID;
     private String name;
@@ -227,6 +228,13 @@ public class Patient {
 
             public Treatment(String _id, String medication, String quantity, String duration, String frequency) {
                 this._id = _id;
+                this.medication = medication;
+                this.quantity = quantity;
+                this.duration = duration;
+                this.frequency = frequency;
+            }
+            
+            public Treatment(String medication, String quantity, String duration, String frequency) {
                 this.medication = medication;
                 this.quantity = quantity;
                 this.duration = duration;
