@@ -34,7 +34,24 @@ public class Diagnostic {
         this.shared = shared;
         this.medicID = medicID;
     }
+    
+    public Diagnostic(String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult, boolean shared, String medicID) {
+        this.date = date;
+        this.diagnostic = diagnostic;
+        this.treatment = treatment;
+        this.treatmentResult = treatmentResult;
+        this.shared = shared;
+        this.medicID = medicID;
+    }
 
+    public Diagnostic(String date, String diagnostic, Treatment[] treatment, boolean shared, String medicID) {
+        this.date = date;
+        this.diagnostic = diagnostic;
+        this.treatment = treatment;
+        this.shared = shared;
+        this.medicID = medicID;
+    }
+    
     public String getId() {
         return _id;
     }

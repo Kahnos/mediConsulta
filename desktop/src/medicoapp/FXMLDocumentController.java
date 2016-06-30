@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -36,6 +37,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -92,6 +95,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Tab pest_histM;
     @FXML private Tab pest_consulta;
     @FXML private Tab pest_paciente;
+    @FXML private CheckBox chk_shared;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -282,13 +286,33 @@ public class FXMLDocumentController implements Initializable {
         tab_cantidad.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         tab_duracion.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tab_frecuencia.setCellValueFactory(new PropertyValueFactory<>("frequency"));
-        
-       //
        
         // Manejadores de eventos de los botones
         btn_guardard.setOnAction(e -> {
-            // Guardar el diagnosico en la lBD y en la estructura del programa
-            //HTTPRequest.addDiagnostic(patientID, diagnosticParameter);
+            // Se asignan los tratamientos al arreglo
+            ObservableList<Treatment> listt = table_tratamiento.getItems();
+            ObservableList<Appointment> lists = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment a = lists.get(0);
+            Treatment[] t = new Treatment[listt.size()]; 
+            for (int i = 0; i < listt.size() ; i++) {
+                t[i] = listt.get(i);
+            }
+            
+            Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
+                                           chk_shared.isSelected(),"22824486"); 
+            
+            String s = null;
+            int i;
+            for (i = 0; i < patients.size() ; i++) {
+                if (a.getPatientID().equals(patients.get(i).getPatientID())) {
+                    s = patients.get(i).getId();
+                    break;
+                }
+            }
+            
+            //Guardar el diagnosico en la lBD y en la estructura del programa
+             patients.set(i, HTTPRequest.addDiagnostic(s, d));
+             disablePest();
         });
         
         btn_addt.setOnAction(e -> {
@@ -445,5 +469,19 @@ public class FXMLDocumentController implements Initializable {
     public void enablePest() {
         pest_histM.setDisable(false);
         pest_consulta.setDisable(false);
+        diagnostico_tx.setDisable(false);
+    }
+    
+    public LocalDate ISO2LocalDate(String iso) {
+        DateTime isodt = new DateTime(iso);
+        Date dt = isodt.toDate();
+        LocalDate local = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return local;
+    }
+    
+    public String localdate2ISO(LocalDate local) {
+        Date d = Date.from(local.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        DateTime dt = new DateTime(d);
+        return dt.toString();
     }
 }
