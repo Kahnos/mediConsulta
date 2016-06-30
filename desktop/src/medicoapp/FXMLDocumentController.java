@@ -182,7 +182,13 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
         ap.display(patients);
-        
+        dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
+        Date dte = new Date(2016,06,02,00,00,00);
+        Calendar c = Calendar.getInstance();
+        c.setTime(dte);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        vaciarAppointmentsInit(c, dateFormat);
+        InsertarAppointments(c, dateFormat);
     }
    
     @Override
