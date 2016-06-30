@@ -373,4 +373,37 @@ public final class HTTPRequest {
         return patient;
     }
     
+    // ---------- Solicitudes relacionadas a los diagnósticos. ----------
+    // Obtiene la información específica de un paciente. - GET api/patients/:id
+    /*public static Patient.Diagnostic getDiagnostic( String patientID, String diagnosticID ){  
+        Diagnostic diagnostic;
+        
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients/" + patientID + "/" + diagnosticID, "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        patient = gson.fromJson(patientString, Patient.class);
+        System.out.println("Object to String: " + patient);
+        System.out.println("Object to JSON: " + gson.toJson(patient));
+        
+        return patient;
+    }
+    
+    // Inserta un nuevo paciente. - POST api/patients/
+    public static Patient addPatient( Patient patientParameter ){ 
+        Patient patient;
+        Gson gson = new GsonBuilder().create();
+                
+        // Se realiza la solicitud GET de los días del médico.
+        String patientString = executeRequest( "patients", gson.toJson(patientParameter), "POST" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        patient = gson.fromJson(patientString, Patient.class);
+        System.out.println("Object to String: " + patient);
+        System.out.println("Object to JSON: " + gson.toJson(patient));
+        
+        return patient;
+    }*/
+    
 }

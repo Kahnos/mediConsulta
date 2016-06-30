@@ -44,6 +44,11 @@ public class Config {
     public void setDayConfigs(dayConfig[] dayConfigs) {
         this.dayConfigs = dayConfigs;
     }
+
+    @Override
+    public String toString() {
+        return "Config{" + "_id=" + _id + ", medicID=" + medicID + ", dayConfigs=" + dayConfigs + '}';
+    }
     
     // Clase que contiene la configuración de un día específico. Subclase de Config.
     public class dayConfig {
@@ -101,6 +106,10 @@ public class Config {
         public void setSlotLength(String slotLength) {
             this.slotLength = slotLength;
         }
-        
+
+        @Override
+        public String toString() {
+            return "dayConfig{" + "_id=" + _id + ", day=" + day + ", scheduleStart=" + scheduleStart + ", scheduleEnd=" + scheduleEnd + ", slotLength=" + slotLength + '}';
+        }
     }
 }

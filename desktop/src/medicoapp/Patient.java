@@ -37,7 +37,8 @@ public class Patient {
 
     
     
-    public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
+    public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex,
+            Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
         this._id = _id;
         this.patientID = patientID;
         this.name = name;
@@ -156,6 +157,11 @@ public class Patient {
     public void setDiagnostics(Diagnostic[] diagnostics) {
         this.diagnostics = diagnostics;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" + "_id=" + _id + ", patientID=" + patientID + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", email=" + email + ", phoneNumber=" + phoneNumber + ", sex=" + sex + ", weight=" + weight + ", height=" + height + ", medicalBackgrounds=" + medicalBackgrounds + ", allergies=" + allergies + ", diagnostics=" + diagnostics + '}';
+    }
     
     // Clase Diagnostic: Contiene la información de un diagnóstico.
     public class Diagnostic {
@@ -176,6 +182,17 @@ public class Patient {
             this.treatmentResult = treatmentResult;
         }
 
+        public Diagnostic(String _id, String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult,
+                boolean shared, String medicID) {
+            this._id = _id;
+            this.date = date;
+            this.diagnostic = diagnostic;
+            this.treatment = treatment;
+            this.treatmentResult = treatmentResult;
+            this.shared = shared;
+            this.medicID = medicID;
+        }
+        
         public String getId() {
             return _id;
         }
@@ -214,6 +231,27 @@ public class Patient {
 
         public void setTreatmentResult(TreatmentResult treatmentResult) {
             this.treatmentResult = treatmentResult;
+        }
+
+        public boolean isShared() {
+            return shared;
+        }
+
+        public void setShared(boolean shared) {
+            this.shared = shared;
+        }
+
+        public String getMedicID() {
+            return medicID;
+        }
+
+        public void setMedicID(String medicID) {
+            this.medicID = medicID;
+        }
+
+        @Override
+        public String toString() {
+            return "Diagnostic{" + "_id=" + _id + ", date=" + date + ", diagnostic=" + diagnostic + ", treatment=" + treatment + ", treatmentResult=" + treatmentResult + ", shared=" + shared + ", medicID=" + medicID + '}';
         }
         
         // Clase Treatment: Contiene la información de un tratamiento.
@@ -272,7 +310,11 @@ public class Patient {
             public void setFrequency(String frequency) {
                 this.frequency = frequency;
             }
-        
+
+            @Override
+            public String toString() {
+                return "Treatment{" + "_id=" + _id + ", medication=" + medication + ", quantity=" + quantity + ", duration=" + duration + ", frequency=" + frequency + '}';
+            }
         }
         
         // Clase TreatmentResult: Contiene la información del feedback de un tratamiento.
@@ -301,7 +343,11 @@ public class Patient {
             public void setRating(int rating) {
                 this.rating = rating;
             }
-            
+
+            @Override
+            public String toString() {
+                return "TreatmentResult{" + "_id=" + _id + ", rating=" + rating + '}';
+            }
         }
     }
     
