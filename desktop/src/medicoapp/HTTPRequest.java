@@ -15,8 +15,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
-import medicoapp.Patient.Diagnostic;
-import medicoapp.Patient.Diagnostic.TreatmentResult;
 
 /**
  * Contiene todas las solicitudes HTTP al servidor. Código basado en la solicitud HTTP de Sunshine para el curso de aplicaciones Android en Udacity.
