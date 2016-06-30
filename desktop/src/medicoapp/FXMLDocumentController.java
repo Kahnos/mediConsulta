@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package medicoapp;
 
 import com.google.gson.Gson;
@@ -29,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -40,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.joda.time.DateTime;
+
 /**
  *
  * @author Rusben Guzman
@@ -88,9 +85,13 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML private Button btn_guardard;
     @FXML private Button btn_addt;
+    @FXML private Button btn_delt;
+    
     
     @FXML private TabPane tabPane_info;
     @FXML private Tab pest_histM;
+    @FXML private Tab pest_consulta;
+    @FXML private Tab pest_paciente;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -181,10 +182,12 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
         ap.display(patients);
+        
     }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        disablePest();
         // Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
@@ -238,9 +241,10 @@ public class FXMLDocumentController implements Initializable {
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
+                        disablePest();
                         return;
                     } 
-                    
+                    enablePest();
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
@@ -277,17 +281,26 @@ public class FXMLDocumentController implements Initializable {
        
         // Manejadores de eventos de los botones
         btn_guardard.setOnAction(e -> {
-            System.out.println("Se supone que aqui se guarda en la BD");
+            // Guardar el diagnosico en la lBD y en la estructura del programa
+            //HTTPRequest.addDiagnostic(patientID, diagnosticParameter);
         });
         
         btn_addt.setOnAction(e -> {
+            // validar los datos de los imputs
+            if ((medicamento_tx.getText().equals("") || cantidad_tx.getText().equals("") ||
+                 duracion_tx.getText().equals("") || frecuencia_tx.getText().equals("")))
+                return;
             Treatment t = new Treatment(medicamento_tx.getText(), cantidad_tx.getText(),
                                         duracion_tx.getText(),frecuencia_tx.getText());
+            table_tratamiento.getItems().add(t);
         });
-        // Llenar los inputs cuando se seleccione un appointment
-        /*pest_histM.setOnSelectionChanged(e -> {
-            System.out.println("Dentro o fuera" + pest_histM.isSelected());
-        });*/
+        btn_delt.setOnAction(e -> {
+            // validar los datos de los imputs
+            ObservableList l,s;
+            l = table_tratamiento.getItems();
+            s = table_tratamiento.getSelectionModel().getSelectedItems();
+            l.remove(s.get(0));
+        });
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
@@ -408,4 +421,23 @@ public class FXMLDocumentController implements Initializable {
     
     }
     
+    public void disablePest() {
+        SingleSelectionModel<Tab> selectionModel = tabPane_info.getSelectionModel();
+        pest_histM.setDisable(true);
+        pest_consulta.setDisable(true);
+        diagnostico_tx.setDisable(true);
+        diagnostico_tx.setText("");
+        medicamento_tx.setText("");
+        cantidad_tx.setText("");
+        duracion_tx.setText("");
+        frecuencia_tx.setText("");
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        table_tratamiento.setItems(list1);
+        selectionModel.select(pest_paciente);
+    }
+    
+    public void enablePest() {
+        pest_histM.setDisable(false);
+        pest_consulta.setDisable(false);
+    }
 }
