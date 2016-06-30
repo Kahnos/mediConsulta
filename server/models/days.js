@@ -10,10 +10,12 @@ var appointmentSchema = new mongoose.Schema({
     start: { type: String, trim: true },
     end: { type: String, trim: true },
     eventType: { type: String, trim: true },
+    description: { type: String, trim: true },
     patientID: { type: String, trim: true },
     patientName: { type: String, trim: true },
     patientLastName: { type: String, trim: true },
-    description: { type: String, trim: true }
+    patientSex: { type: String, trim: true },  // Used for statistics.
+    patientAge: { type: Number }               // Used for statistics.
 });
 
 // Contiene la información de cada día del calendario.

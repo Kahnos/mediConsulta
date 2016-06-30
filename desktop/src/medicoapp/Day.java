@@ -72,8 +72,11 @@ public class Day {
     public void setDayAppointments(Appointment[] dayAppointments) {
         this.dayAppointments = dayAppointments;
     }
-    
-    // Funciones adicionales
+
+    @Override
+    public String toString() {
+        return "Day{" + "_id=" + _id + ", date=" + date + ", medicID=" + medicID + ", full=" + full + ", dayAppointments=" + dayAppointments + '}';
+    }
     
     /*
      * getDayAppointmentPos: devuelve la cita en la posición pos en el arreglo de citas 

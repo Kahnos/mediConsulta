@@ -7,6 +7,7 @@ desktop/dist/
 desktop/nbdist/
 desktop/nbactions.xml
 desktop/.nb-gradle/
+.gitignore
 
 # Windows image file caches
 Thumbs.db

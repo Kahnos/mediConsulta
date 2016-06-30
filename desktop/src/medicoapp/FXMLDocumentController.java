@@ -39,7 +39,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import medicoapp.Patient.Diagnostic.Treatment;
 import org.joda.time.DateTime;
 /**
  *
