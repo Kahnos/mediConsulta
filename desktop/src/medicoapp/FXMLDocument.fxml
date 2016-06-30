@@ -52,7 +52,7 @@
                <right>
                   <TabPane fx:id="tabPane_info" prefHeight="421.0" prefWidth="303.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                     <tabs>
-                      <Tab text="Pacientes">
+                      <Tab fx:id="pest_paciente" text="Pacientes">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="303.0">
                                  <children>
@@ -114,14 +114,16 @@
                                     <TextField fx:id="duracion_tx" layoutX="169.0" layoutY="347.0" prefHeight="25.0" prefWidth="55.0" />
                                     <TextField fx:id="frecuencia_tx" layoutX="226.0" layoutY="347.0" prefHeight="25.0" prefWidth="79.0" />
                                     <Button fx:id="btn_addt" layoutX="137.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Agregar" />
-                                    <Label fx:id="label_errord" layoutX="6.0" layoutY="373.0" prefHeight="17.0" prefWidth="297.0" text="mensaje error" />
                                     <Button fx:id="btn_delt" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Eliminar" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Consultas previas">
+                        <Tab fx:id="pest_consulta" text="Consultas previas">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="393.0" prefWidth="299.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="393.0" prefWidth="299.0">
+                                 <children>
+                                    <ListView fx:id="list_consultas" layoutX="13.0" layoutY="14.0" prefHeight="360.0" prefWidth="277.0" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
