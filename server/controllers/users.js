@@ -33,7 +33,8 @@ exports.addUser = function(req, res) {
         birthdate : req.body.birthdate,
         email : req.body.email,
         phoneNumber : req.body.phoneNumber,
-        sex : req.body.sex
+        sex : req.body.sex,
+        medicID : req.body.medicID
     });
 
     user.save(function(err, user) {
@@ -62,6 +63,7 @@ exports.updateUser = function(req, res) {
         user.email = req.body.email || user.email;
         user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
         user.sex = req.body.sex || user.sex;
+        user.medicID = req.body.medicID || user.medicID;
 
         user.save(function(err) {
             if ( err )
