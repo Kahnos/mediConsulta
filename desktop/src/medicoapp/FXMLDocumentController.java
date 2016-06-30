@@ -29,9 +29,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -42,40 +46,24 @@ import org.joda.time.DateTime;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Button btnCrearEvento;
-    @FXML
-    private Button btnEliminarEvento;
-    @FXML
-    private Button btnVerificarCitas;
-    @FXML
-    private Button btnRegistrarUsusarios;
-    @FXML
-    private TableView<Appointment> tableCitas;
-    @FXML
-    TableColumn<Appointment, String> nombreColumn;
-    @FXML
-    TableColumn<Appointment, String> horaColumn;
-    @FXML
-    TableColumn<Appointment, String> motivoColumn;
-    @FXML
-    TableColumn<Appointment, String> apellidoColumn;
+    @FXML private Button btnCrearEvento;
+    @FXML private Button btnEliminarEvento;
+    @FXML private Button btnVerificarCitas;
+    @FXML private Button btnRegistrarUsusarios;
+    @FXML private TableView<Appointment> tableCitas;
+    @FXML TableColumn<Appointment, String> nombreColumn;
+    @FXML TableColumn<Appointment, String> horaColumn;
+    @FXML TableColumn<Appointment, String> motivoColumn;
+    @FXML TableColumn<Appointment, String> apellidoColumn;
     // @FXML
     private DatePicker date;
-    @FXML
-    private VBox Vmenu;
-    @FXML
-    private AnchorPane pacientes_pane; 
-    @FXML
-    private Label nombre_p_label;
-    @FXML
-    private Label apellido_p_label;
-    @FXML
-    private Label cedula_p_label;
-    @FXML
-    private Label email_p_label;
-    @FXML
-    private Label telefono_p_label;
+    @FXML private VBox Vmenu;
+    @FXML private AnchorPane pacientes_pane; 
+    @FXML private Label nombre_p_label;
+    @FXML private Label apellido_p_label;
+    @FXML private Label cedula_p_label;
+    @FXML private Label email_p_label;
+    @FXML private Label telefono_p_label;
     
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
@@ -84,20 +72,45 @@ public class FXMLDocumentController implements Initializable {
     @FXML private ListView<String> list_alergias;
     @FXML private ListView<String> list_ant;
     
+    // Componenetes de la tab diagnosticos
+    @FXML private TextArea diagnostico_tx;
+    
+    @FXML private TableView<Treatment> table_tratamiento;
+    @FXML private TableColumn<Treatment, String> tab_medicamento;
+    @FXML private TableColumn<Treatment, String> tab_cantidad;
+    @FXML private TableColumn<Treatment, String> tab_duracion;
+    @FXML private TableColumn<Treatment, String> tab_frecuencia;
+    
+    @FXML private TextField medicamento_tx;
+    @FXML private TextField cantidad_tx;
+    @FXML private TextField duracion_tx;
+    @FXML private TextField frecuencia_tx;
+    
+    @FXML private Button btn_guardard;
+    @FXML private Button btn_addt;
+    
+    @FXML private TabPane tabPane_info;
+    @FXML private Tab pest_histM;
+    
     @FXML
     private void crearEvento(ActionEvent event) {
         // Verifica si se selecciono algun item de la tableCitas
         int index = tableCitas.getSelectionModel().getSelectedIndex();
         System.out.println("Index tableCitas: " + index);
         System.out.println("Index tableCitas: " + this.currentDayMedicIndex);
-        if (index == -1)
-        {
+        // Se verifica si el ususario ha seleccionado un slot de la tabla
+        if (index == -1) {
             System.out.println("No ha seleccionado ningun item");
             return;
         }
+        // Se verifica si el slot no esta lleno aun
+        if (!tableCitas.getSelectionModel().getSelectedItem().getDescription().equals("")) {
+            System.out.println("No puedes crear un evento en un evento existente");
+            return;
+        }
+        
         
         // Si el dia no existe en la bd se crea y luego se crea el appointment
-        // NO FUNCIONA AUN
         if (currentDayMedicIndex  == -1 ) {
              System.out.println("El dia no existe. Se tiene que agregar a la BD"); 
              Day newDay = new Day();
@@ -172,7 +185,7 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Obtenemos los deias del medico y los mete en el arreglo dayMedic
+        // Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
         // Se obtienen todos los pacientes de la bd
@@ -200,8 +213,8 @@ public class FXMLDocumentController implements Initializable {
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
         motivoColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        // Manejador de los eventos de el calendario
         
+        // Manejador de los eventos de el calendario
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
                 // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
@@ -215,17 +228,16 @@ public class FXMLDocumentController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Appointment rowData = row.getItem();
-                    
+                    ObservableList<String> list1 = FXCollections.observableArrayList();
+                    ObservableList<String> list2 = FXCollections.observableArrayList();
+                    list_alergias.setItems(list1);
+                        list_ant.setItems(list2);
                     if (rowData.getPatientName().equals("")) {
                         nombre_p_label.setText("");
                         apellido_p_label.setText("");
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
-                        ObservableList<String> list1 = FXCollections.observableArrayList();
-                        ObservableList<String> list2 = FXCollections.observableArrayList();
-                        list_alergias.setItems(list1);
-                        list_ant.setItems(list2);
                         return;
                     } 
                     
@@ -255,6 +267,27 @@ public class FXMLDocumentController implements Initializable {
             return row;
         });
     
+        //----------------------- Inicializacion de los componenetes de diagnosticos -------------------------------
+        tab_medicamento.setCellValueFactory(new PropertyValueFactory<>("medication"));
+        tab_cantidad.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        tab_duracion.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        tab_frecuencia.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+        
+       //
+       
+        // Manejadores de eventos de los botones
+        btn_guardard.setOnAction(e -> {
+            System.out.println("Se supone que aqui se guarda en la BD");
+        });
+        
+        btn_addt.setOnAction(e -> {
+            Treatment t = new Treatment(medicamento_tx.getText(), cantidad_tx.getText(),
+                                        duracion_tx.getText(),frecuencia_tx.getText());
+        });
+        // Llenar los inputs cuando se seleccione un appointment
+        /*pest_histM.setOnSelectionChanged(e -> {
+            System.out.println("Dentro o fuera" + pest_histM.isSelected());
+        });*/
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){

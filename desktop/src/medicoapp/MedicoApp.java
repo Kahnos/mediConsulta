@@ -27,8 +27,8 @@ public class MedicoApp extends Application {
         
                                     
         stage.setScene(scene);
-        //stage.setResizable(false);
-        //stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
+        stage.initStyle(StageStyle.UTILITY);
         stage.show();
     }
 

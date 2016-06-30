@@ -62,6 +62,8 @@ public class crearCita extends VBox {
         }
         
         tipo_e_cb.getItems().addAll("Consulta","Reunion","Vacaciones","Congreso","Personal");
+        nombre_l.setText("");
+        apellido_l.setText("");
     }
 
     /*
@@ -163,6 +165,8 @@ public class crearCita extends VBox {
                 np.setDescription(motivo_txta.getText());
                 // Tipo de evento 
                 np.setEventType(tipo_e_cb.getValue());
+                // sexo
+                
             }
             // POST: agregar una cita al dia
             // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar
@@ -177,38 +181,49 @@ public class crearCita extends VBox {
             window.close();
             });
        
-       btn_cancelar.setOnAction((ActionEvent e) -> {
+        btn_cancelar.setOnAction((ActionEvent e) -> {
             this.cancel = true;
             window.close();
-       });
+        });
        
-       patient_tx.focusedProperty().addListener(new ChangeListener<Boolean>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-                    {
-                        if (newPropertyValue)
-                            {
-                                System.out.println("Textfield on focus");
-                            }
-                            else
-                            {
-                                System.out.println("Textfield out focus");
-                                int i;
-                                for (i = 0; i < patients.size() ; i++) {
-                                    if (patient_tx.getText().equals(patients.get(i).getPatientID())) {
-                                        nombre_l.setText(patients.get(i).getName());
-                                        apellido_l.setText(patients.get(i).getLastName());
-                                        break;
-                                    }
-                                }
+        patient_tx.setOnAction(e -> {
+            int i;
+            for (i = 0; i < patients.size() ; i++) {
+                if (patient_tx.getText().equals(patients.get(i).getPatientID())) {
+                    nombre_l.setText(patients.get(i).getName());
+                    apellido_l.setText(patients.get(i).getLastName());
+                    break;
+                }
+            }
                                 
-                                if (i == patients.size()) {
-                                    nombre_l.setText("Paciente no \n registrado");
-                                }
-                            }
+            if (i == patients.size()) {
+                nombre_l.setText("Paciente no \n registrado");
+            }
+        });
+       
+        patient_tx.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (newPropertyValue) {
+                    System.out.println("Textfield on focus");
+                } else {
+                    System.out.println("Textfield out focus");
+                    int i;
+                    for (i = 0; i < patients.size() ; i++) {
+                        if (patient_tx.getText().equals(patients.get(i).getPatientID())) {
+                            nombre_l.setText(patients.get(i).getName());
+                            apellido_l.setText(patients.get(i).getLastName());
+                            break;
                         }
-            });
+                    }
+                                
+                    if (i == patients.size()) {
+                        nombre_l.setText("Paciente no registrado");
+                        apellido_l.setText("");
+                    }
+                }
+            }
+        });
        
        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
        VBox vb = new VBox();
@@ -220,6 +235,7 @@ public class crearCita extends VBox {
            System.out.println("Cancelado desde la x");
            this.cancel = true;
        });
+       
        window.showAndWait();
        return dayMedic;
     

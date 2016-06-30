@@ -59,6 +59,25 @@ exports.addPatient = function(req, res) {
     });
 };
 
+/*
+    Función auxiliar que calcula la edad de un paciente. Utilizado en updatePatient.
+    Extraída de http://stackoverflow.com/questions/4076321/javascript-age-calculation
+    Autor: Matt
+*/
+function calculateAge (birthDate, otherDate) {
+    birthDate = new Date(birthDate);
+    otherDate = new Date(otherDate);
+
+    var years = (otherDate.getFullYear() - birthDate.getFullYear());
+
+    if (otherDate.getMonth() < birthDate.getMonth() || 
+        otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+        years--;
+    }
+
+    return years;
+}
+
 // PUT - Actualiza un paciente existente en la base de datos.
 exports.updatePatient = function(req, res) {
     console.log('PUT /patients/:id');
@@ -68,6 +87,18 @@ exports.updatePatient = function(req, res) {
         if ( err )
             return res.status(500).send(err.message);
 
+        // Determina si los campos modificados deben ser actualizados en las citas.
+        var modificationAux = false;   
+        var oldDate = new Date(patient.birthdate);
+        var newDate = new Date(req.body.birthdate);
+        var patientIDAux = patient.patientID;
+        if ((patient.patientID != req.body.patientID) || 
+            (patient.name != req.body.name) || 
+            (patient.lastName != req.body.lastName) || 
+            (patient.sex != req.body.sex) || 
+            (oldDate.getTime() != newDate.getTime()))
+                modificationAux = true;
+        
         patient.patientID = req.body.patientID || patient.patientID;
         patient.name = req.body.name || patient.name;
 		patient.lastName = req.body.lastName || patient.lastName;
@@ -84,9 +115,93 @@ exports.updatePatient = function(req, res) {
         patient.save(function(err) {
             if ( err )
                 return res.status(500).send(err.message);
+            
+            // Se actualizan los datos del paciente en todas sus citas si es necesario.
+            if (modificationAux) {
+                var days = require('../models/days.js');
 
+                days.find(function(err, daysArray) {
+                    if ( err )
+                        return;
+
+                    var dayAux;
+                    var appointments;
+                    var appointmentsAux;
+                    for (i = 0; i < daysArray.length; i++) { 
+                        dayAux = daysArray[i];
+                        appointments = [];
+                        appointmentsAux = false;
+                        for (j = 0; j < dayAux.dayAppointments.length; j++) {
+                            if (dayAux.dayAppointments[j].patientID == patientIDAux){
+                                appointments.push(dayAux.dayAppointments[j]);
+                                appointmentsAux = true;
+                            }
+                        }
+                        if (appointmentsAux)
+                            (function (appointments) {
+                                days.findOneAndUpdate (dayAux._id, {}, function(err, day) {
+                                    for (k = 0; k < appointments.length; k++) {
+                                        var appointment = day.dayAppointments.id(appointments[k]._id);
+                                        appointment.patientID = patient.patientID;
+                                        appointment.patientName = patient.name; 
+                                        appointment.patientLastName = patient.lastName;
+                                        appointment.patientSex = patient.sex; 
+                                        appointment.patientAge = calculateAge(newDate, new Date(day.date));
+                                    }
+                                    day.save();
+                                });
+                            }(appointments));
+                    }            
+                });
+            }
+            
             res.status(200).jsonp(patient);
         });
+    });
+};
+
+// DELETE - Se elimina un paciente específico y todas las citas de ese paciente.
+exports.removePatient = function(req, res) {
+    console.log('DELETE /patients/:id');
+
+    // Se busca el documento por su id, si se encuentra, se elimina el paciente con id = :id.
+    patients.findByIdAndRemove(req.params.id, function(err, patient) {
+        if ( err )
+            return res.status(500).send(err.message);
+
+        var days = require('../models/days.js');
+        
+        // Se eliminan todas las citas del paciente.
+        days.find(function(err, daysArray) {
+            if ( err )
+                return;
+
+            var dayAux;
+            var appointments;
+            var appointmentsAux;
+            for (i = 0; i < daysArray.length; i++) { 
+                dayAux = daysArray[i];
+                appointments = [];
+                appointmentsAux = false;
+                for (j = 0; j < dayAux.dayAppointments.length; j++) {
+                    if (dayAux.dayAppointments[j].patientID == patient.patientID){
+                        appointments.push(dayAux.dayAppointments[j]);
+                        appointmentsAux = true;
+                    }
+                }
+                if (appointmentsAux)
+                    (function (appointments) {
+                        days.findOneAndUpdate (dayAux._id, {}, function(err, day) {
+                            for (k = 0; k < appointments.length; k++) {
+                                day.dayAppointments.id(appointments[k]._id).remove();
+                            }
+                            day.save();
+                        });
+                    }(appointments));
+            }            
+        });
+        
+        return res.status(200).send("Patient deleted.");
     });
 };
 
