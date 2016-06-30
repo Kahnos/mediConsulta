@@ -15,7 +15,8 @@ var userSchema = new mongoose.Schema({
     birthdate: { type: Date },
     email: { type: String, trim: true },
     phoneNumber: { type: String, trim: true },
-    sex: { type: String, trim: true }
+    sex: { type: String, trim: true },
+    medicID: { type: String, trim: true }
 });
 
 exports = module.exports = mongoose.model('User', userSchema);
