@@ -276,7 +276,13 @@ public class FXMLDocumentController implements Initializable {
                     for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
                         list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
                     }
+                    // Si tiene diagnostico en la bd se muestra la informacion y se deshabilita las pestañas
+                    
                 }
+                
+                
+                
+                
             });
             return row;
         });
@@ -312,7 +318,7 @@ public class FXMLDocumentController implements Initializable {
             
             //Guardar el diagnosico en la lBD y en la estructura del programa
              patients.set(i, HTTPRequest.addDiagnostic(s, d));
-             disablePest();
+             disableHist();
         });
         
         btn_addt.setOnAction(e -> {
@@ -464,6 +470,12 @@ public class FXMLDocumentController implements Initializable {
         ObservableList<Treatment> list1 = FXCollections.observableArrayList();
         table_tratamiento.setItems(list1);
         selectionModel.select(pest_paciente);
+    }
+    
+    public void disableHist() {
+        pest_histM.setDisable(true);
+        pest_consulta.setDisable(true);
+        diagnostico_tx.setDisable(true);
     }
     
     public void enablePest() {
