@@ -1,13 +1,10 @@
 package medicoapp;
 
-import java.util.Date;
-
 /**
  * Clase Patient: Contiene la información de un Patient.
  * @author Kahnos <josed1305@gmail.com>
  */
 public class Patient {
-    
     
     private String _id;
     private String patientID;
@@ -35,10 +32,9 @@ public class Patient {
         this.weight = 0;
         this.height = 0;
     }
-
     
-    
-    public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex, Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
+    public Patient(String _id, String patientID, String name, String birthdate, String email, String phoneNumber, String sex,
+            Integer weight, Integer height, String[] medicalBackgrounds, String[] allergies, Diagnostic[] diagnostics) {
         this._id = _id;
         this.patientID = patientID;
         this.name = name;
@@ -157,160 +153,10 @@ public class Patient {
     public void setDiagnostics(Diagnostic[] diagnostics) {
         this.diagnostics = diagnostics;
     }
-    
-    // Clase Diagnostic: Contiene la información de un diagnóstico.
-    public class Diagnostic {
 
-        private String _id;
-        private String date;
-        private String diagnostic;
-        private Treatment[] treatment;
-        private TreatmentResult treatmentResult;
-        private boolean shared;
-        private String medicID;
-        
-        public Diagnostic(String _id, String date, String diagnostic, Treatment[] treatment, TreatmentResult treatmentResult) {
-            this._id = _id;
-            this.date = date;
-            this.diagnostic = diagnostic;
-            this.treatment = treatment;
-            this.treatmentResult = treatmentResult;
-        }
-
-        public String getId() {
-            return _id;
-        }
-
-        public void setId(String _id) {
-            this._id = _id;
-        }
-        
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public String getDiagnostic() {
-            return diagnostic;
-        }
-
-        public void setDiagnostic(String diagnostic) {
-            this.diagnostic = diagnostic;
-        }
-
-        public Treatment[] getTreatment() {
-            return treatment;
-        }
-
-        public void setTreatment(Treatment[] treatment) {
-            this.treatment = treatment;
-        }
-
-        public TreatmentResult getTreatmentResult() {
-            return treatmentResult;
-        }
-
-        public void setTreatmentResult(TreatmentResult treatmentResult) {
-            this.treatmentResult = treatmentResult;
-        }
-        
-        // Clase Treatment: Contiene la información de un tratamiento.
-        public class Treatment {
-            
-            private String _id;
-            private String medication;
-            private String quantity;
-            private String duration;
-            private String frequency;
-
-            public Treatment(String _id, String medication, String quantity, String duration, String frequency) {
-                this._id = _id;
-                this.medication = medication;
-                this.quantity = quantity;
-                this.duration = duration;
-                this.frequency = frequency;
-            }
-            
-            public Treatment(String medication, String quantity, String duration, String frequency) {
-                this.medication = medication;
-                this.quantity = quantity;
-                this.duration = duration;
-                this.frequency = frequency;
-            }
-
-            public String getId() {
-                return _id;
-            }
-
-            public void setId(String _id) {
-                this._id = _id;
-            }
-            
-            public String getMedication() {
-                return medication;
-            }
-
-            public void setMedication(String medication) {
-                this.medication = medication;
-            }
-
-            public String getQuantity() {
-                return quantity;
-            }
-
-            public void setQuantity(String quantity) {
-                this.quantity = quantity;
-            }
-
-            public String getDuration() {
-                return duration;
-            }
-
-            public void setDuration(String duration) {
-                this.duration = duration;
-            }
-
-            public String getFrequency() {
-                return frequency;
-            }
-
-            public void setFrequency(String frequency) {
-                this.frequency = frequency;
-            }
-        
-        }
-        
-        // Clase TreatmentResult: Contiene la información del feedback de un tratamiento.
-        public class TreatmentResult {
-            
-            private String _id;
-            private int rating;
-
-            public TreatmentResult(String _id, int rating) {
-                this._id = _id;
-                this.rating = rating;
-            }
-
-            public String getId() {
-                return _id;
-            }
-
-            public void setId(String _id) {
-                this._id = _id;
-            }
-            
-            public int getRating() {
-                return rating;
-            }
-
-            public void setRating(int rating) {
-                this.rating = rating;
-            }
-            
-        }
+    @Override
+    public String toString() {
+        return "Patient{" + "_id=" + _id + ", patientID=" + patientID + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", email=" + email + ", phoneNumber=" + phoneNumber + ", sex=" + sex + ", weight=" + weight + ", height=" + height + ", medicalBackgrounds=" + medicalBackgrounds + ", allergies=" + allergies + ", diagnostics=" + diagnostics + '}';
     }
-    
+   
 }

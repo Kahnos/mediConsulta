@@ -35,7 +35,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         
     }
 
-    public Appointment(String _id, String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+    public Appointment(String _id, String start, String end, String eventType, String patientID, String patientName, 
+            String description, String patientLastName, String startString, String endString) {
         this._id = _id;
         this.start = start;
         this.end = end;
@@ -47,7 +48,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.slot = slot;
     }
     
-    public Appointment( String start, String end, String eventType, String patientID, String patientName, String description, String patientLastName, String startString, String endString) {
+    public Appointment( String start, String end, String eventType, String patientID, String patientName,
+            String description, String patientLastName, String startString, String endString) {
         this.start = start;
         this.end = end;
         this.eventType = eventType;
@@ -57,6 +59,21 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.description = description;
         this.slot = slot;
     }    
+  
+    public Appointment(String _id, String start, String end, String eventType, String patientID, String patientName, 
+            String description, String patientLastName, String startString, String endString, String sex, String age) {
+        this._id = _id;
+        this.start = start;
+        this.end = end;
+        this.eventType = eventType;
+        this.patientID = patientID;
+        this.patientName = patientName;
+        this.patientLastName = patientLastName;
+        this.description = description;
+        this.slot = slot;
+        this.patientSex = sex;
+        this.patientAge = age;
+    }
     
     public String getId() {
         return _id;
@@ -91,8 +108,6 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     public String getPatientLastName() {
         return patientLastName;
     }
-
-    
     
     public String getDescription() {
         return description;
@@ -102,7 +117,13 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         return slot;
     }
 
-    
+    public String getPatientSex() {
+        return patientSex;
+    }
+
+    public String getPatientAge() {
+        return patientAge;
+    }
     
     // Setters 
 
@@ -137,7 +158,14 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     public void setSlot(String slot) {
         this.slot = slot;
     }
-    
+
+    public void setPatientSex(String patientSex) {
+        this.patientSex = patientSex;
+    }
+
+    public void setPatientAge(String patientAge) {
+        this.patientAge = patientAge;
+    }
     
     public void print(){
         System.out.println();
@@ -149,6 +177,11 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         System.out.println(this.description);
         System.out.println(this.eventType);
         System.out.println();
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" + "_id=" + _id + ", start=" + start + ", end=" + end + ", slot=" + slot + ", eventType=" + eventType + ", patientID=" + patientID + ", patientName=" + patientName + ", patientLastName=" + patientLastName + ", description=" + description + ", sex=" + patientSex + ", age=" + patientAge + '}';
     }
     
     @Override 

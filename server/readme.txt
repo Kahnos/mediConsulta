@@ -1,5 +1,12 @@
 Servidor basado en node.js con base de datos noSQL (MongoDB) y API REST.
 
+IMPORTANTE: Previo a utilizar el servidor, se deberá instalar MongoDB. Luego corra mongod (servidor de MongoDB) y manténgalo corriendo en el sistema. Luego de tener el servidor MongoDB corriendo, debe crear la BD utilizando los siguientes comandos desde mongo (El cliente llamado mongo, no el servidor llamado mongod):
+
+use mediConsulta
+db.createCollection("days")
+db.createCollection("configs")
+db.createCollection("patients")
+
 Para poder utilizar este servidor, se debe instalar node.js primero y MongoDB. Puede descargarlos desde sus páginas oficiales para su S.O. correspondiente.
 
 Luego de poseer node.js y poder utilizarlo en su línea de comando, utilice los siguientes instrucciones:
@@ -8,8 +15,6 @@ npm install
 node app.js
 
 "npm install" instalará todas las dependencias requeridas, mientras que "node app.js" iniciará el servidor en el puerto 1305 de localhost (http://localhost:1305). 
-
-Para poder utilizar el servidor, se deberá tener mongod (servidor de MongoDB) corriendo en el sistema.
 
 URLs:
 

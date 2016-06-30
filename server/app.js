@@ -26,6 +26,7 @@ db.once('open', function() {
     var daysController = require('./controllers/days.js');
     var configsController = require('./controllers/configs.js');
     var patientsController = require('./controllers/patients.js');
+    var usersController = require('./controllers/users.js');
 
     // Router de días y citas.
     var days = express.Router();
@@ -35,6 +36,9 @@ db.once('open', function() {
     
     // Router de pacientes.
     var patients = express.Router();
+        
+    // Router de usuarios.
+    var users = express.Router();
     
     // Se asignan a las rutas para las solicitudes sus respectivos manejadores.
     // Rutas de días y citas.
@@ -64,16 +68,31 @@ db.once('open', function() {
     // Rutas de pacientes.
     patients.route('/patients/:id')
         .get(patientsController.getPatient)
-        .put(patientsController.updatePatient);
+        .put(patientsController.updatePatient)
+        .post(patientsController.addDiagnostic)
+        .delete(patientsController.removePatient);
     
     patients.route('/patients/')
         .get(patientsController.getAllPatients)
         .post(patientsController.addPatient);
     
+    patients.route('/patients/:id/:diagnosticID')
+        .get(patientsController.getDiagnostic)
+        .post(patientsController.addTreatmentFeedback);
+    
+    // Rutas de usuarios.
+    users.route('/users')
+        .post(usersController.addUser);
+    
+    users.route('/users/:id')
+        .get(usersController.getUser)
+        .put(usersController.updateUser);
+    
     // Se aplican los routers a la API.
     app.use('/api', days);
     app.use('/api', configs);
     app.use('/api', patients);
+    app.use('/api', users);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
     app.listen(1305, function() {
