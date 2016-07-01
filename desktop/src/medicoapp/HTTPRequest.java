@@ -461,8 +461,89 @@ public final class HTTPRequest {
         return user;
     }
     
+    // ---------- Estadísticas ----------
+    // GET /statistics/:medicID/:month/entryByAge - Retorna el promedio de ingreso por edad - Rangos de edad de 10 años, Mensual.
+    public static double[] getAgeStatistic( String medicID, int month ){  
+        double[] statistic;
+        
+        // Se realiza la solicitud GET del usuario.
+        String statisticString = executeRequest( "statistics/" + medicID + "/" + month + "/entryByAge", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        statistic = gson.fromJson(statisticString, double[].class);
+        System.out.println("Object to String: " + Arrays.toString(statistic));
+        System.out.println("Object to JSON: " + gson.toJson(statistic));
+        
+        return statistic;
+    }
+    
+    // GET /statistics/:medicID/:month/entryBySex - Retorna el promedio de ingreso por sexo - Mensual.
+    public static double[] getSexStatistic( String medicID, int month ){  
+        double[] statistic;
+        
+        // Se realiza la solicitud GET del usuario.
+        String statisticString = executeRequest( "statistics/" + medicID + "/" + month + "/entryBySex", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        statistic = gson.fromJson(statisticString, double[].class);
+        System.out.println("Object to String: " + Arrays.toString(statistic));
+        System.out.println("Object to JSON: " + gson.toJson(statistic));
+        
+        return statistic;
+    }
+    
+    // GET /statistics/:medicID/:month/entryBySlot - Promedio de ingreso por segmentos del día - Mensual
+    public static double[] getSlotStatistic( String medicID, int month ){  
+        double[] statistic;
+        
+        // Se realiza la solicitud GET del usuario.
+        String statisticString = executeRequest( "statistics/" + medicID + "/" + month + "/entryBySlot", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        statistic = gson.fromJson(statisticString, double[].class);
+        System.out.println("Object to String: " + Arrays.toString(statistic));
+        System.out.println("Object to JSON: " + gson.toJson(statistic));
+        
+        return statistic;
+    }
+    
+    // GET /statistics/:medicID/:month/entryByDay -  Ingreso por día en un mes.
+    public static double[] getDayStatistic( String medicID, int month ){  
+        double[] statistic;
+        
+        // Se realiza la solicitud GET del usuario.
+        String statisticString = executeRequest( "statistics/" + medicID + "/" + month + "/entryByDay", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        statistic = gson.fromJson(statisticString, double[].class);
+        System.out.println("Object to String: " + Arrays.toString(statistic));
+        System.out.println("Object to JSON: " + gson.toJson(statistic));
+        
+        return statistic;
+    }
+    
+    // GET /statistics/:medicID/:month/averageRating - Promedio de rating mensual
+    public static double getRatingStatistic( String medicID, int month ){  
+        double statistic;
+        
+        // Se realiza la solicitud GET del usuario.
+        String statisticString = executeRequest( "statistics/" + medicID + "/" + month + "/averageRating", "GET" );
+        
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        statistic = gson.fromJson(statisticString, double.class);
+        System.out.println("Object to String: " + statistic);
+        System.out.println("Object to JSON: " + gson.toJson(statistic));
+        
+        return statistic;
+    }
+    
     // ---------- Obtener datos especificos. ----------
-    // Obtiene los appointments de un paciente especifico. - GET api/days/getSharedAppointments
+    // Obtiene los appointments de un paciente específico. - GET api/days/getSharedAppointments
     public static Appointment[] getAppointmentP( String[] appointmentIDs ){  
         Appointment[] App;
         // Se transforma el resultado en JSON a objeto.
@@ -478,6 +559,23 @@ public final class HTTPRequest {
         System.out.println("Object Array to JSON: " + gson.toJson(App));
         
         return App;
+    }
+    
+    // ---------- Otros ----------
+    // Login. - POST /users/login
+    public static User login( String userID, String password ){  
+        User user;
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        
+        String userString = executeRequest( "days/login",
+                "{ \"userID\": \"" + userID + "\", \"password\": \"" + password + "\"}", "POST");
+     
+        user = gson.fromJson(userString, User.class);
+        System.out.println("Object Array to String: " + user);
+        System.out.println("Object Array to JSON: " + gson.toJson(user));
+        
+        return user;
     }
     
 }
