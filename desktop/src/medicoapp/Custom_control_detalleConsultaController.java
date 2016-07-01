@@ -70,6 +70,7 @@ public class Custom_control_detalleConsultaController extends VBox {
         window.setMinWidth(250);
         
         this.diagnostic = diagnostic;
+        
         dateLabel.setText(diagnostic.getDate());
         diagnosticField.setText(diagnostic.getDiagnostic());
         

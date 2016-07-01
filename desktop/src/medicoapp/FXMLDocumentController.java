@@ -346,11 +346,8 @@ public class FXMLDocumentController implements Initializable {
             }
             
             Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
-<<<<<<< HEAD
-                                          chk_shared.isSelected(),"22824486", a.getId()); 
-=======
-                                           chk_shared.isSelected(),"22824486",a.getId()); 
->>>>>>> refs/remotes/origin/Desktop-Libny
+                chk_shared.isSelected(),"22824486", a.getId()); 
+
             
             String s = null;
             int i;
@@ -382,7 +379,6 @@ public class FXMLDocumentController implements Initializable {
             s = table_tratamiento.getSelectionModel().getSelectedItems();
             l.remove(s.get(0));
         });
-<<<<<<< HEAD
         
         // --------------------- Inicializacion de los componentes de historias medicas ---------------------------
         tab_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
@@ -393,7 +389,7 @@ public class FXMLDocumentController implements Initializable {
             ObservableList<Appointment> list = tableCitas.getSelectionModel().getSelectedItems();
             Appointment a = list.get(0);
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     Consulta rowData = row.getItem();
                     Patient p = null;
                     // Se busca el paciente del appointment seleccionado
@@ -413,34 +409,13 @@ public class FXMLDocumentController implements Initializable {
                     }
                             
                     // Se llama al display de detalle de consultas
-                    
+                    Custom_control_detalleConsultaController custom = new Custom_control_detalleConsultaController();
+                    custom.display(d);
                 }   
             });
             return row;
         });
         
-=======
-
-        // Llenar los inputs cuando se seleccione un appointment
-        /*pest_histM.setOnSelectionChanged(e -> {
-            System.out.println("Dentro o fuera" + pest_histM.isSelected());
-        });*/
-        
-        //Prueba para la pantalla de login
-        Custom_control_loginController lc = new Custom_control_loginController();
-        lc.display();
-        
-        //Prueba para la pantalla de detalle de consulta
-        btnVerificarCitas.setOnAction(e -> {
-            Treatment[] t = new Treatment[2];
-            t[0] = new Treatment("444", "Atamel", "555555", "2 milenios", "24 veces al día"); 
-            t[1] = new Treatment("555", "Atamel", "2", "2 meses", "11 veces al día"); 
-            Diagnostic diagnostic = new Diagnostic("01/07/16","Esto es un diagnóstico",t,false,"889","4445");
-            Custom_control_detalleConsultaController dc = new Custom_control_detalleConsultaController();
-            dc.display(diagnostic);
-        });
-
->>>>>>> refs/remotes/origin/Desktop-Libny
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
