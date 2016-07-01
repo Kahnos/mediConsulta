@@ -25,6 +25,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * FXML Controller class
@@ -70,7 +73,7 @@ public class crearCita extends VBox {
      * display: 
      */
     @FXML
-    public Day display (TableView<Appointment> table, ArrayList<Patient> patients, Day dayM) {
+    public Day display (TableView<Appointment> table, ArrayList<Patient> patients, Day dayM, String date) {
         // Verificar si el dia existe: si no existe crea el dia en la bd
         dayMedic = dayM;
         
@@ -165,6 +168,15 @@ public class crearCita extends VBox {
                 np.setDescription(motivo_txta.getText());
                 // Tipo de evento 
                 np.setEventType(tipo_e_cb.getValue());
+                // sexo
+                np.setPatientSex(patients.get(i).getSex());
+                // age
+                DateTime dt1 = new DateTime(date);
+                DateTime dt2 = new DateTime(patients.get(i).getBirthdate());
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy");
+                int age = Integer.parseInt(fmt.print(dt1)) - Integer.parseInt(fmt.print(dt2));
+                np.setPatientAge(Integer.toString(age));
+                
             }
             // POST: agregar una cita al dia
             // Se modifica el slot de la tableCitas segun los datos del appointment auxiliar

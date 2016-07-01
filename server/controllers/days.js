@@ -102,3 +102,57 @@ exports.removeAppointment = function(req, res) {
         });
     });
 };
+
+// GET - Se obtienen todos las citas de un paciente específico.
+exports.getAllPatientAppointments = function(req, res) {
+    console.log('POST /days/getSharedAppointments');
+    console.log(req.body);
+    var mongoose = require('mongoose');
+    days.find(function(err, daysArray) {
+        if ( err )
+            return;
+
+        var dayAux;
+        var appointmentIDs = req.body.appointmentIDs;
+        var appointmentResult = [];
+        for (i = 0; i < daysArray.length; i++) { 
+            dayAux = daysArray[i];
+            for (j = 0; j < dayAux.dayAppointments.length; j++) {
+                for (k = 0; k < appointmentIDs.length; k++) {
+                    if (dayAux.dayAppointments[j]._id == appointmentIDs[k]) {
+                        /*console.log("dayAux" + dayAux.dayAppointments[j]._id);
+                        console.log("appIDs" + appointmentIDs[k]);*/
+                        appointmentResult.push(dayAux.dayAppointments[j]);
+                    }
+                } 
+            }
+        }
+        
+        res.status(200).json(appointmentResult);
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

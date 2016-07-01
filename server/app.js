@@ -22,11 +22,13 @@ db.once('open', function() {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
-    // Se importan los modelos y los controladores.
+    // Se importan los controladores.
     var daysController = require('./controllers/days.js');
     var configsController = require('./controllers/configs.js');
     var patientsController = require('./controllers/patients.js');
     var usersController = require('./controllers/users.js');
+    var notificationsController = require('./controllers/notifications.js');
+    var formsController = require('./controllers/forms.js');
 
     // Router de días y citas.
     var days = express.Router();
@@ -39,6 +41,12 @@ db.once('open', function() {
         
     // Router de usuarios.
     var users = express.Router();
+    
+    // Router de notificaciones
+    var notifications = express.Router();
+    
+    // Router de formularios
+    var forms = express.Router();
     
     // Se asignan a las rutas para las solicitudes sus respectivos manejadores.
     // Rutas de días y citas.
@@ -54,6 +62,9 @@ db.once('open', function() {
 
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
+    
+    days.route('/days/getSharedAppointments/:anything')
+        .post(daysController.getAllPatientAppointments);
     
     // Rutas de configuraciones.
     configs.route('/configs/:medicID')
@@ -88,11 +99,27 @@ db.once('open', function() {
         .get(usersController.getUser)
         .put(usersController.updateUser);
     
+    // Rutas de notificaciones
+    /*notifications.route('/sms/test')
+        .get(notificationsController.testSMS);*/
+    
+    notifications.route('/emails/test')
+        .get(notificationsController.testEmail);
+    
+    notifications.route('/scheduler/test')
+        .get(notificationsController.testScheduler);
+    
+    // Rutas de formularios
+    forms.route('/forms/test')
+        .get(formsController.testForm);
+    
     // Se aplican los routers a la API.
     app.use('/api', days);
     app.use('/api', configs);
     app.use('/api', patients);
     app.use('/api', users);
+    app.use('/api', notifications);
+    app.use('/api', forms);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
     app.listen(1305, function() {

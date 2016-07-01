@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package medicoapp;
 
 import com.google.gson.Gson;
@@ -26,56 +21,49 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Rusben Guzman
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Button btnCrearEvento;
-    @FXML
-    private Button btnEliminarEvento;
-    @FXML
-    private Button btnVerificarCitas;
-    @FXML
-    private Button btnRegistrarUsusarios;
-    @FXML
-    private TableView<Appointment> tableCitas;
-    @FXML
-    TableColumn<Appointment, String> nombreColumn;
-    @FXML
-    TableColumn<Appointment, String> horaColumn;
-    @FXML
-    TableColumn<Appointment, String> motivoColumn;
-    @FXML
-    TableColumn<Appointment, String> apellidoColumn;
+    @FXML private Button btnCrearEvento;
+    @FXML private Button btnEliminarEvento;
+    @FXML private Button btnVerificarCitas;
+    @FXML private Button btnRegistrarUsusarios;
+    @FXML private TableView<Appointment> tableCitas;
+    @FXML TableColumn<Appointment, String> nombreColumn;
+    @FXML TableColumn<Appointment, String> horaColumn;
+    @FXML TableColumn<Appointment, String> motivoColumn;
+    @FXML TableColumn<Appointment, String> apellidoColumn;
     // @FXML
     private DatePicker date;
-    @FXML
-    private VBox Vmenu;
-    @FXML
-    private AnchorPane pacientes_pane; 
-    @FXML
-    private Label nombre_p_label;
-    @FXML
-    private Label apellido_p_label;
-    @FXML
-    private Label cedula_p_label;
-    @FXML
-    private Label email_p_label;
-    @FXML
-    private Label telefono_p_label;
+    @FXML private VBox Vmenu;
+    @FXML private AnchorPane pacientes_pane; 
+    @FXML private Label nombre_p_label;
+    @FXML private Label apellido_p_label;
+    @FXML private Label cedula_p_label;
+    @FXML private Label email_p_label;
+    @FXML private Label telefono_p_label;
     
     ArrayList<Day> dayMedic;
     int currentDayMedicIndex = 0;
@@ -83,6 +71,35 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML private ListView<String> list_alergias;
     @FXML private ListView<String> list_ant;
+    
+    // Componenetes de la tab diagnosticos
+    @FXML private TextArea diagnostico_tx;
+    
+    @FXML private TableView<Treatment> table_tratamiento;
+    @FXML private TableColumn<Treatment, String> tab_medicamento;
+    @FXML private TableColumn<Treatment, String> tab_cantidad;
+    @FXML private TableColumn<Treatment, String> tab_duracion;
+    @FXML private TableColumn<Treatment, String> tab_frecuencia;
+    
+    @FXML private TextField medicamento_tx;
+    @FXML private TextField cantidad_tx;
+    @FXML private TextField duracion_tx;
+    @FXML private TextField frecuencia_tx;
+    
+    @FXML private Button btn_guardard;
+    @FXML private Button btn_addt;
+    @FXML private Button btn_delt;
+    
+    
+    @FXML private TabPane tabPane_info;
+    @FXML private Tab pest_histM;
+    @FXML private Tab pest_consulta;
+    @FXML private Tab pest_paciente;
+    @FXML private CheckBox chk_shared;
+    
+    @FXML private TableView<Consulta> table_consulta;
+    @FXML private TableColumn<Consulta, String> tab_fecha;
+    @FXML private TableColumn<Consulta, String> tab_motivo;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -127,7 +144,7 @@ public class FXMLDocumentController implements Initializable {
         
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex)));
+        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex),localdate2ISO(date.getValue())));
         Day dauAux = dayMedic.get(currentDayMedicIndex);
         if (cr.isCancel()) {
         } else { 
@@ -173,11 +190,19 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
         ap.display(patients);
+        dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
+        Date dte = new Date(2016,06,02,00,00,00);
+        Calendar c = Calendar.getInstance();
+        c.setTime(dte);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        vaciarAppointmentsInit(c, dateFormat);
+        InsertarAppointments(c, dateFormat);
     }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Obtenemos los deias del medico y los mete en el arreglo dayMedic
+        disablePest();
+        // Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
         // Se obtienen todos los pacientes de la bd
@@ -205,11 +230,15 @@ public class FXMLDocumentController implements Initializable {
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         horaColumn.setCellValueFactory(new PropertyValueFactory<>("slot"));
         motivoColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        // Manejador de los eventos de el calendario
         
+        // Manejador de los eventos de el calendario
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
                 // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
+                if (date.getValue().isBefore(LocalDate.now())) {
+                    btnCrearEvento.setDisable(true);
+                } else
+                    btnCrearEvento.setDisable(false);
                 vaciarAppointmentsSelect(c, dateFormat);            
                 InsertarAppointments(c, dateFormat);
                 });
@@ -230,16 +259,20 @@ public class FXMLDocumentController implements Initializable {
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
+                        disablePest();
                         return;
                     } 
-                    
+                    enablePest();
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
+                    Patient p = null;
                     for (i = 0; i < patients.size() ; i++) {
                         //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        if (patients.get(i).getPatientID().equals(rowData.getPatientID()))
+                        if (patients.get(i).getPatientID().equals(rowData.getPatientID())) {
+                            p = patients.get(i);
                             break;
+                        }
                     }
                     
                     nombre_p_label.setText(patients.get(i).getName());
@@ -254,11 +287,138 @@ public class FXMLDocumentController implements Initializable {
                     for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
                         list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
                     }
-                }
+
+                    // Se busca el diagnostico del paciente correspondiente a la cita
+                    Diagnostic d = null;
+                    int j;
+                    for (j = 0; j < patients.get(i).getDiagnostics().length ; j++) {
+                        if (patients.get(i).getDiagnostics()[j].getAppointmentID().equals(rowData.getId())) {
+                            d = patients.get(i).getDiagnostics()[j];
+                            break;
+                        }
+                    }
+                    // Si tiene diagnostico en la bd se muestra la informacion y se deshabilita las pestañas
+                    if (d == null || d.getDiagnostic().equals("")) {
+                        enablePest();
+                        vaciarPest();
+                    } else {
+                        disableHist();
+                        fillDiagnostico(d);
+                    }
+                    
+                    Diagnostic[] digs = p.getDiagnostics();
+                    Diagnostic ds = null;
+                    String[] apps = new String[digs.length];
+                    for (int k = 0; k < digs.length ; k++) {
+                        apps[k] = digs[k].getAppointmentID();
+                    }
+                    
+                    
+                    Appointment[] a = HTTPRequest.getAppointmentP(apps);
+                    // Se llena la tabla de consultas medicas
+                    ObservableList<Consulta> listC = FXCollections.observableArrayList();
+                    
+                    for (int k = 0; k < digs.length; k++) {
+                        DateTime dt = new DateTime(digs[k].getDate());
+                        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+                        String str = fmt.print(dt);
+                        Consulta cons = new Consulta(str,a[k].getDescription(),digs[k].getId());
+                        listC.add(cons);
+                    }
+                    table_consulta.setItems(listC);
+                }   
+                
             });
             return row;
         });
     
+        //----------------------- Inicializacion de los componenetes de diagnosticos -------------------------------
+        tab_medicamento.setCellValueFactory(new PropertyValueFactory<>("medication"));
+        tab_cantidad.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        tab_duracion.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        tab_frecuencia.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+       
+        // Manejadores de eventos de los botones
+        btn_guardard.setOnAction(e -> {
+            // Se asignan los tratamientos al arreglo
+            ObservableList<Treatment> listt = table_tratamiento.getItems();
+            ObservableList<Appointment> lists = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment a = lists.get(0);
+            Treatment[] t = new Treatment[listt.size()]; 
+            for (int i = 0; i < listt.size() ; i++) {
+                t[i] = listt.get(i);
+            }
+            
+            Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
+                chk_shared.isSelected(),"22824486", a.getId()); 
+
+            
+            String s = null;
+            int i;
+            for (i = 0; i < patients.size() ; i++) {
+                if (a.getPatientID().equals(patients.get(i).getPatientID())) {
+                    s = patients.get(i).getId();
+                    break;
+                }
+            }
+            
+            //Guardar el diagnosico en la lBD y en la estructura del programa
+             patients.set(i, HTTPRequest.addDiagnostic(s, d));
+             disableHist();
+        });
+        
+        btn_addt.setOnAction(e -> {
+            // validar los datos de los imputs
+            if ((medicamento_tx.getText().equals("") || cantidad_tx.getText().equals("") ||
+                 duracion_tx.getText().equals("") || frecuencia_tx.getText().equals("")))
+                return;
+            Treatment t = new Treatment(medicamento_tx.getText(), cantidad_tx.getText(),
+                                        duracion_tx.getText(),frecuencia_tx.getText());
+            table_tratamiento.getItems().add(t);
+        });
+        btn_delt.setOnAction(e -> {
+            // validar los datos de los imputs
+            ObservableList l,s;
+            l = table_tratamiento.getItems();
+            s = table_tratamiento.getSelectionModel().getSelectedItems();
+            l.remove(s.get(0));
+        });
+        
+        // --------------------- Inicializacion de los componentes de historias medicas ---------------------------
+        tab_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        tab_motivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
+        
+        table_consulta.setRowFactory( tv -> {
+            TableRow<Consulta> row = new TableRow<>();
+            ObservableList<Appointment> list = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment a = list.get(0);
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Consulta rowData = row.getItem();
+                    Patient p = null;
+                    // Se busca el paciente del appointment seleccionado
+                    for (int i = 0; i < patients.size() ; i++) {
+                        if (patients.get(i).getPatientID().equals(a.getPatientID())) {
+                            p = patients.get(i);
+                            break;
+                        }
+                    }
+                    // Se busca el diagnostico correspondiente al appointment
+                    Diagnostic d = null;
+                    for (int i = 0; i < p.getDiagnostics().length ; i++) {
+                        if (p.getDiagnostics()[i].getId().equals(rowData.getDiagnosticID())) {
+                            d = p.getDiagnostics()[i];
+                            break;
+                        }
+                    }
+                    // Se llama al display de detalle de consultas
+                    Custom_control_detalleConsultaController custom = new Custom_control_detalleConsultaController();
+                    custom.display(d);
+                }   
+            });
+            return row;
+        });
+        
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
@@ -379,4 +539,82 @@ public class FXMLDocumentController implements Initializable {
     
     }
     
+    public void disablePest() {
+        SingleSelectionModel<Tab> selectionModel = tabPane_info.getSelectionModel();
+        pest_histM.setDisable(true);
+        pest_consulta.setDisable(true);
+        diagnostico_tx.setDisable(true);
+        diagnostico_tx.setText("");
+        medicamento_tx.setText("");
+        cantidad_tx.setText("");
+        duracion_tx.setText("");
+        frecuencia_tx.setText("");
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        table_tratamiento.setItems(list1);
+        selectionModel.select(pest_paciente);
+    }
+    
+    public void disableHist() {
+        diagnostico_tx.setEditable(false);
+        medicamento_tx.setEditable(false);
+        cantidad_tx.setEditable(false);
+        duracion_tx.setEditable(false);
+        frecuencia_tx.setEditable(false);
+        medicamento_tx.setText("");
+        cantidad_tx.setText("");
+        duracion_tx.setText("");
+        frecuencia_tx.setText("");
+        btn_addt.setDisable(true);
+        btn_delt.setDisable(true);
+        btn_guardard.setDisable(true);
+        chk_shared.setSelected(false);
+    }
+    
+    public void enablePest() {
+        diagnostico_tx.setEditable(true);
+        medicamento_tx.setEditable(true);
+        cantidad_tx.setEditable(true);
+        duracion_tx.setEditable(true);
+        frecuencia_tx.setEditable(true);
+        pest_histM.setDisable(false);
+        pest_consulta.setDisable(false);
+        diagnostico_tx.setDisable(false);
+        btn_addt.setDisable(false);
+        btn_delt.setDisable(false);
+        btn_guardard.setDisable(false);
+    }
+    
+    public void vaciarPest() {
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        diagnostico_tx.setText("");
+        chk_shared.setSelected(false);
+        table_tratamiento.setItems(list1);
+    }
+    
+    public void fillDiagnostico(Diagnostic d) {
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        diagnostico_tx.setText(d.getDiagnostic());
+        chk_shared.setSelected(d.isShared());
+        for (int i = 0; i < d.getTreatment().length; i++) {
+            list1.add(d.getTreatment()[i]);
+        }
+        table_tratamiento.setItems(list1);
+    }
+    
+    public void llenarConsultas() {
+        ObservableList<Appointment> list1 = FXCollections.observableArrayList();
+    }
+    
+    public LocalDate ISO2LocalDate(String iso) {
+        DateTime isodt = new DateTime(iso);
+        Date dt = isodt.toDate();
+        LocalDate local = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return local;
+    }
+    
+    public String localdate2ISO(LocalDate local) {
+        Date d = Date.from(local.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        DateTime dt = new DateTime(d);
+        return dt.toString();
+    }
 }

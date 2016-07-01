@@ -1,0 +1,72 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'nodemailer' ]
+2 info using npm@2.15.1
+3 info using node@v4.4.4
+4 verbose install initial load of C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server\package.json
+5 verbose installManyTop reading scoped package data from C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server\node_modules\body-parser\package.json
+6 verbose installManyTop reading scoped package data from C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server\node_modules\express\package.json
+7 verbose installManyTop reading scoped package data from C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server\node_modules\mongoose\package.json
+8 verbose readDependencies loading dependencies from C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server\package.json
+9 silly cache add args [ 'nodemailer', null ]
+10 verbose cache add spec nodemailer
+11 silly cache add parsed spec Result {
+11 silly cache add   raw: 'nodemailer',
+11 silly cache add   scope: null,
+11 silly cache add   name: 'nodemailer',
+11 silly cache add   rawSpec: '',
+11 silly cache add   spec: 'latest',
+11 silly cache add   type: 'tag' }
+12 silly addNamed nodemailer@latest
+13 verbose addNamed "latest" is being treated as a dist-tag for nodemailer
+14 info addNameTag [ 'nodemailer', 'latest' ]
+15 silly mapToRegistry name nodemailer
+16 silly mapToRegistry using default registry
+17 silly mapToRegistry registry https://registry.npmjs.org/
+18 silly mapToRegistry data Result {
+18 silly mapToRegistry   raw: 'nodemailer',
+18 silly mapToRegistry   scope: null,
+18 silly mapToRegistry   name: 'nodemailer',
+18 silly mapToRegistry   rawSpec: '',
+18 silly mapToRegistry   spec: 'latest',
+18 silly mapToRegistry   type: 'tag' }
+19 silly mapToRegistry uri https://registry.npmjs.org/nodemailer
+20 verbose addNameTag registry:https://registry.npmjs.org/nodemailer not in flight; fetching
+21 verbose request uri https://registry.npmjs.org/nodemailer
+22 verbose request no auth needed
+23 info attempt registry request try #1 at 18:32:09
+24 verbose request id 64e95d675701dc84
+25 http request GET https://registry.npmjs.org/nodemailer
+26 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=Parse Error
+27 info attempt registry request try #2 at 18:32:19
+28 http request GET https://registry.npmjs.org/nodemailer
+29 info retry will retry, error on last attempt: Error: tunneling socket could not be established, statusCode=400
+30 info attempt registry request try #3 at 18:33:19
+31 http request GET https://registry.npmjs.org/nodemailer
+32 verbose stack Error: tunneling socket could not be established, cause=Parse Error
+32 verbose stack     at ClientRequest.onError (C:\Program Files\nodejs\node_modules\npm\node_modules\request\node_modules\tunnel-agent\index.js:176:17)
+32 verbose stack     at ClientRequest.g (events.js:260:16)
+32 verbose stack     at emitOne (events.js:77:13)
+32 verbose stack     at ClientRequest.emit (events.js:169:7)
+32 verbose stack     at Socket.socketOnData (_http_client.js:314:9)
+32 verbose stack     at emitOne (events.js:77:13)
+32 verbose stack     at Socket.emit (events.js:169:7)
+32 verbose stack     at readableAddChunk (_stream_readable.js:153:18)
+32 verbose stack     at Socket.Readable.push (_stream_readable.js:111:10)
+32 verbose stack     at TCP.onread (net.js:531:20)
+33 verbose cwd C:\Users\Rusben Guzman\Documents\GitHub\mediConsulta\server
+34 error Windows_NT 10.0.10586
+35 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "nodemailer"
+36 error node v4.4.4
+37 error npm  v2.15.1
+38 error code ECONNRESET
+39 error network tunneling socket could not be established, cause=Parse Error
+39 error network This is most likely not a problem with npm itself
+39 error network and is related to network connectivity.
+39 error network In most cases you are behind a proxy or have bad network settings.
+39 error network
+39 error network If you are behind a proxy, please make sure that the
+39 error network 'proxy' config is set properly.  See: 'npm help config'
+40 verbose exit [ 1, true ]

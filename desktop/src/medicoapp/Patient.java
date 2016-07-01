@@ -158,5 +158,5 @@ public class Patient {
     public String toString() {
         return "Patient{" + "_id=" + _id + ", patientID=" + patientID + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", email=" + email + ", phoneNumber=" + phoneNumber + ", sex=" + sex + ", weight=" + weight + ", height=" + height + ", medicalBackgrounds=" + medicalBackgrounds + ", allergies=" + allergies + ", diagnostics=" + diagnostics + '}';
     }
-    
+   
 }

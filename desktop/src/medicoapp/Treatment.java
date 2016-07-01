@@ -23,6 +23,13 @@ public class Treatment {
         this.frequency = frequency;
     }
 
+    public Treatment(String medication, String quantity, String duration, String frequency) {
+        this.medication = medication;
+        this.quantity = quantity;
+        this.duration = duration;
+        this.frequency = frequency;
+    }
+
     public String getId() {
         return _id;
     }

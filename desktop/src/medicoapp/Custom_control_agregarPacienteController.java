@@ -91,7 +91,6 @@ public class Custom_control_agregarPacienteController extends VBox {
        // ----- grupos de los radio buttons
 
        rbtn_add.setToggleGroup(group);
-       rbtn_del.setToggleGroup(group);
        rbtn_up.setToggleGroup(group); 
 }
         

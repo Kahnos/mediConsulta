@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--></!-->
+<!-->
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+</!-->
+<!--></fx:root></!-->
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox spacing="30.0">
+         <children>
+            <Label text="Fecha:" />
+            <Label fx:id="dateLabel" text="Label" />
+         </children>
+      </HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label text="Diagnóstico" />
+            <TextArea fx:id="diagnosticField" prefHeight="146.0" prefWidth="560.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label text="Tratamiento" />
+            <TableView fx:id="treatmentTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="medicationColumn" prefWidth="136.0" text="Medicamento" />
+                <TableColumn fx:id="durationColumn" prefWidth="111.0" text="Duración" />
+                  <TableColumn fx:id="frequencyColumn" prefWidth="123.0" text="Frecuencia" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="89.0" text="Cantidad" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
+</fx:root>

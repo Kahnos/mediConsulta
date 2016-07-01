@@ -461,4 +461,23 @@ public final class HTTPRequest {
         return user;
     }
     
+    // ---------- Obtener datos especificos. ----------
+    // Obtiene los appointments de un paciente especifico. - GET api/days/getSharedAppointments
+    public static Appointment[] getAppointmentP( String[] appointmentIDs ){  
+        Appointment[] App;
+        // Se transforma el resultado en JSON a objeto.
+        Gson gson = new GsonBuilder().create();
+        
+        // Se realiza la solicitud GET de los días del médico.
+        Arrays.toString(appointmentIDs);
+        String AppointmentsString = executeRequest( "days/getSharedAppointments/algo",
+                "{ \"appointmentIDs\": " + gson.toJson(appointmentIDs) + " }", "POST");
+     
+        App = gson.fromJson(AppointmentsString, Appointment[].class);
+        System.out.println("Object Array to String: " + Arrays.toString(App));
+        System.out.println("Object Array to JSON: " + gson.toJson(App));
+        
+        return App;
+    }
+    
 }
