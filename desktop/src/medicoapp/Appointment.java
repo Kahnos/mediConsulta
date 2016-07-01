@@ -32,7 +32,6 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
         this.patientLastName = "";
         this.description = "";
         this.slot = "";
-        
     }
 
     public Appointment(String _id, String start, String end, String eventType, String patientID, String patientName, 
@@ -49,7 +48,7 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     }
     
     public Appointment( String start, String end, String eventType, String patientID, String patientName,
-            String description, String patientLastName, String startString, String endString) {
+        String description, String patientLastName, String startString, String endString) {
         this.start = start;
         this.end = end;
         this.eventType = eventType;
@@ -166,6 +165,8 @@ public class Appointment implements Comparable<Appointment>, Cloneable{
     public void setPatientAge(String patientAge) {
         this.patientAge = patientAge;
     }
+    
+    
     
     public void print(){
         System.out.println();

@@ -22,6 +22,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * FXML Controller class
@@ -70,8 +73,9 @@ public class Custom_control_detalleConsultaController extends VBox {
         window.setMinWidth(250);
         
         this.diagnostic = diagnostic;
-        
-        dateLabel.setText(diagnostic.getDate());
+        DateTime dt = new DateTime(diagnostic.getDate());
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+        dateLabel.setText(fmt.print(dt));
         diagnosticField.setText(diagnostic.getDiagnostic());
         
         ObservableList treatmentList = FXCollections.observableArrayList();
