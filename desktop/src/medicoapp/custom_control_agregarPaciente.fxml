@@ -32,6 +32,11 @@
          <left>
             <VBox prefHeight="292.0" prefWidth="131.0" spacing="2.0" BorderPane.alignment="CENTER">
                <children>
+                  <Label text="Cédula">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
                   <Label text="Nombre">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -42,17 +47,12 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Cedula">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
                   <Label text="E-mail">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Telefono">
+                  <Label text="Teléfono">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -101,17 +101,17 @@
          <center>
             <VBox prefHeight="292.0" prefWidth="339.0" spacing="2.0" BorderPane.alignment="CENTER">
                <children>
+                  <TextField fx:id="cedula_tf">
+                     <VBox.margin>
+                        <Insets bottom="3.0" />
+                     </VBox.margin>
+                  </TextField>
                   <TextField fx:id="nombre_tf" prefHeight="25.0" prefWidth="228.0">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>
                   </TextField>
                   <TextField fx:id="apellido_tf">
-                     <VBox.margin>
-                        <Insets bottom="3.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="cedula_tf">
                      <VBox.margin>
                         <Insets bottom="3.0" />
                      </VBox.margin>

@@ -144,7 +144,7 @@ public class FXMLDocumentController implements Initializable {
         
         System.out.println("Se abre la ventana para agregar un elemento a la lista");
         crearCita cr = new crearCita();
-        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex)));
+        dayMedic.set(currentDayMedicIndex, cr.display(tableCitas,patients, dayMedic.get(currentDayMedicIndex),localdate2ISO(date.getValue())));
         Day dauAux = dayMedic.get(currentDayMedicIndex);
         if (cr.isCancel()) {
         } else { 
@@ -235,6 +235,10 @@ public class FXMLDocumentController implements Initializable {
         //GET: obtener todos los dias y ponerlos en un arreglo de appointment
         dp.setOnAction(e -> {
                 // Se vacia la tabla para luego llenarla con los appoinmets correespondientes
+                if (date.getValue().isBefore(LocalDate.now())) {
+                    btnCrearEvento.setDisable(true);
+                } else
+                    btnCrearEvento.setDisable(false);
                 vaciarAppointmentsSelect(c, dateFormat);            
                 InsertarAppointments(c, dateFormat);
                 });
@@ -346,7 +350,8 @@ public class FXMLDocumentController implements Initializable {
             }
             
             Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
-                                          chk_shared.isSelected(),"22824486", a.getId()); 
+                chk_shared.isSelected(),"22824486", a.getId()); 
+
             
             String s = null;
             int i;
@@ -388,7 +393,7 @@ public class FXMLDocumentController implements Initializable {
             ObservableList<Appointment> list = tableCitas.getSelectionModel().getSelectedItems();
             Appointment a = list.get(0);
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     Consulta rowData = row.getItem();
                     Patient p = null;
                     // Se busca el paciente del appointment seleccionado
@@ -406,9 +411,9 @@ public class FXMLDocumentController implements Initializable {
                             break;
                         }
                     }
-                            
                     // Se llama al display de detalle de consultas
-                    
+                    Custom_control_detalleConsultaController custom = new Custom_control_detalleConsultaController();
+                    custom.display(d);
                 }   
             });
             return row;

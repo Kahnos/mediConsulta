@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="97.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="177.0" layoutY="56.0" text="mediConsulta">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <HBox spacing="20.0">
+         <children>
+            <RadioButton fx:id="doctorRadio" mnemonicParsing="false" text="Doctor" />
+            <RadioButton fx:id="asistentRadio" mnemonicParsing="false" text="Asistente">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </RadioButton>
+         </children>
+         <padding>
+            <Insets left="70.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="100.0" top="30.0" />
+         </VBox.margin>
+      </HBox>
+      <AnchorPane prefHeight="205.0" prefWidth="500.0">
+         <children>
+            <AnchorPane fx:id="loginPane" layoutX="100.0" layoutY="21.0" prefHeight="186.0" prefWidth="317.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <VBox layoutX="37.0" layoutY="25.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="ciField" promptText="Cédula" />
+                        <TextField fx:id="passwordField" promptText="Contraseña" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="226.0" text="Iniciar Sesión" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="204.0" layoutY="159.0" text="Registrarse" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
+</fx:root>
