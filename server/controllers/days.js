@@ -106,7 +106,7 @@ exports.removeAppointment = function(req, res) {
 // GET - Se obtienen todos las citas de un paciente específico.
 exports.getAllPatientAppointments = function(req, res) {
     console.log('POST /days/getSharedAppointments');
-    
+    console.log(req.body);
     var mongoose = require('mongoose');
     days.find(function(err, daysArray) {
         if ( err )

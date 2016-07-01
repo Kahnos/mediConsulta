@@ -262,10 +262,13 @@ public class FXMLDocumentController implements Initializable {
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
+                    Patient p = null;
                     for (i = 0; i < patients.size() ; i++) {
                         //System.out.println("patient: " + patients[i].getId() + " row: " + rowData.getPatientID());
-                        if (patients.get(i).getPatientID().equals(rowData.getPatientID()))
+                        if (patients.get(i).getPatientID().equals(rowData.getPatientID())) {
+                            p = patients.get(i);
                             break;
+                        }
                     }
                     
                     nombre_p_label.setText(patients.get(i).getName());
@@ -298,7 +301,29 @@ public class FXMLDocumentController implements Initializable {
                         disableHist();
                         fillDiagnostico(d);
                     }
+                    
+                    Diagnostic[] digs = p.getDiagnostics();
+                    Diagnostic ds = null;
+                    String[] apps = new String[digs.length];
+                    for (int k = 0; k < digs.length ; k++) {
+                        apps[k] = digs[k].getAppointmentID();
+                    }
+                    
+                    
+                    Appointment[] a = HTTPRequest.getAppointmentP(apps);
+                    // Se llena la tabla de consultas medicas
+                    ObservableList<Consulta> listC = FXCollections.observableArrayList();
+                    
+                    for (int k = 0; k < digs.length; k++) {
+                        DateTime dt = new DateTime(digs[k].getDate());
+                        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+                        String str = fmt.print(dt);
+                        Consulta cons = new Consulta(str,a[k].getDescription(),digs[k].getId());
+                        listC.add(cons);
+                    }
+                    table_consulta.setItems(listC);
                 }   
+                
             });
             return row;
         });

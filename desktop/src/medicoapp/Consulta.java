@@ -15,13 +15,13 @@ public class Consulta {
     private String motivo;
     private String diagnosticID;
     
-    public void Consulta () {
+    public Consulta () {
         this.fecha = "";
         this.motivo = "";
         this.diagnosticID = "";
     }
     
-    public void Consulta (String fecha, String motivo, String diagnosticID) {
+    public Consulta (String fecha, String motivo, String diagnosticID) {
         this.fecha = fecha;
         this.motivo = motivo;
         this.diagnosticID = diagnosticID;

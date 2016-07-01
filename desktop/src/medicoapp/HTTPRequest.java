@@ -469,7 +469,9 @@ public final class HTTPRequest {
         Gson gson = new GsonBuilder().create();
         
         // Se realiza la solicitud GET de los días del médico.
-        String AppointmentsString = executeRequest( "days/getSharedAppointments/algo",gson.toJson(appointmentIDs), "POST");
+        Arrays.toString(appointmentIDs);
+        String AppointmentsString = executeRequest( "days/getSharedAppointments/algo",
+                "{ \"appointmentIDs\": " + gson.toJson(appointmentIDs) + " }", "POST");
      
         App = gson.fromJson(AppointmentsString, Appointment[].class);
         System.out.println("Object Array to String: " + Arrays.toString(App));
