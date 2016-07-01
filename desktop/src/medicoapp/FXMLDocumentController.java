@@ -346,7 +346,11 @@ public class FXMLDocumentController implements Initializable {
             }
             
             Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
+<<<<<<< HEAD
                                           chk_shared.isSelected(),"22824486", a.getId()); 
+=======
+                                           chk_shared.isSelected(),"22824486",a.getId()); 
+>>>>>>> refs/remotes/origin/Desktop-Libny
             
             String s = null;
             int i;
@@ -378,6 +382,7 @@ public class FXMLDocumentController implements Initializable {
             s = table_tratamiento.getSelectionModel().getSelectedItems();
             l.remove(s.get(0));
         });
+<<<<<<< HEAD
         
         // --------------------- Inicializacion de los componentes de historias medicas ---------------------------
         tab_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
@@ -414,6 +419,28 @@ public class FXMLDocumentController implements Initializable {
             return row;
         });
         
+=======
+
+        // Llenar los inputs cuando se seleccione un appointment
+        /*pest_histM.setOnSelectionChanged(e -> {
+            System.out.println("Dentro o fuera" + pest_histM.isSelected());
+        });*/
+        
+        //Prueba para la pantalla de login
+        Custom_control_loginController lc = new Custom_control_loginController();
+        lc.display();
+        
+        //Prueba para la pantalla de detalle de consulta
+        btnVerificarCitas.setOnAction(e -> {
+            Treatment[] t = new Treatment[2];
+            t[0] = new Treatment("444", "Atamel", "555555", "2 milenios", "24 veces al día"); 
+            t[1] = new Treatment("555", "Atamel", "2", "2 meses", "11 veces al día"); 
+            Diagnostic diagnostic = new Diagnostic("01/07/16","Esto es un diagnóstico",t,false,"889","4445");
+            Custom_control_detalleConsultaController dc = new Custom_control_detalleConsultaController();
+            dc.display(diagnostic);
+        });
+
+>>>>>>> refs/remotes/origin/Desktop-Libny
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){

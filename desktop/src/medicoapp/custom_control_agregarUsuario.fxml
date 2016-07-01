@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="540.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane>
+         <children>
+            <HBox layoutX="-8.0" spacing="15.0">
+               <children>
+                  <RadioButton fx:id="doctorRadio" mnemonicParsing="false" text="Doctor" />
+                  <RadioButton fx:id="asistentRadio" mnemonicParsing="false" text="Asistente" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" top="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Cédula  " />
+            <TextField fx:id="ciField" />
+            <Label text="Contraseña">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="passwordField">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Nombre" />
+            <TextField fx:id="nameField" />
+            <Label text="Apellido     ">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="lastNameField">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Email     " />
+            <TextField fx:id="emailField" />
+            <Label text="Teléfono ">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="numberField">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Sexo      " />
+            <TextField fx:id="sexField" />
+            <Label text="Fecha de nacimiento" />
+            <DatePicker fx:id="birthdateField" prefHeight="25.0" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <AnchorPane prefHeight="41.0" prefWidth="570.0">
+         <children>
+            <Button fx:id="registerButton" layoutX="182.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Resgistrar" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets left="30.0" />
+   </padding>
+</VBox>
