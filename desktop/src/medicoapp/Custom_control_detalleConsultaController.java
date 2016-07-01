@@ -15,8 +15,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,12 +33,18 @@ public class Custom_control_detalleConsultaController extends VBox {
     @FXML private VBox mainPanel;
     @FXML private Label dateLabel;
     @FXML private TextArea diagnosticField;
-    @FXML private TableView treatmentTable;
     @FXML private Diagnostic diagnostic;
+
+    //TableView de tratamiento
+    @FXML private TableView<Treatment> treatmentTable;
+    @FXML private TableColumn<Treatment, String> medicationColumn;
+    @FXML private TableColumn<Treatment, String> durationColumn;
+    @FXML private TableColumn<Treatment, String> quantityColumn;
+    @FXML private TableColumn<Treatment, String> frequencyColumn;
 
     public Custom_control_detalleConsultaController() {
         // Carga el archivo FXML
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("custom_control_login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Custom_control_detalleConsulta.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -44,6 +52,14 @@ public class Custom_control_detalleConsultaController extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
           }
+        
+        diagnosticField.setEditable(false);
+        
+        medicationColumn.setCellValueFactory(new PropertyValueFactory<>("medication"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        frequencyColumn.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+        
     }
     
     public void display(Diagnostic diagnostic){

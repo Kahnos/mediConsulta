@@ -305,7 +305,7 @@ public class FXMLDocumentController implements Initializable {
             }
             
             Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
-                                           chk_shared.isSelected(),"22824486"); 
+                                           chk_shared.isSelected(),"22824486",a.getId()); 
             
             String s = null;
             int i;
@@ -348,12 +348,14 @@ public class FXMLDocumentController implements Initializable {
         lc.display();
         
         //Prueba para la pantalla de detalle de consulta
-        /*btnVerificarCitas.setOnAction(e -> {
-            Treatment[] t = new Treatment[5];
-            t[1] = new Treatment("444", "Atamel", "555555", "2 milenios", "24 veces al día"); 
+        btnVerificarCitas.setOnAction(e -> {
+            Treatment[] t = new Treatment[2];
+            t[0] = new Treatment("444", "Atamel", "555555", "2 milenios", "24 veces al día"); 
             t[1] = new Treatment("555", "Atamel", "2", "2 meses", "11 veces al día"); 
             Diagnostic diagnostic = new Diagnostic("01/07/16","Esto es un diagnóstico",t,false,"889","4445");
-        });*/
+            Custom_control_detalleConsultaController dc = new Custom_control_detalleConsultaController();
+            dc.display(diagnostic);
+        });
 
     }
     

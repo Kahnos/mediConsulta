@@ -7,6 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<!--></!-->
+<!-->
+<fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+</!-->
+<!--></fx:root></!-->
 <fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <VBox fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -27,10 +32,10 @@
             <Label text="Tratamiento" />
             <TableView fx:id="treatmentTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="136.0" text="Medicamento" />
-                <TableColumn prefWidth="111.0" text="Duración" />
-                  <TableColumn prefWidth="123.0" text="Frecuencia" />
-                  <TableColumn prefWidth="89.0" text="Cantidad" />
+                <TableColumn fx:id="medicationColumn" prefWidth="136.0" text="Medicamento" />
+                <TableColumn fx:id="durationColumn" prefWidth="111.0" text="Duración" />
+                  <TableColumn fx:id="frequencyColumn" prefWidth="123.0" text="Frecuencia" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="89.0" text="Cantidad" />
               </columns>
             </TableView>
          </children>
