@@ -254,6 +254,4 @@ public class crearCita extends VBox {
     public boolean isCancel() {
         return cancel;
     }
-    
-    
 }

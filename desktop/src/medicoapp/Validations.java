@@ -21,7 +21,7 @@ public final class Validations {
     // verifica si un numero es int
     public static boolean isInt(String str){  
           try {  
-            double d = Integer.parseInt(str);  
+            int d = Integer.parseInt(str);  
           }  
           catch(NumberFormatException nfe)  
           {  
@@ -29,7 +29,4 @@ public final class Validations {
           }  
           return true;  
         }
-    
-    
-    
 }

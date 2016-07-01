@@ -101,6 +101,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML private TableColumn<Consulta, String> tab_fecha;
     @FXML private TableColumn<Consulta, String> tab_motivo;
     
+    User userlog;
+    
     @FXML
     private void crearEvento(ActionEvent event) {
         // Verifica si se selecciono algun item de la tableCitas
