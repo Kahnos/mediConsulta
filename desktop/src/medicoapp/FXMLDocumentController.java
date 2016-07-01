@@ -383,6 +383,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                             
                     // Se llama al display de detalle de consultas
+                    
                 }   
             });
             return row;
