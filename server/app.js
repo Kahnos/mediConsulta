@@ -103,6 +103,9 @@ db.once('open', function() {
         .get(usersController.getUser)
         .put(usersController.updateUser);
     
+    users.route('/users/login')
+        .post(usersController.login);
+    
     // Rutas de notificaciones
     /*notifications.route('/sms/test')
         .get(notificationsController.testSMS);*/
