@@ -29,6 +29,7 @@ db.once('open', function() {
     var usersController = require('./controllers/users.js');
     var notificationsController = require('./controllers/notifications.js');
     var formsController = require('./controllers/forms.js');
+    var statisticsController = require('./controllers/statistics.js');
 
     // Router de días y citas.
     var days = express.Router();
@@ -47,6 +48,9 @@ db.once('open', function() {
     
     // Router de formularios
     var forms = express.Router();
+    
+    // Router de estadísticas
+    var statistics = express.Router();
     
     // Se asignan a las rutas para las solicitudes sus respectivos manejadores.
     // Rutas de días y citas.
@@ -113,6 +117,10 @@ db.once('open', function() {
     forms.route('/forms/test')
         .get(formsController.testForm);
     
+    // Rutas de estadísticas
+    statistics.route('/statistics/:medicID/:month/entryByAge')
+        .get(statisticsController.getEntryByAge);
+    
     // Se aplican los routers a la API.
     app.use('/api', days);
     app.use('/api', configs);
@@ -120,6 +128,7 @@ db.once('open', function() {
     app.use('/api', users);
     app.use('/api', notifications);
     app.use('/api', forms);
+    app.use('/api', statistics);
 
     // Se inicia el servidor en el puerto 1305 de localhost.
     app.listen(1305, function() {
