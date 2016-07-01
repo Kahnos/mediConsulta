@@ -41,7 +41,24 @@ exports.testEmail = function() {
         }
         console.log('Message sent: ' + info.response);
     });
-}
+};
+
+exports.testScheduler = function(req, res) {
+    console.log("Scheduler test.");
+    
+    var CronJob = require('cron').CronJob;
+    var job = new CronJob({
+      cronTime: '*/20 * * * *',
+      onTick: function() {
+          console.log("Shit is working.");  
+      },
+      start: false,
+      timeZone: 'America/Caracas'
+    });
+    job.start();
+    
+    res.status(200).send("Scheduled succesfully.");
+};
 
 /*var TMClient = require('textmagic-rest-client');
   

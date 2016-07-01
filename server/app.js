@@ -63,6 +63,9 @@ db.once('open', function() {
     days.route('/days/:medicID')
         .get(daysController.findAllDaysByDoctor);
     
+    days.route('/days/getSharedAppointments/:anything')
+        .post(daysController.getAllPatientAppointments);
+    
     // Rutas de configuraciones.
     configs.route('/configs/:medicID')
         .get(configsController.getConfig);   
@@ -102,6 +105,9 @@ db.once('open', function() {
     
     notifications.route('/emails/test')
         .get(notificationsController.testEmail);
+    
+    notifications.route('/scheduler/test')
+        .get(notificationsController.testScheduler);
     
     // Rutas de formularios
     forms.route('/forms/test')
