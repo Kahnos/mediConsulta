@@ -316,3 +316,51 @@ exports.getEntryByDay = function(req, res) {
         res.status(200).json(dayStatistic);
     });
 };
+    
+// GET - Promedio de rating mensual
+exports.getAverageRating = function(req, res) {
+    console.log('GET /statistics/:medicID/:month/averageRating');
+
+    days.find({ medicID: req.params.medicID }, function(err, days) {
+        if ( err )
+            return;
+
+        var dayAux;
+        var averageRating = 0;
+        var appointmentTotal = 0;
+        var dayDate;
+        var monthDate = new Date();
+        monthDate.setMonth(req.params.month - 1);
+
+        var patients = require('../models/patients.js');
+
+        patients.find(function(err, patientsArray) {
+            var patients = [];
+            var patientsCounter = 0;
+
+            for (i = 0; i < days.length; i++) {
+                dayAux = days[i];
+                dayDate = new Date(dayAux.date);
+
+                if (dayDate.getMonth() == monthDate.getMonth()) {        
+                    for (k = 0; k < dayAux.dayAppointments.length; k++) {
+                        if (dayAux.dayAppointments[k].eventType.localeCompare('Consulta') == 0) {
+                            var patientAux = patientsArray[patientsCounter]; 
+                            for(j = 0; j < patientAux.diagnostics.length; j++){
+                                if ((patientAux.diagnostics[j].treatmentResult.rating >= 0) || 
+                                    (patientAux.diagnostics[j].treatmentResult.rating <= 5)) {
+                                    averageRating += patientAux.diagnostics[j].treatmentResult.rating;
+                                    ++appointmentTotal;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            averageRating = averageRating / appointmentTotal;
+
+            res.status(200).json(averageRating);
+        }); 
+    });
+};
