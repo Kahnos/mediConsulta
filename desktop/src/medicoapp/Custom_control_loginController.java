@@ -42,6 +42,8 @@ public class Custom_control_loginController extends VBox {
     @FXML private RadioButton asistentRadio;
     final ToggleGroup group = new ToggleGroup();
     
+    private User user = new User("","","","","","","","","");
+    
     // Panel principal
     @FXML private VBox mainPanel;
     
@@ -57,8 +59,12 @@ public Custom_control_loginController() {
       }
     doctorRadio.setToggleGroup(group);
     asistentRadio.setToggleGroup(group);
+    doctorRadio.setSelected(true);
     
-    loginPane.setBackground(new Background(new BackgroundFill(Color.web("5C6BC0"), CornerRadii.EMPTY, Insets.EMPTY)));
+    loginButton.setOnAction(e -> loginButtonClicked());
+    
+    loginPane.setBackground(new Background(new BackgroundFill(Color.web("5C6BC0"),
+            CornerRadii.EMPTY, Insets.EMPTY)));
 }
 
 @FXML
@@ -77,6 +83,16 @@ public void display(){
        window.setScene(scene);
        window.showAndWait();
     
+}
+
+private void loginButtonClicked(){
+    /*user.setId(ciField.getText());
+    user.setPassword(passwordField.getText());
+    if (doctorRadio.isSelected()){
+        user.setUserType("Médico");
+    }else if (asistentRadio.isSelected()){
+        user.setUserType("Ayudante");
+    }*/
 }
     
 }
