@@ -73,3 +73,15 @@ exports.updateUser = function(req, res) {
         });
     });
 };
+
+// POST - Login rudimentario
+exports.login = function(req, res) {
+    console.log('POST /users/login');
+    
+    users.find({ userID: req.body.userID, password: req.body.password }, function(err, user) {
+        if (err)
+            return res.status(500).send(err.message);
+        
+        res.status(200).jsonp(user);
+    });
+};
