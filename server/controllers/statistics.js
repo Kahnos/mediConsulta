@@ -156,3 +156,91 @@ exports.getEntryBySex = function(req, res) {
         res.status(200).json(sexStatistic);
     });
 };
+
+// GET - Promedio de ingreso por segmentos del día - Mensual
+exports.getEntryBySlot = function(req, res) {
+    console.log('GET /statistics/:medicID/:month/entryBySlot');
+    
+    days.find({ medicID: req.params.medicID }, function(err, days) {
+        if ( err )
+            return;
+
+        var dayAux;
+        var slotStatistic = [];
+        var dayDate;
+        var monthDate = new Date();
+        var appointmentTotal = 0;
+        monthDate.setMonth(req.params.month - 1);
+        
+        for (i = 0; i < days.length; i++) {
+            dayAux = days[i];
+            dayDate = new Date(dayAux.date);
+            if (dayDate.getMonth() == monthDate.getMonth()) {                 
+                appointmentTotal += dayAux.dayAppointments.length;
+            }
+        }
+
+        for (i = 0; i < 6; i++) 
+            slotStatistic[i] = 0;
+            
+        for (i = 0; i < days.length; i++) { 
+            dayAux = days[i];
+            dayDate = new Date(dayAux.date);
+
+            if (dayDate.getMonth() == monthDate.getMonth()) {
+                for (k = 0; k < dayAux.dayAppointments.length; k++) {
+                    var appointment = dayAux.dayAppointments[k];
+                    var appointmentStart = appointment.start;
+                    var appointmentStartTime = new Date();
+                    appointmentStartTime.setTime(appointment.start.split(':')[0]);
+                    var auxTime6am = new Date();
+                    auxTime6am.setTime(6);
+                    var auxTime9am = new Date();
+                    auxTime9am.setTime(9);
+                    var auxTime12pm = new Date();
+                    auxTime12pm.setTime(12);
+                    var auxTime3pm = new Date();
+                    auxTime3pm.setTime(15);
+                    var auxTime6pm = new Date();
+                    auxTime6pm.setTime(18);
+                    
+                    switch (true) {
+                        case (appointmentStartTime < auxTime6am):
+                            ++slotStatistic[0];
+                            break;
+                            
+                        case (appointmentStartTime >= auxTime6am &&
+                             appointmentStartTime < auxTime9am):
+                            ++slotStatistic[1];
+                            break;
+                        
+                        case (appointmentStartTime >= auxTime9am &&
+                             appointmentStartTime < auxTime12pm):
+                            ++slotStatistic[2];
+                            break;
+                            
+                        case (appointmentStartTime >= auxTime12pm &&
+                             appointmentStartTime < auxTime3pm):
+                            ++slotStatistic[3];
+                            break;
+                            
+                        case (appointmentStartTime >= auxTime3pm &&
+                             appointmentStartTime < auxTime6pm):
+                            ++slotStatistic[4];
+                            break;
+                            
+                        case (appointmentStartTime >= auxTime6pm):
+                            ++slotStatistic[5];
+                            break;
+                    }
+                }
+            }
+        }
+        
+        for (i = 0; i < 6; i++) {
+            slotStatistic[i] = slotStatistic[i] / appointmentTotal;
+        }
+                
+        res.status(200).json(slotStatistic);
+    });
+};

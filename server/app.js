@@ -125,6 +125,10 @@ db.once('open', function() {
     statistics.route('/statistics/:medicID/:month/entryBySex')
         .get(statisticsController.getEntryBySex);
     
+    // Rutas de estadísticas
+    statistics.route('/statistics/:medicID/:month/entryBySlot')
+        .get(statisticsController.getEntryBySlot);
+    
     // Se aplican los routers a la API.
     app.use('/api', days);
     app.use('/api', configs);
