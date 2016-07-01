@@ -383,7 +383,7 @@ public class FXMLDocumentController implements Initializable {
             s = table_tratamiento.getSelectionModel().getSelectedItems();
             l.remove(s.get(0));
         });
-        
+       
         // --------------------- Inicializacion de los componentes de historias medicas ---------------------------
         tab_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         tab_motivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
@@ -417,6 +417,12 @@ public class FXMLDocumentController implements Initializable {
                 }   
             });
             return row;
+        });
+        
+        //Prueba del resgistrar
+        btnVerificarCitas.setOnAction(e -> {
+            Custom_control_agregarUsuarioController addUser = new Custom_control_agregarUsuarioController();
+            addUser.display();
         });
         
     }
