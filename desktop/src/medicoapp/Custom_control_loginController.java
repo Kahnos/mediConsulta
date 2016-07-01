@@ -58,7 +58,7 @@ public Custom_control_loginController() {
     doctorRadio.setToggleGroup(group);
     asistentRadio.setToggleGroup(group);
     
-    loginPane.setBackground(new Background(new BackgroundFill(Color.web("0x0000FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+    loginPane.setBackground(new Background(new BackgroundFill(Color.web("5C6BC0"), CornerRadii.EMPTY, Insets.EMPTY)));
 }
 
 @FXML

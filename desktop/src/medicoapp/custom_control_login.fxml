@@ -22,8 +22,8 @@
       </AnchorPane>
       <HBox spacing="20.0">
          <children>
-            <RadioButton mnemonicParsing="false" text="Doctor" />
-            <RadioButton mnemonicParsing="false" text="Asistente">
+            <RadioButton fx:id="doctorRadio" mnemonicParsing="false" text="Doctor" />
+            <RadioButton fx:id="asistentRadio" mnemonicParsing="false" text="Asistente">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

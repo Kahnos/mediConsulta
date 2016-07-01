@@ -288,6 +288,18 @@ public class FXMLDocumentController implements Initializable {
         /*pest_histM.setOnSelectionChanged(e -> {
             System.out.println("Dentro o fuera" + pest_histM.isSelected());
         });*/
+        
+        //Prueba para la pantalla de login
+        Custom_control_loginController lc = new Custom_control_loginController();
+        lc.display();
+        
+        //Prueba para la pantalla de detalle de consulta
+        /*btnVerificarCitas.setOnAction(e -> {
+            Treatment[] t = new Treatment[5];
+            t[1] = new Treatment("444", "Atamel", "555555", "2 milenios", "24 veces al día"); 
+            t[1] = new Treatment("555", "Atamel", "2", "2 meses", "11 veces al día"); 
+            Diagnostic diagnostic = new Diagnostic("01/07/16","Esto es un diagnóstico",t,false,"889","4445");
+        });*/
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
