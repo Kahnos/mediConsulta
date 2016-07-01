@@ -360,11 +360,29 @@ public class FXMLDocumentController implements Initializable {
         
         table_consulta.setRowFactory( tv -> {
             TableRow<Consulta> row = new TableRow<>();
-            
+            ObservableList<Appointment> list = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment a = list.get(0);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
                     Consulta rowData = row.getItem();
-                    
+                    Patient p = null;
+                    // Se busca el paciente del appointment seleccionado
+                    for (int i = 0; i < patients.size() ; i++) {
+                        if (patients.get(i).getPatientID().equals(a.getPatientID())) {
+                            p = patients.get(i);
+                            break;
+                        }
+                    }
+                    // Se busca el diagnostico correspondiente al appointment
+                    Diagnostic d = null;
+                    for (int i = 0; i < p.getDiagnostics().length ; i++) {
+                        if (p.getDiagnostics()[i].getId().equals(rowData.getDiagnosticID())) {
+                            d = p.getDiagnostics()[i];
+                            break;
+                        }
+                    }
+                            
+                    // Se llama al display de detalle de consultas
                 }   
             });
             return row;
