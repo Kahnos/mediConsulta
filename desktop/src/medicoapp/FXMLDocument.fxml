@@ -27,7 +27,7 @@
                         <Button id="btnCrearEvento" fx:id="btnCrearEvento" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="58.0" mnemonicParsing="false" onAction="#crearEvento" prefHeight="25.0" prefWidth="180.0" text="Crear evento" />
                         <Button id="btnEliminarEvento" fx:id="btnEliminarEvento" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="89.0" mnemonicParsing="false" onAction="#eliminarEvento" prefHeight="25.0" prefWidth="180.0" text="Eliminar evento" />
                         <Button id="btnVerificarCitas" fx:id="btnVerificarCitas" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Verificar solicitudes de citas" />
-                        <Button id="btnRegistrarUsuarios" fx:id="btnRegistrarUsuarios" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="156.0" mnemonicParsing="false" onAction="#agregarPaciente" prefHeight="25.0" prefWidth="180.0" text="Registrar paciente" />
+                        <Button id="btnRegistrarUsuarios" fx:id="btnRegistrarUsuarios" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="156.0" mnemonicParsing="false" onAction="#agregarPaciente" prefHeight="25.0" prefWidth="180.0" text="Agregar/Modificar Paciente" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -52,7 +52,7 @@
                <right>
                   <TabPane fx:id="tabPane_info" prefHeight="421.0" prefWidth="303.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                     <tabs>
-                      <Tab fx:id="pest_paciente" text="Pacientes">
+                      <Tab fx:id="pest_paciente" text="Información personal">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="303.0">
                                  <children>
@@ -85,7 +85,7 @@
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                        <Tab fx:id="pest_histM" text="Hist. Medicas">
+                        <Tab fx:id="pest_histM" text="Diagnostico">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="303.0">
                                  <children>
@@ -119,11 +119,16 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab fx:id="pest_consulta" text="Consultas previas">
+                        <Tab fx:id="pest_consulta" text="Hist. medicas">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="393.0" prefWidth="299.0">
                                  <children>
-                                    <ListView fx:id="list_consultas" layoutX="13.0" layoutY="14.0" prefHeight="360.0" prefWidth="277.0" />
+                                    <TableView fx:id="table_consulta" layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="279.0">
+                                      <columns>
+                                        <TableColumn fx:id="tab_fecha" prefWidth="96.0" text="Fecha " />
+                                        <TableColumn fx:id="tab_motivo" prefWidth="182.0" text="Motivo" />
+                                      </columns>
+                                    </TableView>
                                  </children></AnchorPane>
                           </content>
                         </Tab>

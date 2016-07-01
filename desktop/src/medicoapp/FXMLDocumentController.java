@@ -97,6 +97,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Tab pest_paciente;
     @FXML private CheckBox chk_shared;
     
+    @FXML private TableView<Consulta> table_consulta;
+    @FXML private TableColumn<Consulta, String> tab_fecha;
+    @FXML private TableColumn<Consulta, String> tab_motivo;
+    
     @FXML
     private void crearEvento(ActionEvent event) {
         // Verifica si se selecciono algun item de la tableCitas
@@ -349,6 +353,23 @@ public class FXMLDocumentController implements Initializable {
             s = table_tratamiento.getSelectionModel().getSelectedItems();
             l.remove(s.get(0));
         });
+        
+        // --------------------- Inicializacion de los componentes de historias medicas ---------------------------
+        tab_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        tab_motivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
+        
+        table_consulta.setRowFactory( tv -> {
+            TableRow<Consulta> row = new TableRow<>();
+            
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
+                    Consulta rowData = row.getItem();
+                    
+                }   
+            });
+            return row;
+        });
+        
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
@@ -529,6 +550,10 @@ public class FXMLDocumentController implements Initializable {
             list1.add(d.getTreatment()[i]);
         }
         table_tratamiento.setItems(list1);
+    }
+    
+    public void llenarConsultas() {
+        ObservableList<Appointment> list1 = FXCollections.observableArrayList();
     }
     
     public LocalDate ISO2LocalDate(String iso) {
