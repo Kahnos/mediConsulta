@@ -16,6 +16,10 @@ public class TreatmentResult {
         this._id = _id;
         this.rating = rating;
     }
+    
+    public TreatmentResult() {
+        rating = 0;
+    }
 
     public String getId() {
         return _id;

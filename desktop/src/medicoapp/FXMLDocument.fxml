@@ -108,13 +108,14 @@
                                           <TableColumn fx:id="tab_frecuencia" prefWidth="83.0" text="Frecuencia" />
                                       </columns>
                                     </TableView>
-                                    <Button fx:id="btn_guardard" layoutX="188.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Guardar" />
+                                    <Button fx:id="btn_guardard" layoutX="125.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Guardar" />
                                     <TextField fx:id="medicamento_tx" layoutX="6.0" layoutY="347.0" prefHeight="25.0" prefWidth="96.0" />
                                     <TextField fx:id="cantidad_tx" layoutX="104.0" layoutY="347.0" prefHeight="25.0" prefWidth="63.0" />
                                     <TextField fx:id="duracion_tx" layoutX="169.0" layoutY="347.0" prefHeight="25.0" prefWidth="55.0" />
                                     <TextField fx:id="frecuencia_tx" layoutX="226.0" layoutY="347.0" prefHeight="25.0" prefWidth="79.0" />
                                     <Button fx:id="btn_addt" layoutX="137.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Agregar" />
                                     <Button fx:id="btn_delt" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Eliminar" />
+                                    <CheckBox fx:id="chk_shared" layoutX="197.0" layoutY="18.0" mnemonicParsing="false" text="Compartir" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>

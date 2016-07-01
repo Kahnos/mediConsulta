@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package medicoapp;
 
 import com.google.gson.Gson;
@@ -26,9 +21,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -40,6 +37,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Rusben Guzman
@@ -88,9 +88,14 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML private Button btn_guardard;
     @FXML private Button btn_addt;
+    @FXML private Button btn_delt;
+    
     
     @FXML private TabPane tabPane_info;
     @FXML private Tab pest_histM;
+    @FXML private Tab pest_consulta;
+    @FXML private Tab pest_paciente;
+    @FXML private CheckBox chk_shared;
     
     @FXML
     private void crearEvento(ActionEvent event) {
@@ -181,10 +186,18 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Se abre la ventana para agregar un paciente a la BD");
         Custom_control_agregarPacienteController ap = new Custom_control_agregarPacienteController();
         ap.display(patients);
+        dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
+        Date dte = new Date(2016,06,02,00,00,00);
+        Calendar c = Calendar.getInstance();
+        c.setTime(dte);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        vaciarAppointmentsInit(c, dateFormat);
+        InsertarAppointments(c, dateFormat);
     }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        disablePest();
         // Obtenemos los deias del medico y los mete en el arreglo dayMedic
         // NOTA: hay que hacer la pantalla login para obtener los dias del medico seleccionado
         dayMedic = new ArrayList<Day>(Arrays.asList(HTTPRequest.getDays("22824486")));
@@ -238,9 +251,10 @@ public class FXMLDocumentController implements Initializable {
                         cedula_p_label.setText("");
                         email_p_label.setText("");
                         telefono_p_label.setText("");
+                        disablePest();
                         return;
                     } 
-                    
+                    enablePest();
                     // Se busca el paciente de la fila seleccionada
                     System.out.println();
                     int i;
@@ -262,7 +276,13 @@ public class FXMLDocumentController implements Initializable {
                     for (int j = 0; j < patients.get(i).getMedicalBackgrounds().length ; j++) {
                         list_ant.getItems().add(patients.get(i).getMedicalBackgrounds()[j]);
                     }
+                    // Si tiene diagnostico en la bd se muestra la informacion y se deshabilita las pestañas
+                    
                 }
+                
+                
+                
+                
             });
             return row;
         });
@@ -272,18 +292,52 @@ public class FXMLDocumentController implements Initializable {
         tab_cantidad.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         tab_duracion.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tab_frecuencia.setCellValueFactory(new PropertyValueFactory<>("frequency"));
-        
-       //
        
         // Manejadores de eventos de los botones
         btn_guardard.setOnAction(e -> {
-            System.out.println("Se supone que aqui se guarda en la BD");
+            // Se asignan los tratamientos al arreglo
+            ObservableList<Treatment> listt = table_tratamiento.getItems();
+            ObservableList<Appointment> lists = tableCitas.getSelectionModel().getSelectedItems();
+            Appointment a = lists.get(0);
+            Treatment[] t = new Treatment[listt.size()]; 
+            for (int i = 0; i < listt.size() ; i++) {
+                t[i] = listt.get(i);
+            }
+            
+            Diagnostic d = new Diagnostic(localdate2ISO(date.getValue()),diagnostico_tx.getText(),t,
+                                           chk_shared.isSelected(),"22824486"); 
+            
+            String s = null;
+            int i;
+            for (i = 0; i < patients.size() ; i++) {
+                if (a.getPatientID().equals(patients.get(i).getPatientID())) {
+                    s = patients.get(i).getId();
+                    break;
+                }
+            }
+            
+            //Guardar el diagnosico en la lBD y en la estructura del programa
+             patients.set(i, HTTPRequest.addDiagnostic(s, d));
+             disableHist();
         });
         
         btn_addt.setOnAction(e -> {
+            // validar los datos de los imputs
+            if ((medicamento_tx.getText().equals("") || cantidad_tx.getText().equals("") ||
+                 duracion_tx.getText().equals("") || frecuencia_tx.getText().equals("")))
+                return;
             Treatment t = new Treatment(medicamento_tx.getText(), cantidad_tx.getText(),
                                         duracion_tx.getText(),frecuencia_tx.getText());
+            table_tratamiento.getItems().add(t);
         });
+        btn_delt.setOnAction(e -> {
+            // validar los datos de los imputs
+            ObservableList l,s;
+            l = table_tratamiento.getItems();
+            s = table_tratamiento.getSelectionModel().getSelectedItems();
+            l.remove(s.get(0));
+        });
+
         // Llenar los inputs cuando se seleccione un appointment
         /*pest_histM.setOnSelectionChanged(e -> {
             System.out.println("Dentro o fuera" + pest_histM.isSelected());
@@ -300,6 +354,7 @@ public class FXMLDocumentController implements Initializable {
             t[1] = new Treatment("555", "Atamel", "2", "2 meses", "11 veces al día"); 
             Diagnostic diagnostic = new Diagnostic("01/07/16","Esto es un diagnóstico",t,false,"889","4445");
         });*/
+
     }
     
     public void vaciarAppointmentsInit(Calendar c, DateFormat dateFormat){
@@ -420,4 +475,43 @@ public class FXMLDocumentController implements Initializable {
     
     }
     
+    public void disablePest() {
+        SingleSelectionModel<Tab> selectionModel = tabPane_info.getSelectionModel();
+        pest_histM.setDisable(true);
+        pest_consulta.setDisable(true);
+        diagnostico_tx.setDisable(true);
+        diagnostico_tx.setText("");
+        medicamento_tx.setText("");
+        cantidad_tx.setText("");
+        duracion_tx.setText("");
+        frecuencia_tx.setText("");
+        ObservableList<Treatment> list1 = FXCollections.observableArrayList();
+        table_tratamiento.setItems(list1);
+        selectionModel.select(pest_paciente);
+    }
+    
+    public void disableHist() {
+        pest_histM.setDisable(true);
+        pest_consulta.setDisable(true);
+        diagnostico_tx.setDisable(true);
+    }
+    
+    public void enablePest() {
+        pest_histM.setDisable(false);
+        pest_consulta.setDisable(false);
+        diagnostico_tx.setDisable(false);
+    }
+    
+    public LocalDate ISO2LocalDate(String iso) {
+        DateTime isodt = new DateTime(iso);
+        Date dt = isodt.toDate();
+        LocalDate local = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return local;
+    }
+    
+    public String localdate2ISO(LocalDate local) {
+        Date d = Date.from(local.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        DateTime dt = new DateTime(d);
+        return dt.toString();
+    }
 }
