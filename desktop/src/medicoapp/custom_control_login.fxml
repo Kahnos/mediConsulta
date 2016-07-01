@@ -8,6 +8,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<!--><fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"></!-->
+<!--></fx:root></!-->
 <fx:root fx:id="main" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <VBox fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -43,11 +45,11 @@
                   <VBox layoutX="37.0" layoutY="25.0" spacing="15.0">
                      <children>
                         <TextField fx:id="ciField" promptText="Cédula" />
-                        <TextField fx:id="passwordField" promptText="Contraseña" />
+                        <PasswordField fx:id="passwordField" promptText="Contraseña" />
                         <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="226.0" text="Iniciar Sesión" />
                      </children>
                   </VBox>
-                  <Label layoutX="204.0" layoutY="159.0" text="Registrarse" />
+                  <Label fx:id="registerLabel" layoutX="204.0" layoutY="159.0" text="Registrarse" underline="true" />
                </children>
             </AnchorPane>
          </children>

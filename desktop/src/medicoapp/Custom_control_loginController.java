@@ -15,6 +15,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -36,10 +38,11 @@ public class Custom_control_loginController extends VBox {
     
     @FXML private Button loginButton;
     @FXML private TextField ciField;
-    @FXML private TextField passwordField;
+    @FXML private PasswordField passwordField;
     @FXML private AnchorPane loginPane;
     @FXML private RadioButton doctorRadio;
     @FXML private RadioButton asistentRadio;
+    @FXML private Label registerLabel;
     final ToggleGroup group = new ToggleGroup();
     
     private User user = new User("","","","","","","","","");
@@ -65,34 +68,49 @@ public Custom_control_loginController() {
     
     loginPane.setBackground(new Background(new BackgroundFill(Color.web("5C6BC0"),
             CornerRadii.EMPTY, Insets.EMPTY)));
+    
+    registerLabel.setOnMouseClicked(e-> registerLabelClicked());
 }
 
 @FXML
-public void display(){
+public User display(){
     // Se declara una window 
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("mediConsulta - Iniciar Sesión");
-        window.setMinWidth(250);
+    Stage window = new Stage();
+    window.initModality(Modality.APPLICATION_MODAL);
+    window.setTitle("mediConsulta - Iniciar Sesión");
+    window.setMinWidth(250);
         
-        // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
-       VBox vb = new VBox();
-       vb.getChildren().addAll(mainPanel);
-       vb.setAlignment(Pos.CENTER);
-       Scene scene = new Scene(vb);
-       window.setScene(scene);
-       window.showAndWait();
+    // Se crea un panel, se le asigna el panel a una scene y se le asigna la scene a la window
+    VBox vb = new VBox();
+    vb.getChildren().addAll(mainPanel);
+    vb.setAlignment(Pos.CENTER);
+    Scene scene = new Scene(vb);
+    window.setScene(scene);
+    window.showAndWait();
+    return user;
     
 }
 
 private void loginButtonClicked(){
-    /*user.setId(ciField.getText());
-    user.setPassword(passwordField.getText());
-    if (doctorRadio.isSelected()){
-        user.setUserType("Médico");
-    }else if (asistentRadio.isSelected()){
-        user.setUserType("Ayudante");
-    }*/
+    if((ciField.getText().equals("")) || (passwordField.getText().equals(""))
+        || (Validations.isInt(ciField.getText()) == false)){
+        System.out.println("Error: valor incorrecto.");
+    }
+    else {
+        user.setId(ciField.getText());
+        user.setPassword(passwordField.getText());
+        if (doctorRadio.isSelected()){
+            user.setUserType("Medico");
+        }else if (asistentRadio.isSelected()){
+            user.setUserType("Ayudante");
+        }        
+    }
+    
+}
+
+private void registerLabelClicked(){
+    Custom_control_agregarUsuarioController addUser = new Custom_control_agregarUsuarioController();
+    addUser.display();
 }
     
 }

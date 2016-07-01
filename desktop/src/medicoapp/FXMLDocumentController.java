@@ -349,8 +349,12 @@ public class FXMLDocumentController implements Initializable {
         
         //Prueba del resgistrar
         btnVerificarCitas.setOnAction(e -> {
-            Custom_control_agregarUsuarioController addUser = new Custom_control_agregarUsuarioController();
-            addUser.display();
+            /*Custom_control_agregarUsuarioController addUser = new Custom_control_agregarUsuarioController();
+            addUser.display();*/
+            Custom_control_loginController lc = new Custom_control_loginController();
+            User user = new User("","","","","","","","","");
+            user = lc.display();
+            System.out.println(user);
         });
         
 

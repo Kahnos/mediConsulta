@@ -109,7 +109,7 @@ public class Custom_control_agregarUsuarioController extends VBox {
             || (nameField.getText().equals("")) || (lastNameField.getText().equals(""))
             || (emailField.getText().equals("")) || (emailField.getText().equals(""))
             || (numberField.getText().equals("")) || (birthdateField.getValue() == null)
-            || (Validations.isInt(numberField.getText()) == false) || (Validations.isInt(ciField.getText()) == false)){
+            /*|| (Validations.isInt(numberField.getText()) == false) || (Validations.isInt(ciField.getText()) == false)*/){
             
             System.out.println("Error: valor incorrecto.");
         }
@@ -123,7 +123,7 @@ public class Custom_control_agregarUsuarioController extends VBox {
             user.setPhoneNumber(numberField.getText());      
             user.setSex(sexField.getValue());
             if (doctorRadio.isSelected()){
-                user.setUserType("Médico");
+                user.setUserType("Medico");
             }
             else {
                 user.setUserType("Ayudante");
